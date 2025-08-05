@@ -16,6 +16,21 @@
   th { background: #222; }
   .stats { margin-top: 20px; background: #1e1e1e; padding: 15px; border-radius: 8px; }
   canvas { background: #1e1e1e; border-radius: 8px; padding: 10px; }
+
+  /* Stil für den Zurück-Button */
+  .back-btn {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background: #e53935;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  .back-btn:hover {
+    background: #d32f2f;
+  }
 </style>
 
 <script>
@@ -30,6 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 </head>
 <body>
+
+<!-- Zurück zum Dashboard -->
+<a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
 
 <h1>🔫 Apex Match Logger</h1>
 
