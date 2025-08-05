@@ -2,89 +2,150 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Apex S26 RP‑Rechner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex S26 RP-Rechner</title>
 <link rel="stylesheet" href="style.css">
+
+<style>
+/* Hintergrund mit deinem Wraith Bild */
+body {
+    background: url('Wraith PFP_V4_00000.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Dunkler Overlay für Lesbarkeit */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+    z-index: -1;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Eingaben */
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button {
+    background-color: #ff1744;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff4569;
+}
+
+/* Ergebnisbox */
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: bold;
+}
+.result.plus {
+    background-color: rgba(46, 125, 50, 0.9); /* Grün */
+}
+.result.minus {
+    background-color: rgba(198, 40, 40, 0.9); /* Rot */
+}
+</style>
 </head>
 <body>
 
-<h1>📈 Apex S26 RP‑Rechner</h1>
-<p>Berechne deine RP‑Änderung basierend auf Platzierung und Kills.</p>
+<h1>🔫 Apex S26 RP-Rechner</h1>
 
-<div class="rp-box">
-    <label>Entry‑Cost (negativ eingeben):</label>
-    <input type="number" id="entryCost" value="-65">
+<label for="placement">Placement (1-20):</label>
+<input type="number" id="placement" min="1" max="20" value="10">
 
-    <label>Platzierung:</label>
-    <select id="placement">
-        <option value="1">1. Platz</option>
-        <option value="2">2. Platz</option>
-        <option value="3">3. Platz</option>
-        <option value="4">4. Platz</option>
-        <option value="5">5. Platz</option>
-        <option value="6">6. Platz</option>
-        <option value="7">7. Platz</option>
-        <option value="8">8. Platz</option>
-        <option value="9">9. Platz</option>
-        <option value="10">10. Platz</option>
-        <option value="11">11. Platz</option>
-        <option value="12">12. Platz</option>
-        <option value="13">13. Platz</option>
-        <option value="14">14. Platz</option>
-        <option value="15">15. Platz</option>
-        <option value="16">16. Platz</option>
-        <option value="17">17. Platz</option>
-        <option value="18">18. Platz</option>
-        <option value="19">19. Platz</option>
-        <option value="20">20. Platz</option>
-    </select>
+<label for="kills">Kills:</label>
+<input type="number" id="kills" min="0" value="0">
 
-    <label>Kills / Assists:</label>
-    <input type="number" id="kills" value="0">
+<label for="bonus">Challenger Bonus:</label>
+<select id="bonus">
+    <option value="0">Kein Bonus</option>
+    <option value="0.15">+15% (1 Tier höher)</option>
+    <option value="0.25">+25% (2 Tiers höher)</option>
+    <option value="0.35">+35% (3 Tiers höher)</option>
+    <option value="0.50">+50% (4+ Tiers höher)</option>
+</select>
 
-    <button onclick="calcRP()">Berechnen</button>
+<label for="entry">Entry Cost:</label>
+<input type="number" id="entry" value="65">
 
-    <div class="result" id="resultRP">Ergebnis wird hier angezeigt</div>
-</div>
+<button onclick="calculateRP()">Berechnen</button>
+
+<div id="output" class="result"></div>
 
 <script>
-const placementPoints = {
-    1: 125,
-    2: 95,
-    3: 70,
-    4: 55,
-    5: 45,
-    6: 30,
-    7: 20,
-    8: 10,
-    9: 5,
-    10: 2,
-    11: 0,
-    12: 0,
-    13: 0,
-    14: 0,
-    15: 0,
-    16: 0,
-    17: 0,
-    18: 0,
-    19: 0,
-    20: 0
-};
+function calculateRP() {
+    let placement = parseInt(document.getElementById('placement').value);
+    let kills = parseInt(document.getElementById('kills').value);
+    let bonus = parseFloat(document.getElementById('bonus').value);
+    let entry = parseInt(document.getElementById('entry').value);
 
-function calcRP() {
-    let entry = parseInt(document.getElementById("entryCost").value) || 0;
-    let place = parseInt(document.getElementById("placement").value);
-    let kills = parseInt(document.getElementById("kills").value) || 0;
+    if (isNaN(placement) || placement < 1 || placement > 20) return alert("Placement 1-20 eingeben!");
+    if (isNaN(kills) || kills < 0) return alert("Kills eingeben!");
+    if (isNaN(entry)) return alert("Entry Cost eingeben!");
 
-    let placePoints = placementPoints[place] || 0;
-    let killPoints = kills * 20; // pro Kill 20 RP
+    // Killwerte nach Platzierung (S26 Werte)
+    let killValues = {
+        1: 20, 2: 18, 3: 16, 4: 14, 5: 12, 6: 10, 7: 10, 8: 10, 9: 8, 10: 8,
+        11: 6, 12: 6, 13: 6, 14: 6, 15: 6, 16: 4, 17: 4, 18: 4, 19: 4, 20: 4
+    };
 
-    let total = entry + placePoints + killPoints;
+    let killValue = killValues[placement] || 0;
+    let killPoints = kills * killValue;
 
-    document.getElementById("resultRP").innerHTML =
-        `<strong>Gesamt‑RP Änderung: ${total} RP</strong><br>` +
-        `Platzierungspunkte: ${placePoints} RP<br>` +
-        `Killpunkte: ${killPoints} RP<br>` +
-        `Entry‑Cost: ${entry} RP`;
+    // Challenger Bonus auf Killpunkte anwenden
+    killPoints += killPoints * bonus;
+
+    // Placement Punkte (vereinfacht aus Patchnotes)
+    let placementPoints = 0;
+    if (placement === 1) placementPoints = 125;
+    else if (placement === 2) placementPoints = 100;
+    else if (placement === 3) placementPoints = 75;
+    else if (placement === 4 || placement === 5) placementPoints = 40;
+    else if (placement >= 6 && placement <= 10) placementPoints = 20;
+    else placementPoints = 0;
+
+    let totalRP = (placementPoints + killPoints) - entry;
+
+    let output = document.getElementById('output');
+    output.innerHTML = `
+        Killwert: ${killValue} RP<br>
+        Killpunkte: ${killPoints.toFixed(1)} RP<br>
+        Placementpunkte: ${placementPoints} RP<br>
+        Entry-Cost: -${entry} RP<br>
+        <strong>Netto RP: ${totalRP.toFixed(1)}</strong>
+    `;
+    output.className = "result " + (totalRP >= 0 ? "plus" : "minus");
 }
 </script>
 
