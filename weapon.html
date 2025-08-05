@@ -10,33 +10,39 @@ body {
     background: url('Wraith PFP_V4_00000.jpg') no-repeat center center fixed;
     background-size: cover;
     color: white;
-    text-align: center;
     margin: 0;
+    padding: 0;
 }
 .container {
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.75);
     padding: 20px;
     border-radius: 10px;
-    display: inline-block;
-    margin-top: 20px;
-    max-width: 400px;
+    max-width: 420px;
+    margin: 20px auto;
+}
+h1, h2 {
+    text-align: center;
+}
+label {
+    display: block;
+    margin-top: 10px;
 }
 select, input {
-    width: 90%;
-    padding: 5px;
-    margin: 5px 0;
+    width: 100%;
+    padding: 6px;
+    margin-top: 3px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 .result {
     background: black;
     padding: 10px;
     border-radius: 5px;
-    text-align: left;
     margin-top: 10px;
 }
 .green { color: #00ff00; font-weight: bold; }
-.red { color: #ff0000; font-weight: bold; }
+.red { color: #ff4444; font-weight: bold; }
+.yellow { color: #ffff00; font-weight: bold; }
 </style>
 </head>
 <body>
@@ -84,7 +90,7 @@ select, input {
 
 <script>
 const weapons = {
-    "Havoc": { body: 18, head: 27, rpm: 672, mags: {White:24, Blue:28, Purple:32} },
+    "Havoc": { body: 18, head: 27, rpm: 672, mags: {White:24, Blue:28, Purple:32}, spin: true },
     "Flatline": { body: 18, head: 36, rpm: 600, mags: {White:24, Blue:28, Purple:30} },
     "Hemlok": { body: 20, head: 35, rpm: 384, mags: {White:18, Blue:24, Purple:27} },
     "R-301": { body: 14, head: 25, rpm: 810, mags: {White:18, Blue:20, Purple:25} },
@@ -94,10 +100,10 @@ const weapons = {
     "R-99": { body: 11, head: 17, rpm: 1080, mags: {White:20, Blue:24, Purple:27} },
     "Volt": { body: 15, head: 23, rpm: 720, mags: {White:19, Blue:21, Purple:26} },
     "C.A.R": { body: 13, head: 20, rpm: 930, mags: {White:20, Blue:22, Purple:27} },
-    "Devotion": { body: 17, head: 26, rpm: 900, mags: {White:36, Blue:40, Purple:44} },
-    "L-STAR": { body: 18, head: 27, rpm: 600, mags: {White:24, Blue:26, Purple:28} },
+    "Devotion": { body: 17, head: 26, rpm: 900, mags: {White:36, Blue:40, Purple:44}, spin: true },
+    "L-STAR": { body: 18, head: 27, rpm: 600, mags: {White:24, Blue:26, Purple:28}, spin: true },
     "Spitfire": { body: 18, head: 27, rpm: 512, mags: {White:35, Blue:40, Purple:45} },
-    "Rampage": { body: 26, head: 39, rpm: 360, mags: {White:28, Blue:32, Purple:40} },
+    "Rampage": { body: 26, head: 39, rpm: 360, mags: {White:28, Blue:32, Purple:40}, spin: true },
     "G7 Scout": { body: 34, head: 54, rpm: 240, mags: {White:10, Blue:12, Purple:15} },
     "30-30 Repeater": { body: 42, head: 74, rpm: 216, mags: {White:6, Blue:8, Purple:10} },
     "Bocek": { body: 60, head: 105, rpm: 60, mags: {White:1, Blue:1, Purple:1} },
@@ -154,7 +160,8 @@ function calculate(weaponName, magColor, hsPercent, accPercent, hp) {
         dps: dps.toFixed(1),
         dmgPerMag: dmgPerMag.toFixed(0),
         killsPerMag: killsPerMag,
-        shotsPerMag: magSize
+        shotsPerMag: magSize,
+        spin: w.spin || false
     };
 }
 
@@ -166,6 +173,9 @@ function updateAll() {
         const acc = parseFloat(document.getElementById(`acc${i}`).value) || 100;
         const hp = parseFloat(document.getElementById(`hp${i}`).value) || 200;
         const res = calculate(weapon, mag, hs, acc, hp);
+
+        let spinText = res.spin ? `<br><span class="yellow">⚠ Spin-Up Zeit beachten!</span>` : ``;
+
         document.getElementById(`result${i}`).innerHTML = 
             `<span class="${res.killsPerMag >= 1 ? 'green' : 'red'}">
              Schaden pro Schuss: ${res.dmgPerShot}</span><br>
@@ -173,7 +183,7 @@ function updateAll() {
              DPS: ${res.dps}<br>
              Schaden pro Mag: ${res.dmgPerMag}<br>
              Kills pro Mag: ${res.killsPerMag}<br>
-             Schüsse pro Mag: ${res.shotsPerMag}`;
+             Schüsse pro Mag: ${res.shotsPerMag}${spinText}`;
     }
 }
 
