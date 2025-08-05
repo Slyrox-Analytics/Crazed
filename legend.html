@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legend Meta</title>
+<style>
+  body { background:#121212; color:#fff; font-family:Arial, sans-serif; padding:20px; }
+  h1 { text-align:center; margin-bottom:20px; }
+  select { padding:8px; border:none; border-radius:5px; margin:5px; background:#1e1e1e; color:#fff; }
+  table { width:100%; border-collapse:collapse; margin-top:20px; }
+  th, td { padding:10px; text-align:left; border-bottom:1px solid #333; }
+  th { background:#222; }
+  .legend-name { font-weight:bold; font-size:1.1em; color:#ffcc00; }
+  .small-data { font-size:0.9em; color:#bbb; }
+  .back-btn {
+    display:inline-block; margin-bottom:15px; padding:8px 12px;
+    background:#e53935; color:white; text-decoration:none; border-radius:5px; font-weight:bold;
+  }
+  .back-btn:hover { background:#d32f2f; }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
+<h1>📊 Legend Meta</h1>
+
+<div style="text-align:center;">
+  <label>Plattform:</label>
+  <select id="platform" onchange="updateTable()">
+    <option value="all">Alle</option>
+    <option value="PC">PC</option>
+    <option value="PlayStation">PlayStation</option>
+    <option value="Xbox">Xbox</option>
+  </select>
+
+  <label>Rangbereich:</label>
+  <select id="rank" onchange="updateTable()">
+    <option value="all">Alle Ränge</option>
+    <option value="Bronze">Bronze</option>
+    <option value="Silver">Silber</option>
+    <option value="Gold">Gold</option>
+    <option value="Platinum">Platin</option>
+    <option value="Diamond">Diamant</option>
+    <option value="Master/Predator">Master / Predator</option>
+  </select>
+</div>
+
+<table id="metaTable">
+  <thead>
+    <tr>
+      <th>Platz</th>
+      <th>Legende</th>
+      <th>Pick-Rate</th>
+      <th>Win-Rate</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+// Beispiel-Daten – später durch echte Live-Daten oder manuelle Updates ersetzen
+const metaData = [
+  { rank: "all", platform: "all", legend: "Ash", pick: "18.4%", win: "52.3%" },
+  { rank: "all", platform: "all", legend: "Bangalore", pick: "12.5%", win: "50.8%" },
+  { rank: "all", platform: "all", legend: "Revenant", pick: "7.1%", win: "49.5%" },
+  { rank: "all", platform: "all", legend: "Lifeline", pick: "7.1%", win: "51.1%" },
+  { rank: "all", platform: "all", legend: "Sparrow", pick: "6.3%", win: "48.9%" },
+  { rank: "all", platform: "all", legend: "Pathfinder", pick: "6.0%", win: "49.7%" },
+  { rank: "all", platform: "all", legend: "Wraith", pick: "5.7%", win: "50.2%" },
+  { rank: "all", platform: "all", legend: "Mirage", pick: "4.2%", win: "48.1%" },
+  { rank: "all", platform: "all", legend: "Ballistic", pick: "3.3%", win: "47.6%" },
+  { rank: "all", platform: "all", legend: "Octane", pick: "2.9%", win: "46.5%" }
+];
+
+function updateTable() {
+  const tbody = document.querySelector("#metaTable tbody");
+  tbody.innerHTML = "";
+  const plat = document.getElementById("platform").value;
+  const rank = document.getElementById("rank").value;
+
+  const filtered = metaData.filter(m => 
+    (plat === "all" || m.platform === plat) &&
+    (rank === "all" || m.rank === rank)
+  );
+
+  filtered.forEach((m, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${i+1}</td>
+        <td><span class="legend-name">${m.legend}</span><br>
+            <span class="small-data">Pick: ${m.pick} | Win: ${m.win}</span></td>
+        <td>${m.pick}</td>
+        <td>${m.win}</td>
+      </tr>
+    `;
+  });
+}
+
+updateTable();
+</script>
+
+</body>
+</html>
