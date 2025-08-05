@@ -4,25 +4,43 @@
 <meta charset="UTF-8">
 <title>Slyrox-Analytics Dashboard</title>
 <link rel="stylesheet" href="style.css">
+
 <script>
-// Passwortschutz
-document.addEventListener("DOMContentLoaded", function() {
-    var pass = prompt("🔒 Passwort erforderlich:");
-    if (pass !== "Analytics1337") {
+// Passwortschutz für das Dashboard
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Hauptpasswort abfragen
+    var pass = prompt("🔑 Passwort erforderlich:");
+    if (pass !== "Analytics1337") { // <-- Dein aktuelles Hauptpasswort hier eintragen
         alert("Falsches Passwort! Zugriff verweigert.");
         window.location.href = "https://google.com";
+        return;
+    }
+
+    // 2. Admin-Passwort für Logger-Zugriff abfragen
+    var isAdmin = false;
+    var adminPass = prompt("🔒 Admin-Passwort für Match Logger (leer lassen für normalen Zugriff):");
+    if (adminPass === "Admin8112") { // <-- Festgelegtes Admin-Passwort
+        isAdmin = true;
+    }
+
+    // 3. Match Logger-Button nur anzeigen, wenn Admin
+    if (!isAdmin) {
+        var loggerButton = document.getElementById("logger-btn");
+        if (loggerButton) {
+            loggerButton.remove();
+        }
     }
 });
 </script>
 </head>
-<body>
 
-<h1>Welcome to Slyrox‑Analytics</h1>
+<body>
+<h1>Welcome to Slyrox-Analytics</h1>
 
 <div class="dashboard">
     <a href="weapon.html" class="card">🔫 Weapon Comparison</a>
-    <a href="rp.html" class="card">📈 Apex S26 RP‑Rechner</a>
-    <a href="logger.html" class="card">📝 Match Logger</a>
+    <a href="rp.html" class="card">📈 Apex S26 RP-Rechner</a>
+    <a href="logger.html" id="logger-btn" class="card">📄 Match Logger</a>
 </div>
 
 </body>
