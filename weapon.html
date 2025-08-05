@@ -90,39 +90,40 @@
 
 <script>
 // Waffen-Daten mit Body, Head, Rate, SpinUp, Mag-Größen
-const weapons={
- "Havoc":{body:19,head:25,rate:10,spin:true,mag:{white:24,blue:28,purple:32}},
- "Flatline":{body:19,head:25,rate:10,spin:false,mag:{white:20,blue:25,purple:28}},
- "Hemlok":{body:20,head:28,rate:9,spin:false,mag:{white:18,blue:24,purple:27}},
- "R-301":{body:14,head:18,rate:13.5,spin:false,mag:{white:18,blue:20,purple:25}},
- "Nemesis":{body:17,head:22,rate:10.6,spin:false,mag:{white:20,blue:24,purple:28}},
- "Alternator":{body:18,head:22,rate:10,spin:false,mag:{white:19,blue:22,purple:27}},
- "Prowler":{body:16,head:20,rate:11,spin:false,mag:{white:20,blue:25,purple:35}},
- "R-99":{body:13,head:16,rate:18,spin:false,mag:{white:20,blue:23,purple:27}},
- "Volt":{body:16,head:19,rate:12,spin:false,mag:{white:19,blue:21,purple:26}},
- "C.A.R.":{body:14,head:17,rate:15,spin:false,mag:{white:20,blue:23,purple:27}},
- "Devotion":{body:16,head:20,rate:12,spin:true,mag:{white:36,blue:40,purple:44}},
- "L-STAR":{body:20,head:25,rate:10,spin:false,mag:{white:24,blue:27,purple:30}},
- "Spitfire":{body:21,head:26,rate:9,spin:false,mag:{white:35,blue:40,purple:55}},
- "Rampage":{body:30,head:38,rate:7,spin:false,mag:{white:28,blue:32,purple:40}},
- "G7 Scout":{body:35,head:56,rate:4.5,spin:false,mag:{white:10,blue:12,purple:15}},
- "30-30 Repeater":{body:43,head:69,rate:2.3,spin:false,mag:{white:6,blue:8,purple:10}},
- "Bocek":{body:55,head:120,rate:1,spin:false,mag:{white:1,blue:1,purple:1}},
- "Charge Rifle":{body:75,head:135,rate:0.5,spin:false,mag:{white:4,blue:5,purple:6}},
- "Longbow":{body:55,head:108,rate:1.3,spin:false,mag:{white:6,blue:8,purple:10}},
- "Sentinel":{body:70,head:126,rate:0.9,spin:false,mag:{white:4,blue:5,purple:6}},
- "Kraber":{body:150,head:210,rate:0.5,spin:false,mag:{white:4,blue:4,purple:4}},
- "RE-45":{body:14,head:18,rate:13,spin:false,mag:{white:16,blue:19,purple:24}},
- "P2020":{body:24,head:30,rate:7.0,spin:false,mag:{white:14,blue:16,purple:18}},
- "Akimbo P2020":{body:24,head:30,rate:14.0,spin:false,mag:{white:14,blue:16,purple:18}},
- "Wingman":{body:48,head:72,rate:2.6,spin:false,mag:{white:6,blue:8,purple:9}},
- "Triple Take":{body:69,head:111,rate:1.2,spin:false,mag:{white:5,blue:6,purple:7}},
- "EVA-8":{body:48,head:48,rate:2,spin:false,mag:{white:6,blue:8,purple:8}},
- "Mastiff":{body:90,head:90,rate:1.1,spin:false,mag:{white:4,blue:6,purple:6}},
- "Mozambique":{body:45,head:60,rate:2.2,spin:false,mag:{white:4,blue:6,purple:6}},
- "Akimbo Mozambique":{body:45,head:60,rate:2.6,spin:false,mag:{white:4,blue:6,purple:6}},
- "Peacekeeper":{body:99,head:135,rate:1.1,spin:false,mag:{white:5,blue:6,purple:6}}
+const weapons = {
+  "Havoc": { body: 19, head: 25, rate: 10, spin: true, mag: { base: 18, white: 24, blue: 28, purple: 32 } },
+  "Flatline": { body: 19, head: 25, rate: 10, spin: false, mag: { base: 20, white: 23, blue: 27, purple: 30 } },
+  "Hemlok": { body: 20, head: 28, rate: 9, spin: false, mag: { base: 18, white: 21, blue: 24, purple: 30 } },
+  "R-301": { body: 14, head: 18, rate: 13.5, spin: false, mag: { base: 21, white: 23, blue: 28, purple: 31 } },
+  "Nemesis": { body: 17, head: 22, rate: 10.6, spin: false, mag: { base: 20, white: 24, blue: 28, purple: 32 } },
+  "Alternator": { body: 18, head: 22, rate: 10, spin: false, mag: { base: 19, white: 23, blue: 26, purple: 28 } },
+  "Prowler": { body: 16, head: 20, rate: 11, spin: false, mag: { base: 20, white: 23, blue: 26, purple: 35 } },
+  "R-99": { body: 13, head: 16, rate: 18, spin: false, mag: { base: 17, white: 20, blue: 23, purple: 27 } },
+  "Volt": { body: 16, head: 19, rate: 12, spin: false, mag: { base: 19, white: 21, blue: 23, purple: 26 } },
+  "C.A.R.": { body: 14, head: 17, rate: 15, spin: false, mag: { base: 19, white: 22, blue: 24, purple: 27 } },
+  "Devotion": { body: 16, head: 20, rate: 12, spin: true, mag: { base: 36, white: 40, blue: 44, purple: 48 } },
+  "L-STAR": { body: 20, head: 25, rate: 10, spin: false, mag: { base: 24, white: 27, blue: 30, purple: 34 } },
+  "Spitfire": { body: 21, head: 26, rate: 9, spin: false, mag: { base: 35, white: 40, blue: 45, purple: 50 } },
+  "Rampage": { body: 30, head: 38, rate: 7, spin: false, mag: { base: 28, white: 28, blue: 32, purple: 40 } },
+  "G7 Scout": { body: 35, head: 56, rate: 4.5, spin: false, mag: { base: 10, white: 12, blue: 15, purple: 20 } },
+  "30-30 Repeater": { body: 43, head: 69, rate: 2.3, spin: false, mag: { base: 6, white: 8, blue: 10, purple: 12 } },
+  "Bocek": { body: 55, head: 120, rate: 1, spin: false, mag: { base: 1, white: 1, blue: 1, purple: 1 } },
+  "Charge Rifle": { body: 75, head: 135, rate: 0.5, spin: false, mag: { base: 4, white: 5, blue: 6, purple: 8 } },
+  "Longbow": { body: 55, head: 108, rate: 1.3, spin: false, mag: { base: 6, white: 8, blue: 10, purple: 12 } },
+  "Sentinel": { body: 70, head: 126, rate: 0.9, spin: false, mag: { base: 4, white: 5, blue: 6, purple: 7 } },
+  "Kraber": { body: 150, head: 210, rate: 0.5, spin: false, mag: { base: 4, white: 4, blue: 4, purple: 4 } },
+  "RE-45": { body: 14, head: 18, rate: 13, spin: false, mag: { base: 18, white: 21, blue: 24, purple: 27 } },
+  "P2020": { body: 24, head: 30, rate: 7, spin: false, mag: { base: 10, white: 12, blue: 14, purple: 16 } },
+  "Akimbo P2020": { body: 24, head: 30, rate: 14, spin: false, mag: { base: 10, white: 12, blue: 14, purple: 16 } },
+  "Wingman": { body: 48, head: 72, rate: 2.6, spin: false, mag: { base: 6, white: 8, blue: 9, purple: 11 } },
+  "Triple Take": { body: 69, head: 111, rate: 1.2, spin: false, mag: { base: 5, white: 6, blue: 7, purple: 9 } },
+  "EVA-8": { body: 48, head: 48, rate: 2, spin: false, mag: { base: 6, white: 8, blue: 8, purple: 8 } },
+  "Mastiff": { body: 90, head: 90, rate: 1.1, spin: false, mag: { base: 4, white: 6, blue: 6, purple: 6 } },
+  "Mozambique": { body: 45, head: 60, rate: 2.2, spin: false, mag: { base: 4, white: 6, blue: 6, purple: 6 } },
+  "Akimbo Mozambique": { body: 45, head: 60, rate: 2.6, spin: false, mag: { base: 4, white: 6, blue: 6, purple: 6 } },
+  "Peacekeeper": { body: 99, head: 135, rate: 1.1, spin: false, mag: { base: 5, white: 6, blue: 6, purple: 6 } }
 };
+
 
 const magColors={white:"#E0E0E0",blue:"#2196F3",purple:"#9C27B0"};
 
@@ -202,3 +203,4 @@ function calc(){
 
 </body>
 </html>
+
