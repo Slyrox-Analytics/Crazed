@@ -1,6 +1,6 @@
 /* ====== Hintergrund im Apex-Style ====== */
 body {
-    background: url('https://i.imgur.com/nQJrQ7y.jpeg') no-repeat center center fixed; /* Apex Hintergrund */
+    background: url('https://w0.peakpx.com/wallpaper/1013/1011/HD-wallpaper-apex-legends-hero-apex-legends.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #fff;
     font-family: Arial, Helvetica, sans-serif;
@@ -21,11 +21,6 @@ body::before {
 }
 
 h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-p {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -55,117 +50,4 @@ p {
 .card:hover {
     border-color: #ff1744;
     background-color: rgba(44,44,44,0.9);
-}
-
-/* ====== Weapon Comparison ====== */
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.weapon {
-    flex: 1 1 320px;
-    background: rgba(30,30,30,0.85);
-    padding: 15px;
-    border-radius: 8px;
-}
-
-label {
-    display: block;
-    margin: 8px 0 4px;
-}
-
-input, select {
-    width: 100%;
-    padding: 7px;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-button {
-    display: block;
-    padding: 10px;
-    width: 200px;
-    margin: 20px auto;
-    background: #e53935;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #ff1744;
-}
-
-.result {
-    margin-top: 15px;
-    background: rgba(44,44,44,0.9);
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.note {
-    font-size: 0.9em;
-    color: #ffb300;
-    margin-top: 5px;
-}
-
-.better {
-    color: #00e676;
-    font-weight: bold;
-}
-
-.worse {
-    color: #ff1744;
-    font-weight: bold;
-}
-
-/* ====== RP Rechner ====== */
-.rp-box {
-    background: rgba(30,30,30,0.85);
-    padding: 15px;
-    border-radius: 8px;
-    max-width: 400px;
-    margin: auto;
-}
-
-/* ====== Match Logger ====== */
-.logger-box {
-    background: rgba(30,30,30,0.85);
-    padding: 15px;
-    border-radius: 8px;
-    max-width: 400px;
-    margin: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-th, td {
-    border: 1px solid #333;
-    padding: 8px;
-    text-align: center;
-}
-
-th {
-    background-color: rgba(44,44,44,0.9);
-}
-
-td button {
-    background: #e53935;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-td button:hover {
-    background: #ff1744;
 }
