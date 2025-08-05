@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Weapon Comparison</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🔫 Apex Weapon Comparison</h1>
+<p>Vergleiche Waffen‑TTK, Schaden pro Mag und mehr.</p>
+
+<div class="container">
+ <div class="weapon"><h2>Waffe 1</h2>
+  <label>Waffe:</label>
+  <select id="w1" onchange="updateWeapon('1')"></select>
+
+  <label>Magazinfarbe:</label>
+  <select id="mag1" onchange="updateMag('1')">
+    <option value="white">White</option>
+    <option value="blue">Blue</option>
+    <option value="purple">Purple</option>
+  </select>
+
+  <label>Body Schaden:</label><input id="body1" type="number" readonly>
+  <label>Head Schaden:</label><input id="head1" type="number" readonly>
+  <label>Feuerrate (Schuss/s):</label><input id="rate1" type="number">
+  <label>Headshot‑Anteil (%):</label><input id="hs1" type="number" value="0">
+  <label>Trefferquote (%):</label><input id="acc1" type="number" value="100">
+  <label>Ziel‑HP:</label><input id="hp1" type="number" value="200">
+  <div class="result" id="out1">...</div>
+  <div class="note" id="note1"></div>
+ </div>
+
+ <div class="weapon"><h2>Waffe 2</h2>
+  <label>Waffe:</label>
+  <select id="w2" onchange="updateWeapon('2')"></select>
+
+  <label>Magazinfarbe:</label>
+  <select id="mag2" onchange="updateMag('2')">
+    <option value="white">White</option>
+    <option value="blue">Blue</option>
+    <option value="purple">Purple</option>
+  </select>
+
+  <label>Body Schaden:</label><input id="body2" type="number" readonly>
+  <label>Head Schaden:</label><input id="head2" type="number" readonly>
+  <label>Feuerrate (Schuss/s):</label><input id="rate2" type="number">
+  <label>Headshot‑Anteil (%):</label><input id="hs2" type="number" value="0">
+  <label>Trefferquote (%):</label><input id="acc2" type="number" value="100">
+  <label>Ziel‑HP:</label><input id="hp2" type="number" value="200">
+  <div class="result" id="out2">...</div>
+  <div class="note" id="note2"></div>
+ </div>
+</div>
+
+<button onclick="calc()">Berechnen</button>
+
+<script>
+// Waffen-Daten mit Body, Head, Rate, SpinUp, Mag-Größen
+const weapons={
+ "Havoc":{body:19,head:25,rate:10,spin:true,mag:{white:24,blue:28,purple:32}},
+ "Flatline":{body:19,head:25,rate:10,spin:false,mag:{white:20,blue:25,purple:28}},
+ "Hemlok":{body:20,head:28,rate:9,spin:false,mag:{white:18,blue:24,purple:27}},
+ "R-301":{body:14,head:18,rate:13.5,spin:false,mag:{white:18,blue:20,purple:25}},
+ "Nemesis":{body:17,head:22,rate:10.6,spin:false,mag:{white:20,blue:24,purple:28}},
+ "Alternator":{body:18,head:22,rate:10,spin:false,mag:{white:19,blue:22,purple:27}},
+ "Prowler":{body:16,head:20,rate:11,spin:false,mag:{white:20,blue:25,purple:35}},
+ "R-99":{body:13,head:16,rate:18,spin:false,mag:{white:20,blue:23,purple:27}},
+ "Volt":{body:16,head:19,rate:12,spin:false,mag:{white:19,blue:21,purple:26}},
+ "C.A.R.":{body:14,head:17,rate:15,spin:false,mag:{white:20,blue:23,purple:27}},
+ "Devotion":{body:16,head:20,rate:12,spin:true,mag:{white:36,blue:40,purple:44}},
+ "L-STAR":{body:20,head:25,rate:10,spin:false,mag:{white:24,blue:27,purple:30}},
+ "Spitfire":{body:21,head:26,rate:9,spin:false,mag:{white:35,blue:40,purple:55}},
+ "Rampage":{body:30,head:38,rate:7,spin:false,mag:{white:28,blue:32,purple:40}},
+ "G7 Scout":{body:35,head:56,rate:4.5,spin:false,mag:{white:10,blue:12,purple:15}},
+ "30-30 Repeater":{body:43,head:69,rate:2.3,spin:false,mag:{white:6,blue:8,purple:10}},
+ "Bocek":{body:55,head:120,rate:1,spin:false,mag:{white:1,blue:1,purple:1}},
+ "Charge Rifle":{body:75,head:135,rate:0.5,spin:false,mag:{white:4,blue:5,purple:6}},
+ "Longbow":{body:55,head:108,rate:1.3,spin:false,mag:{white:6,blue:8,purple:10}},
+ "Sentinel":{body:70,head:126,rate:0.9,spin:false,mag:{white:4,blue:5,purple:6}},
+ "Kraber":{body:150,head:210,rate:0.5,spin:false,mag:{white:4,blue:4,purple:4}},
+ "RE-45":{body:14,head:18,rate:13,spin:false,mag:{white:16,blue:19,purple:24}},
+ "P2020":{body:24,head:30,rate:7.0,spin:false,mag:{white:14,blue:16,purple:18}},
+ "Akimbo P2020":{body:24,head:30,rate:14.0,spin:false,mag:{white:14,blue:16,purple:18}},
+ "Wingman":{body:48,head:72,rate:2.6,spin:false,mag:{white:6,blue:8,purple:9}},
+ "Triple Take":{body:69,head:111,rate:1.2,spin:false,mag:{white:5,blue:6,purple:7}},
+ "EVA-8":{body:48,head:48,rate:2,spin:false,mag:{white:6,blue:8,purple:8}},
+ "Mastiff":{body:90,head:90,rate:1.1,spin:false,mag:{white:4,blue:6,purple:6}},
+ "Mozambique":{body:45,head:60,rate:2.2,spin:false,mag:{white:4,blue:6,purple:6}},
+ "Akimbo Mozambique":{body:45,head:60,rate:2.6,spin:false,mag:{white:4,blue:6,purple:6}},
+ "Peacekeeper":{body:99,head:135,rate:1.1,spin:false,mag:{white:5,blue:6,purple:6}}
+};
+
+const magColors={white:"#E0E0E0",blue:"#2196F3",purple:"#9C27B0"};
+
+window.onload = function(){
+ ['w1','w2'].forEach(id=>{
+   let sel=document.getElementById(id);
+   Object.keys(weapons).forEach(w=>{
+     let opt=document.createElement('option');
+     opt.value=w; opt.textContent=w;
+     sel.appendChild(opt);
+   });
+ });
+ updateWeapon('1');
+ updateWeapon('2');
+};
+
+function updateWeapon(num){
+ let w=document.getElementById('w'+num).value;
+ document.getElementById('body'+num).value=weapons[w].body;
+ document.getElementById('head'+num).value=weapons[w].head;
+ document.getElementById('rate'+num).value=weapons[w].rate;
+ updateMag(num);
+}
+
+function updateMag(num){
+ let w=document.getElementById('w'+num).value;
+ let magColor=document.getElementById('mag'+num).value;
+ let magSize=weapons[w].mag[magColor];
+ document.getElementById('note'+num).innerHTML = `<span style="color:${magColors[magColor]}">📦 Schüsse pro Mag: ${magSize}</span>`;
+}
+
+function calc(){
+ let results=[];
+ ['1','2'].forEach(i=>{
+  let w=document.getElementById('w'+i).value;
+  let magColor=document.getElementById('mag'+i).value;
+  let rate=+document.getElementById('rate'+i).value;
+  let hs=+document.getElementById('hs'+i).value/100;
+  let acc=+document.getElementById('acc'+i).value/100;
+  let hp=+document.getElementById('hp'+i).value;
+  let body=weapons[w].body, head=weapons[w].head;
+  let dmg=body*(1-hs)+head*hs;
+  let adjDmg=dmg*acc;
+  let ttk=(hp/(adjDmg*rate)).toFixed(2);
+  let shots=Math.ceil(hp/adjDmg);
+  let dps=(dmg*rate).toFixed(1);
+  let realDps=(adjDmg*rate).toFixed(1);
+  let magSize=weapons[w].mag[magColor];
+  let totalMagDamage = (magSize * adjDmg).toFixed(1);
+  let killsPossible = Math.floor((magSize * adjDmg) / hp);
+  let killCheck = killsPossible >= 1 
+      ? `<span style="color:lime;font-weight:bold">🟢 Magazin reicht für ${killsPossible} Kill${killsPossible>1?"s":""}</span>` 
+      : `<span style="color:red;font-weight:bold">🔴 Reload nötig für 1 Kill</span>`;
+
+  results.push({i,dmg,ttk,shots,dps,realDps,magSize,magColor,totalMagDamage,killCheck});
+ });
+
+ const faster = results[0].ttk < results[1].ttk ? 0 : 1;
+ results.forEach((r,idx)=>{
+  let colorClass=(idx==faster)?"better":"worse";
+  document.getElementById('out'+r.i).innerHTML=
+    `Effektiv dmg/Bullet: ${r.dmg.toFixed(1)}<br>`+
+    `Theoretischer DPS: ${r.dps}<br>`+
+    `Real-DPS: ${r.realDps}<br>`+
+    `<span style="color:${magColors[r.magColor]}">📦 Schüsse pro Mag: ${r.magSize}</span><br>`+
+    `💥 Schaden pro Mag: <strong>${r.totalMagDamage}</strong><br>`+
+    `${r.killCheck}<br>`+
+    `TTK: <strong class="${colorClass}">${r.ttk}s</strong><br>`+
+    `Schüsse bis Kill: ${r.shots}`;
+ });
+}
+</script>
+
+</body>
+</html>

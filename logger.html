@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Apex Match Logger</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>📝 Apex Match Logger</h1>
+<p>Logge deine Matches, um deine Performance im Überblick zu behalten.</p>
+
+<div class="logger-box">
+    <label>Datum:</label>
+    <input type="date" id="matchDate">
+
+    <label>Map:</label>
+    <input type="text" id="matchMap" placeholder="Map-Name">
+
+    <label>Platzierung:</label>
+    <input type="number" id="matchPlacement" placeholder="z. B. 3">
+
+    <label>Kills:</label>
+    <input type="number" id="matchKills" placeholder="z. B. 5">
+
+    <label>Assists:</label>
+    <input type="number" id="matchAssists" placeholder="z. B. 2">
+
+    <label>Schaden:</label>
+    <input type="number" id="matchDamage" placeholder="z. B. 1250">
+
+    <button onclick="addMatch()">Match hinzufügen</button>
+</div>
+
+<h2>📊 Gespeicherte Matches</h2>
+<table id="matchTable">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Map</th>
+            <th>Platz</th>
+            <th>Kills</th>
+            <th>Assists</th>
+            <th>Schaden</th>
+            <th>Löschen</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+function loadMatches() {
+    let matches = JSON.parse(localStorage.getItem("apexMatches")) || [];
+    let tableBody = document.querySelector("#matchTable tbody");
+    tableBody.innerHTML = "";
+
+    matches.forEach((match, index) => {
+        let row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${match.date}</td>
+            <td>${match.map}</td>
+            <td>${match.place}</td>
+            <td>${match.kills}</td>
+            <td>${match.assists}</td>
+            <td>${match.damage}</td>
+            <td><button onclick="deleteMatch(${index})">❌</button></td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+function addMatch() {
+    let date = document.getElementById("matchDate").value;
+    let map = document.getElementById("matchMap").value;
+    let place = document.getElementById("matchPlacement").value;
+    let kills = document.getElementById("matchKills").value;
+    let assists = document.getElementById("matchAssists").value;
+    let damage = document.getElementById("matchDamage").value;
+
+    if (!date || !map || !place) {
+        alert("Bitte mindestens Datum, Map und Platzierung eingeben!");
+        return;
+    }
+
+    let matches = JSON.parse(localStorage.getItem("apexMatches")) || [];
+    matches.push({ date, map, place, kills, assists, damage });
+    localStorage.setItem("apexMatches", JSON.stringify(matches));
+
+    loadMatches();
+}
+
+function deleteMatch(index) {
+    let matches = JSON.parse(localStorage.getItem("apexMatches")) || [];
+    matches.splice(index, 1);
+    localStorage.setItem("apexMatches", JSON.stringify(matches));
+    loadMatches();
+}
+
+window.onload = loadMatches;
+</script>
+
+</body>
+</html>

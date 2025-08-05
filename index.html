@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Apex Analytics Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<script>
+// Passwortschutz
+document.addEventListener("DOMContentLoaded", function() {
+    var pass = prompt("🔒 Passwort erforderlich:");
+    if (pass !== "Analytics1337") {
+        alert("Falsches Passwort! Zugriff verweigert.");
+        window.location.href = "https://google.com";
+    }
+});
+</script>
+</head>
+<body>
+
+<h1>📊 Apex Analytics Dashboard</h1>
+<p>Willkommen in deinem privaten Apex Command Center, Steve 😎</p>
+
+<div class="dashboard">
+    <a href="weapon.html" class="card">🔫 Weapon Comparison</a>
+    <a href="rp.html" class="card">📈 Apex S26 RP‑Rechner</a>
+    <a href="logger.html" class="card">📝 Match Logger</a>
+</div>
+
+</body>
+</html>

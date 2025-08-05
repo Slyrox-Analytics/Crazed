@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Apex S26 RP‑Rechner</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>📈 Apex S26 RP‑Rechner</h1>
+<p>Berechne deine RP‑Änderung basierend auf Platzierung und Kills.</p>
+
+<div class="rp-box">
+    <label>Entry‑Cost (negativ eingeben):</label>
+    <input type="number" id="entryCost" value="-65">
+
+    <label>Platzierung:</label>
+    <select id="placement">
+        <option value="1">1. Platz</option>
+        <option value="2">2. Platz</option>
+        <option value="3">3. Platz</option>
+        <option value="4">4. Platz</option>
+        <option value="5">5. Platz</option>
+        <option value="6">6. Platz</option>
+        <option value="7">7. Platz</option>
+        <option value="8">8. Platz</option>
+        <option value="9">9. Platz</option>
+        <option value="10">10. Platz</option>
+        <option value="11">11. Platz</option>
+        <option value="12">12. Platz</option>
+        <option value="13">13. Platz</option>
+        <option value="14">14. Platz</option>
+        <option value="15">15. Platz</option>
+        <option value="16">16. Platz</option>
+        <option value="17">17. Platz</option>
+        <option value="18">18. Platz</option>
+        <option value="19">19. Platz</option>
+        <option value="20">20. Platz</option>
+    </select>
+
+    <label>Kills / Assists:</label>
+    <input type="number" id="kills" value="0">
+
+    <button onclick="calcRP()">Berechnen</button>
+
+    <div class="result" id="resultRP">Ergebnis wird hier angezeigt</div>
+</div>
+
+<script>
+const placementPoints = {
+    1: 125,
+    2: 95,
+    3: 70,
+    4: 55,
+    5: 45,
+    6: 30,
+    7: 20,
+    8: 10,
+    9: 5,
+    10: 2,
+    11: 0,
+    12: 0,
+    13: 0,
+    14: 0,
+    15: 0,
+    16: 0,
+    17: 0,
+    18: 0,
+    19: 0,
+    20: 0
+};
+
+function calcRP() {
+    let entry = parseInt(document.getElementById("entryCost").value) || 0;
+    let place = parseInt(document.getElementById("placement").value);
+    let kills = parseInt(document.getElementById("kills").value) || 0;
+
+    let placePoints = placementPoints[place] || 0;
+    let killPoints = kills * 20; // pro Kill 20 RP
+
+    let total = entry + placePoints + killPoints;
+
+    document.getElementById("resultRP").innerHTML =
+        `<strong>Gesamt‑RP Änderung: ${total} RP</strong><br>` +
+        `Platzierungspunkte: ${placePoints} RP<br>` +
+        `Killpunkte: ${killPoints} RP<br>` +
+        `Entry‑Cost: ${entry} RP`;
+}
+</script>
+
+</body>
+</html>
