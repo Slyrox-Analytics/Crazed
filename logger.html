@@ -1,196 +1,139 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Apex Match Logger</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: url('Wraith PFP_V4_00000.jpg') no-repeat center center fixed;
-        background-size: cover;
-        color: #fff;
-    }
-
-    body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.5);
-        z-index: 0;
-    }
-
-    .container {
-        position: relative;
-        z-index: 1;
-        max-width: 800px;
-        margin: auto;
-        padding: 20px;
-    }
-
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    label {
-        display: block;
-        margin-top: 10px;
-        font-weight: bold;
-    }
-
-    input, select {
-        width: 100%;
-        padding: 8px;
-        margin-top: 3px;
-        border: none;
-        border-radius: 5px;
-        font-size: 14px;
-    }
-
-    button {
-        display: block;
-        width: 100%;
-        margin-top: 15px;
-        padding: 10px;
-        font-size: 16px;
-        font-weight: bold;
-        color: #fff;
-        background: #e63946;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background: #d62828;
-    }
-
-    .match-list {
-        margin-top: 30px;
-        background: rgba(0,0,0,0.7);
-        padding: 15px;
-        border-radius: 10px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-    }
-
-    th, td {
-        padding: 8px;
-        text-align: center;
-    }
-
-    th {
-        border-bottom: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .delete-btn {
-        color: #ff4444;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    .delete-btn:hover {
-        color: #ff0000;
-    }
+  body { font-family: Arial, sans-serif; background: #121212; color: #fff; padding: 20px; }
+  h1 { text-align: center; }
+  label { display: block; margin-top: 10px; }
+  input { width: 100%; padding: 8px; margin-top: 5px; border: none; border-radius: 5px; }
+  button { margin-top: 15px; padding: 10px; border: none; background: #e53935; color: white; cursor: pointer; border-radius: 5px; width: 100%; }
+  button:hover { background: #d32f2f; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { border: 1px solid #444; padding: 8px; text-align: center; }
+  th { background: #222; }
+  .stats { margin-top: 20px; background: #1e1e1e; padding: 15px; border-radius: 8px; }
+  canvas { background: #1e1e1e; border-radius: 8px; padding: 10px; }
 </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>📄 Apex Match Logger</h1>
+<h1>🔫 Apex Match Logger</h1>
 
-    <label>Datum:</label>
-    <input type="date" id="date">
+<label>Placement:</label>
+<input type="number" id="placement" min="1" max="20">
 
-    <label>Map:</label>
-    <input type="text" id="map" placeholder="Map-Name">
+<label>Kills:</label>
+<input type="number" id="kills" min="0">
 
-    <label>Platzierung:</label>
-    <input type="number" id="placement" placeholder="z. B. 3">
+<label>Tode:</label>
+<input type="number" id="deaths" min="0">
 
-    <label>Kills:</label>
-    <input type="number" id="kills" placeholder="z. B. 5">
+<label>Damage:</label>
+<input type="number" id="damage" min="0">
 
-    <label>Assists:</label>
-    <input type="number" id="assists" placeholder="z. B. 2">
+<label>RP Gewinn/Verlust:</label>
+<input type="number" id="rp" min="-500">
 
-    <label>Schaden:</label>
-    <input type="number" id="damage" placeholder="z. B. 1250">
+<button onclick="addMatch()">Match speichern</button>
 
-    <button onclick="addMatch()">Match hinzufügen</button>
-
-    <div class="match-list">
-        <h2>📊 Gespeicherte Matches</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Datum</th>
-                    <th>Map</th>
-                    <th>Platz</th>
-                    <th>Kills</th>
-                    <th>Assists</th>
-                    <th>Schaden</th>
-                    <th>Löschen</th>
-                </tr>
-            </thead>
-            <tbody id="matchTableBody"></tbody>
-        </table>
-    </div>
+<div class="stats">
+  <p><strong>Durchschnitt Kills:</strong> <span id="avgKills">0</span></p>
+  <p><strong>Durchschnitt Damage:</strong> <span id="avgDamage">0</span></p>
+  <p><strong>Gesamt RP:</strong> <span id="totalRP">0</span></p>
+  <p><strong>K/D‑Quote:</strong> <span id="kdRatio">0</span></p>
 </div>
 
+<canvas id="rpChart" height="100"></canvas>
+
+<table id="matchTable">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Placement</th>
+      <th>Kills</th>
+      <th>Tode</th>
+      <th>Damage</th>
+      <th>RP</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 let matches = JSON.parse(localStorage.getItem('apexMatches')) || [];
 
-function renderMatches() {
-    const tableBody = document.getElementById('matchTableBody');
-    tableBody.innerHTML = '';
-    matches.forEach((match, index) => {
-        tableBody.innerHTML += `
-            <tr>
-                <td>${match.date}</td>
-                <td>${match.map}</td>
-                <td>${match.placement}</td>
-                <td>${match.kills}</td>
-                <td>${match.assists}</td>
-                <td>${match.damage}</td>
-                <td class="delete-btn" onclick="deleteMatch(${index})">🗑</td>
-            </tr>
-        `;
-    });
+function updateStats() {
+  if (matches.length === 0) return;
+
+  let totalKills = matches.reduce((sum, m) => sum + m.kills, 0);
+  let totalDamage = matches.reduce((sum, m) => sum + m.damage, 0);
+  let totalRP = matches.reduce((sum, m) => sum + m.rp, 0);
+  let totalDeaths = matches.reduce((sum, m) => sum + m.deaths, 0);
+
+  let avgKills = totalKills / matches.length;
+  let avgDamage = totalDamage / matches.length;
+  let kdRatio = totalDeaths > 0 ? (totalKills / totalDeaths).toFixed(2) : totalKills.toFixed(2);
+
+  document.getElementById('avgKills').textContent = avgKills.toFixed(1);
+  document.getElementById('avgDamage').textContent = avgDamage.toFixed(0);
+  document.getElementById('totalRP').textContent = totalRP;
+  document.getElementById('kdRatio').textContent = kdRatio;
+}
+
+function renderTable() {
+  let tbody = document.querySelector("#matchTable tbody");
+  tbody.innerHTML = "";
+  matches.forEach((m, i) => {
+    let row = `<tr>
+      <td>${i + 1}</td>
+      <td>${m.placement}</td>
+      <td>${m.kills}</td>
+      <td>${m.deaths}</td>
+      <td>${m.damage}</td>
+      <td>${m.rp}</td>
+    </tr>`;
+    tbody.innerHTML += row;
+  });
+}
+
+function renderChart() {
+  let ctx = document.getElementById('rpChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: matches.map((_, i) => `Match ${i+1}`),
+      datasets: [{
+        label: 'RP-Verlauf',
+        data: matches.map(m => m.rp),
+        borderColor: '#e53935',
+        fill: false
+      }]
+    }
+  });
 }
 
 function addMatch() {
-    const date = document.getElementById('date').value;
-    const map = document.getElementById('map').value;
-    const placement = document.getElementById('placement').value;
-    const kills = document.getElementById('kills').value;
-    const assists = document.getElementById('assists').value;
-    const damage = document.getElementById('damage').value;
+  let placement = parseInt(document.getElementById('placement').value) || 0;
+  let kills = parseInt(document.getElementById('kills').value) || 0;
+  let deaths = parseInt(document.getElementById('deaths').value) || 0;
+  let damage = parseInt(document.getElementById('damage').value) || 0;
+  let rp = parseInt(document.getElementById('rp').value) || 0;
 
-    if (!date || !map || !placement || !kills || !assists || !damage) {
-        alert("Bitte alle Felder ausfüllen!");
-        return;
-    }
+  matches.push({ placement, kills, deaths, damage, rp });
+  localStorage.setItem('apexMatches', JSON.stringify(matches));
 
-    matches.push({ date, map, placement, kills, assists, damage });
-    localStorage.setItem('apexMatches', JSON.stringify(matches));
-    renderMatches();
+  updateStats();
+  renderTable();
+  renderChart();
 }
 
-function deleteMatch(index) {
-    matches.splice(index, 1);
-    localStorage.setItem('apexMatches', JSON.stringify(matches));
-    renderMatches();
-}
-
-renderMatches();
+updateStats();
+renderTable();
+renderChart();
 </script>
 
 </body>
