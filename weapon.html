@@ -18,9 +18,27 @@
  .note{font-size:0.9em;color:#ffb300;margin-top:5px;}
  .killok{color:#00e676;font-weight:bold;}
  .killno{color:#ff1744;font-weight:bold;}
+
+ /* Zurück-Button Style */
+ .back-btn {
+    display:inline-block;
+    margin-bottom:15px;
+    padding:8px 12px;
+    background:#e53935;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+    font-weight:bold;
+ }
+ .back-btn:hover {
+    background:#d32f2f;
+ }
 </style>
 </head>
 <body>
+
+<!-- Zurück zum Dashboard -->
+<a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
 
 <h1>🔫 Apex TTK‑Vergleich – Full Mag Edition</h1>
 
@@ -155,10 +173,8 @@ function calc(){
   let realDps=(adjDmg*rate).toFixed(1);
   let magSize=weapons[w].mag[magColor];
   
-  // Total Damage pro Mag
   let totalMagDamage = (magSize * adjDmg).toFixed(1);
 
-  // Kill Check
   let killsPossible = Math.floor((magSize * adjDmg) / hp);
   let killCheck = killsPossible >= 1 
       ? `<span class="killok">🟢 Magazin reicht für ${killsPossible} Kill${killsPossible>1?"s":""}</span>` 
