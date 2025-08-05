@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -21,6 +21,10 @@
 <body>
 
 <h1>🔫 Apex Match Logger</h1>
+
+<!-- Neues Datumseingabefeld -->
+<label>Datum:</label>
+<input type="date" id="date">
 
 <label>Placement:</label>
 <input type="number" id="placement" min="1" max="20">
@@ -52,6 +56,7 @@
   <thead>
     <tr>
       <th>#</th>
+      <th>Datum</th>
       <th>Placement</th>
       <th>Kills</th>
       <th>Tode</th>
@@ -90,6 +95,7 @@ function renderTable() {
   matches.forEach((m, i) => {
     let row = `<tr>
       <td>${i + 1}</td>
+      <td>${m.date || "-"}</td>
       <td>${m.placement}</td>
       <td>${m.kills}</td>
       <td>${m.deaths}</td>
@@ -105,7 +111,7 @@ function renderChart() {
   new Chart(ctx, {
     type: 'line',
     data: {
-      labels: matches.map((_, i) => `Match ${i+1}`),
+      labels: matches.map((m, i) => m.date ? `${m.date}` : `Match ${i+1}`),
       datasets: [{
         label: 'RP-Verlauf',
         data: matches.map(m => m.rp),
@@ -117,13 +123,14 @@ function renderChart() {
 }
 
 function addMatch() {
+  let date = document.getElementById('date').value;
   let placement = parseInt(document.getElementById('placement').value) || 0;
   let kills = parseInt(document.getElementById('kills').value) || 0;
   let deaths = parseInt(document.getElementById('deaths').value) || 0;
   let damage = parseInt(document.getElementById('damage').value) || 0;
   let rp = parseInt(document.getElementById('rp').value) || 0;
 
-  matches.push({ placement, kills, deaths, damage, rp });
+  matches.push({ date, placement, kills, deaths, damage, rp });
   localStorage.setItem('apexMatches', JSON.stringify(matches));
 
   updateStats();
