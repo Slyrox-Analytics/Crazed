@@ -4,182 +4,154 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Weapon Comparison</title>
+<link rel="stylesheet" href="style.css">
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: url('Wraith PFP_V4_00000.jpg') no-repeat center center fixed;
-        background-size: cover;
-        color: #fff;
-    }
-
-    /* Abdunkelung über dem Hintergrund */
-    body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 0;
-    }
-
-    .container {
-        position: relative;
-        z-index: 1;
-        max-width: 800px;
-        margin: auto;
-        padding: 20px;
-    }
-
-    h1 {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .weapon-box {
-        background: rgba(0, 0, 0, 0.7);
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-
-    label {
-        display: block;
-        margin-top: 8px;
-        font-weight: bold;
-    }
-
-    input, select {
-        width: 100%;
-        padding: 8px;
-        margin-top: 3px;
-        border: none;
-        border-radius: 5px;
-        font-size: 14px;
-    }
-
-    button {
-        display: block;
-        width: 100%;
-        margin-top: 15px;
-        padding: 10px;
-        font-size: 16px;
-        font-weight: bold;
-        color: #fff;
-        background: #e63946;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background: #d62828;
-    }
-
-    .result {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 10px;
-        margin-top: 10px;
-        border-radius: 5px;
-        font-size: 14px;
-        line-height: 1.4em;
-    }
-
-    .green {
-        color: #00ff88;
-        font-weight: bold;
-    }
-
-    .red {
-        color: #ff4444;
-        font-weight: bold;
-    }
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+.weapon-box {
+    background: rgba(0,0,0,0.7);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+label {
+    display: block;
+    margin-top: 8px;
+    font-weight: bold;
+}
+select, input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 3px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.result {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 5px;
+}
+.green { color: #00ff88; font-weight: bold; }
+.red { color: #ff4444; font-weight: bold; }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🔫 Weapon Comparison</h1>
+<h1>🔫 Weapon Comparison</h1>
 
-    <!-- Waffe 1 -->
-    <div class="weapon-box">
-        <h2>Waffe 1</h2>
-        <label>Waffe:</label>
-        <select id="weapon1"></select>
+<div class="weapon-box">
+    <h2>Waffe 1</h2>
+    <label>Waffe:</label>
+    <select id="weapon1" onchange="setWeaponStats(1)"></select>
 
-        <label>Magazinfarbe:</label>
-        <select id="mag1">
-            <option value="White">White</option>
-            <option value="Blue">Blue</option>
-            <option value="Purple">Purple</option>
-        </select>
+    <label>Magazin:</label>
+    <select id="mag1" onchange="updateTTK(1)">
+        <option value="White">White</option>
+        <option value="Blue">Blue</option>
+        <option value="Purple">Purple</option>
+    </select>
 
-        <label>Body Schaden:</label>
-        <input type="number" id="body1">
+    <label>Headshot-Anteil (%):</label>
+    <input type="number" id="hs1" value="0" onchange="updateTTK(1)">
 
-        <label>Head Schaden:</label>
-        <input type="number" id="head1">
+    <label>Trefferquote (%):</label>
+    <input type="number" id="acc1" value="100" onchange="updateTTK(1)">
 
-        <label>Feuerrate (Schuss/s):</label>
-        <input type="number" id="fire1">
+    <label>Ziel-HP:</label>
+    <input type="number" id="hp1" value="200" onchange="updateTTK(1)">
 
-        <label>Headshot-Anteil (%):</label>
-        <input type="number" id="hs1">
+    <div class="result" id="result1">Noch keine Berechnung</div>
+</div>
 
-        <label>Trefferquote (%):</label>
-        <input type="number" id="acc1">
+<div class="weapon-box">
+    <h2>Waffe 2</h2>
+    <label>Waffe:</label>
+    <select id="weapon2" onchange="setWeaponStats(2)"></select>
 
-        <label>Ziel-HP:</label>
-        <input type="number" id="hp1">
+    <label>Magazin:</label>
+    <select id="mag2" onchange="updateTTK(2)">
+        <option value="White">White</option>
+        <option value="Blue">Blue</option>
+        <option value="Purple">Purple</option>
+    </select>
 
-        <div class="result" id="result1">Noch keine Berechnung</div>
-    </div>
+    <label>Headshot-Anteil (%):</label>
+    <input type="number" id="hs2" value="0" onchange="updateTTK(2)">
 
-    <!-- Waffe 2 -->
-    <div class="weapon-box">
-        <h2>Waffe 2</h2>
-        <label>Waffe:</label>
-        <select id="weapon2"></select>
+    <label>Trefferquote (%):</label>
+    <input type="number" id="acc2" value="100" onchange="updateTTK(2)">
 
-        <label>Magazinfarbe:</label>
-        <select id="mag2">
-            <option value="White">White</option>
-            <option value="Blue">Blue</option>
-            <option value="Purple">Purple</option>
-        </select>
+    <label>Ziel-HP:</label>
+    <input type="number" id="hp2" value="200" onchange="updateTTK(2)">
 
-        <label>Body Schaden:</label>
-        <input type="number" id="body2">
-
-        <label>Head Schaden:</label>
-        <input type="number" id="head2">
-
-        <label>Feuerrate (Schuss/s):</label>
-        <input type="number" id="fire2">
-
-        <label>Headshot-Anteil (%):</label>
-        <input type="number" id="hs2">
-
-        <label>Trefferquote (%):</label>
-        <input type="number" id="acc2">
-
-        <label>Ziel-HP:</label>
-        <input type="number" id="hp2">
-
-        <div class="result" id="result2">Noch keine Berechnung</div>
-    </div>
-
-    <button onclick="berechnen()">Berechnen</button>
+    <div class="result" id="result2">Noch keine Berechnung</div>
+</div>
 </div>
 
 <script>
-function berechnen() {
-    // Dummy Berechnung für Demo
-    document.getElementById('result1').innerHTML = '<span class="green">Magazin reicht für 2 Kills</span><br>TTK: 1.05s';
-    document.getElementById('result2').innerHTML = '<span class="red">Magazin reicht nur für 1 Kill</span><br>TTK: 1.20s';
+const weapons = {
+    "Flatline": { body: 18, head: 36, fireRate: 10, mags: {White: 24, Blue: 28, Purple: 30}},
+    "R-301": { body: 14, head: 28, fireRate: 13.5, mags: {White: 18, Blue: 20, Purple: 25}},
+    "R-99": { body: 11, head: 16.5, fireRate: 18, mags: {White: 20, Blue: 24, Purple: 27}},
+    "Volt": { body: 15, head: 22.5, fireRate: 16, mags: {White: 19, Blue: 21, Purple: 26}},
+    "CAR SMG": { body: 13, head: 19.5, fireRate: 16.2, mags: {White: 20, Blue: 22, Purple: 27}},
+    "Wingman": { body: 45, head: 97, fireRate: 2.6, mags: {White: 6, Blue: 8, Purple: 9}},
+};
+
+function populateDropdowns() {
+    const selects = [document.getElementById("weapon1"), document.getElementById("weapon2")];
+    for (let sel of selects) {
+        sel.innerHTML = "";
+        for (let w in weapons) {
+            let opt = document.createElement("option");
+            opt.value = w;
+            opt.textContent = w;
+            sel.appendChild(opt);
+        }
+    }
 }
 
-// Hier könntest du deine echten Waffen-Daten einfügen wie vorher
+function setWeaponStats(num) {
+    const weaponName = document.getElementById(`weapon${num}`).value;
+    const data = weapons[weaponName];
+    document.getElementById(`mag${num}`).value = "White";
+    updateTTK(num);
+}
+
+function updateTTK(num) {
+    const weaponName = document.getElementById(`weapon${num}`).value;
+    const data = weapons[weaponName];
+    const hsPerc = parseFloat(document.getElementById(`hs${num}`).value) / 100;
+    const accPerc = parseFloat(document.getElementById(`acc${num}`).value) / 100;
+    const hp = parseInt(document.getElementById(`hp${num}`).value);
+    const magSize = data.mags[document.getElementById(`mag${num}`).value];
+
+    const avgDmg = (data.body * (1 - hsPerc) + data.head * hsPerc);
+    const adjDmg = avgDmg * accPerc;
+    const shotsToKill = Math.ceil(hp / adjDmg);
+    const ttk = ((shotsToKill - 1) / data.fireRate).toFixed(2);
+    const dmgPerMag = avgDmg * magSize;
+    const killsPerMag = Math.floor(dmgPerMag / hp);
+
+    let res = `Schaden pro Schuss: ${avgDmg.toFixed(1)}<br>` +
+              `TTK: ${ttk}s<br>` +
+              `DPS: ${(avgDmg * data.fireRate).toFixed(1)}<br>` +
+              `Schaden pro Mag: ${dmgPerMag.toFixed(0)}<br>` +
+              `Kills pro Mag: ${killsPerMag}`;
+
+    document.getElementById(`result${num}`).innerHTML = res;
+    document.getElementById(`result${num}`).className = "result " + (killsPerMag >= 1 ? "green" : "red");
+}
+
+populateDropdowns();
+setWeaponStats(1);
+setWeaponStats(2);
 </script>
 
 </body>
