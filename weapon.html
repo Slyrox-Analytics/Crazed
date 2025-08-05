@@ -18,26 +18,12 @@
  .note{font-size:0.9em;color:#ffb300;margin-top:5px;}
  .killok{color:#00e676;font-weight:bold;}
  .killno{color:#ff1744;font-weight:bold;}
-
- /* Zurück-Button Style */
- .back-btn {
-    display:inline-block;
-    margin-bottom:15px;
-    padding:8px 12px;
-    background:#e53935;
-    color:white;
-    text-decoration:none;
-    border-radius:5px;
-    font-weight:bold;
- }
- .back-btn:hover {
-    background:#d32f2f;
- }
+ .back-btn {display:inline-block;margin-bottom:15px;padding:8px 12px;background:#e53935;color:white;text-decoration:none;border-radius:5px;font-weight:bold;}
+ .back-btn:hover {background:#d32f2f;}
 </style>
 </head>
 <body>
 
-<!-- Zurück zum Dashboard -->
 <a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
 
 <h1>🔫 Apex TTK‑Vergleich – Full Mag Edition</h1>
@@ -47,9 +33,10 @@
   <label>Waffe:</label>
   <select id="w1" onchange="updateWeapon('1')"></select>
   
-  <label>Magazinfarbe:</label>
+  <label>Magazin:</label>
   <select id="mag1" onchange="updateMag('1')">
-    <option value="white">White</option>
+    <option value="base">Base</option>
+    <option value="white" selected>White</option>
     <option value="blue">Blue</option>
     <option value="purple">Purple</option>
   </select>
@@ -68,9 +55,10 @@
   <label>Waffe:</label>
   <select id="w2" onchange="updateWeapon('2')"></select>
   
-  <label>Magazinfarbe:</label>
+  <label>Magazin:</label>
   <select id="mag2" onchange="updateMag('2')">
-    <option value="white">White</option>
+    <option value="base">Base</option>
+    <option value="white" selected>White</option>
     <option value="blue">Blue</option>
     <option value="purple">Purple</option>
   </select>
@@ -89,43 +77,41 @@
 <button onclick="calc()">Berechnen</button>
 
 <script>
-// Waffen-Daten mit Body, Head, Rate, SpinUp, Mag-Größen
 const weapons = {
-  "Havoc": { body: 19, head: 25, rate: 10, spin: true, mag: { base: 18, white: 24, blue: 28, purple: 32 } },
-  "Flatline": { body: 19, head: 25, rate: 10, spin: false, mag: { base: 20, white: 23, blue: 27, purple: 30 } },
-  "Hemlok": { body: 20, head: 28, rate: 9, spin: false, mag: { base: 18, white: 21, blue: 24, purple: 30 } },
-  "R-301": { body: 14, head: 18, rate: 13.5, spin: false, mag: { base: 21, white: 23, blue: 28, purple: 31 } },
-  "Nemesis": { body: 17, head: 22, rate: 10.6, spin: false, mag: { base: 20, white: 24, blue: 28, purple: 32 } },
-  "Alternator": { body: 18, head: 22, rate: 10, spin: false, mag: { base: 19, white: 23, blue: 26, purple: 28 } },
-  "Prowler": { body: 16, head: 20, rate: 11, spin: false, mag: { base: 20, white: 23, blue: 26, purple: 35 } },
-  "R-99": { body: 13, head: 16, rate: 18, spin: false, mag: { base: 17, white: 20, blue: 23, purple: 27 } },
-  "Volt": { body: 16, head: 19, rate: 12, spin: false, mag: { base: 19, white: 21, blue: 23, purple: 26 } },
-  "C.A.R.": { body: 14, head: 17, rate: 15, spin: false, mag: { base: 19, white: 22, blue: 24, purple: 27 } },
-  "Devotion": { body: 16, head: 20, rate: 12, spin: true, mag: { base: 36, white: 40, blue: 44, purple: 48 } },
-  "L-STAR": { body: 20, head: 25, rate: 10, spin: false, mag: { base: 24, white: 27, blue: 30, purple: 34 } },
-  "Spitfire": { body: 21, head: 26, rate: 9, spin: false, mag: { base: 35, white: 40, blue: 45, purple: 50 } },
-  "Rampage": { body: 30, head: 38, rate: 7, spin: false, mag: { base: 28, white: 28, blue: 32, purple: 40 } },
-  "G7 Scout": { body: 35, head: 56, rate: 4.5, spin: false, mag: { base: 10, white: 12, blue: 15, purple: 20 } },
-  "30-30 Repeater": { body: 43, head: 69, rate: 2.3, spin: false, mag: { base: 6, white: 8, blue: 10, purple: 12 } },
-  "Bocek": { body: 55, head: 120, rate: 1, spin: false, mag: { base: 1, white: 1, blue: 1, purple: 1 } },
-  "Charge Rifle": { body: 75, head: 135, rate: 0.5, spin: false, mag: { base: 4, white: 5, blue: 6, purple: 8 } },
-  "Longbow": { body: 55, head: 108, rate: 1.3, spin: false, mag: { base: 6, white: 8, blue: 10, purple: 12 } },
-  "Sentinel": { body: 70, head: 126, rate: 0.9, spin: false, mag: { base: 4, white: 5, blue: 6, purple: 7 } },
-  "Kraber": { body: 150, head: 210, rate: 0.5, spin: false, mag: { base: 4, white: 4, blue: 4, purple: 4 } },
-  "RE-45": { body: 14, head: 18, rate: 13, spin: false, mag: { base: 18, white: 21, blue: 24, purple: 27 } },
-  "P2020": { body: 24, head: 30, rate: 7, spin: false, mag: { base: 10, white: 12, blue: 14, purple: 16 } },
-  "Akimbo P2020": { body: 24, head: 30, rate: 14, spin: false, mag: { base: 10, white: 12, blue: 14, purple: 16 } },
-  "Wingman": { body: 48, head: 72, rate: 2.6, spin: false, mag: { base: 6, white: 8, blue: 9, purple: 11 } },
-  "Triple Take": { body: 69, head: 111, rate: 1.2, spin: false, mag: { base: 5, white: 6, blue: 7, purple: 9 } },
-  "EVA-8": { body: 48, head: 48, rate: 2, spin: false, mag: { base: 6, white: 8, blue: 8, purple: 8 } },
-  "Mastiff": { body: 90, head: 90, rate: 1.1, spin: false, mag: { base: 4, white: 6, blue: 6, purple: 6 } },
-  "Mozambique": { body: 45, head: 60, rate: 2.2, spin: false, mag: { base: 4, white: 6, blue: 6, purple: 6 } },
-  "Akimbo Mozambique": { body: 45, head: 60, rate: 2.6, spin: false, mag: { base: 4, white: 6, blue: 6, purple: 6 } },
-  "Peacekeeper": { body: 99, head: 135, rate: 1.1, spin: false, mag: { base: 5, white: 6, blue: 6, purple: 6 } }
+ "Havoc":{body:19,head:25,rate:10,spin:true,mag:{base:18,white:24,blue:28,purple:32}},
+ "Flatline":{body:19,head:25,rate:10,spin:false,mag:{base:20,white:23,blue:27,purple:30}},
+ "Hemlok":{body:20,head:28,rate:9,spin:false,mag:{base:18,white:21,blue:24,purple:30}},
+ "R-301":{body:14,head:18,rate:13.5,spin:false,mag:{base:21,white:23,blue:28,purple:31}},
+ "Nemesis":{body:17,head:22,rate:10.6,spin:false,mag:{base:20,white:24,blue:28,purple:32}},
+ "Alternator":{body:18,head:22,rate:10,spin:false,mag:{base:19,white:23,blue:26,purple:28}},
+ "Prowler":{body:16,head:20,rate:11,spin:false,mag:{base:20,white:23,blue:26,purple:35}},
+ "R-99":{body:13,head:16,rate:18,spin:false,mag:{base:17,white:20,blue:23,purple:27}},
+ "Volt":{body:16,head:19,rate:12,spin:false,mag:{base:19,white:21,blue:23,purple:26}},
+ "C.A.R.":{body:14,head:17,rate:15,spin:false,mag:{base:19,white:22,blue:24,purple:27}},
+ "Devotion":{body:16,head:20,rate:12,spin:true,mag:{base:36,white:40,blue:44,purple:48}},
+ "L-STAR":{body:20,head:25,rate:10,spin:false,mag:{base:24,white:27,blue:30,purple:34}},
+ "Spitfire":{body:21,head:26,rate:9,spin:false,mag:{base:35,white:40,blue:45,purple:50}},
+ "Rampage":{body:30,head:38,rate:7,spin:false,mag:{base:28,white:28,blue:32,purple:40}},
+ "G7 Scout":{body:35,head:56,rate:4.5,spin:false,mag:{base:10,white:12,blue:15,purple:20}},
+ "30-30 Repeater":{body:43,head:69,rate:2.3,spin:false,mag:{base:6,white:8,blue:10,purple:12}},
+ "Bocek":{body:55,head:120,rate:1,spin:false,mag:{base:1,white:1,blue:1,purple:1}},
+ "Charge Rifle":{body:75,head:135,rate:0.5,spin:false,mag:{base:4,white:5,blue:6,purple:8}},
+ "Longbow":{body:55,head:108,rate:1.3,spin:false,mag:{base:6,white:8,blue:10,purple:12}},
+ "Sentinel":{body:70,head:126,rate:0.9,spin:false,mag:{base:4,white:5,blue:6,purple:7}},
+ "Kraber":{body:150,head:210,rate:0.5,spin:false,mag:{base:4,white:4,blue:4,purple:4}},
+ "RE-45":{body:14,head:18,rate:13,spin:false,mag:{base:18,white:21,blue:24,purple:27}},
+ "P2020":{body:24,head:30,rate:7,spin:false,mag:{base:10,white:12,blue:14,purple:16}},
+ "Akimbo P2020":{body:24,head:30,rate:14,spin:false,mag:{base:10,white:12,blue:14,purple:16}},
+ "Wingman":{body:48,head:72,rate:2.6,spin:false,mag:{base:6,white:8,blue:9,purple:11}},
+ "Triple Take":{body:69,head:111,rate:1.2,spin:false,mag:{base:5,white:6,blue:7,purple:9}},
+ "EVA-8":{body:48,head:48,rate:2,spin:false,mag:{base:6,white:8,blue:8,purple:8}},
+ "Mastiff":{body:90,head:90,rate:1.1,spin:false,mag:{base:4,white:6,blue:6,purple:6}},
+ "Mozambique":{body:45,head:60,rate:2.2,spin:false,mag:{base:4,white:6,blue:6,purple:6}},
+ "Akimbo Mozambique":{body:45,head:60,rate:2.6,spin:false,mag:{base:4,white:6,blue:6,purple:6}},
+ "Peacekeeper":{body:99,head:135,rate:1.1,spin:false,mag:{base:5,white:6,blue:6,purple:6}}
 };
 
-
-const magColors={white:"#E0E0E0",blue:"#2196F3",purple:"#9C27B0"};
+const magColors={base:"#FFFFFF",white:"#E0E0E0",blue:"#2196F3",purple:"#9C27B0"};
 
 window.onload = function(){
  ['w1','w2'].forEach(id=>{
@@ -152,8 +138,9 @@ function updateWeapon(num){
 function updateMag(num){
  let w=document.getElementById('w'+num).value;
  let magColor=document.getElementById('mag'+num).value;
+ let displayColor = magColors[magColor] || "#FFFFFF";
  let magSize=weapons[w].mag[magColor];
- document.getElementById('note'+num).innerHTML = `<span style="color:${magColors[magColor]}">📦 Schüsse pro Mag: ${magSize}</span>`;
+ document.getElementById('note'+num).innerHTML = `<span style="color:${displayColor}">📦 Schüsse pro Mag (${magColor.toUpperCase()}): ${magSize}</span>`;
 }
 
 function calc(){
@@ -173,17 +160,13 @@ function calc(){
   let dps=(dmg*rate).toFixed(1);
   let realDps=(adjDmg*rate).toFixed(1);
   let magSize=weapons[w].mag[magColor];
-  
   let totalMagDamage = (magSize * adjDmg).toFixed(1);
-
   let killsPossible = Math.floor((magSize * adjDmg) / hp);
   let killCheck = killsPossible >= 1 
       ? `<span class="killok">🟢 Magazin reicht für ${killsPossible} Kill${killsPossible>1?"s":""}</span>` 
       : `<span class="killno">🔴 Reload nötig für 1 Kill</span>`;
-
   results.push({i,dmg,adjDmg,ttk,shots,dps,realDps,magSize,magColor,killCheck,totalMagDamage});
  });
-
  const faster = results[0].ttk < results[1].ttk ? 0 : 1;
  ['0','1'].forEach(idx=>{
   let r=results[idx];
@@ -203,4 +186,3 @@ function calc(){
 
 </body>
 </html>
-
