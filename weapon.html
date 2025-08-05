@@ -19,6 +19,7 @@ body {
     border-radius: 10px;
     display: inline-block;
     margin-top: 20px;
+    max-width: 400px;
 }
 select, input {
     width: 90%;
@@ -36,7 +37,6 @@ select, input {
 }
 .green { color: #00ff00; font-weight: bold; }
 .red { color: #ff0000; font-weight: bold; }
-.yellow { color: #ffff00; font-weight: bold; }
 </style>
 </head>
 <body>
@@ -84,14 +84,37 @@ select, input {
 
 <script>
 const weapons = {
-    "Flatline": { body: 19, head: 25, rpm: 600, mags: {White:20, Blue:25, Purple:28} },
-    "Havoc": { body: 18, head: 24, rpm: 672, mags: {White:24, Blue:28, Purple:32} },
-    "R-301": { body: 14, head: 20, rpm: 810, mags: {White:18, Blue:20, Purple:25} },
-    "R-99": { body: 12, head: 18, rpm: 1080, mags: {White:20, Blue:22, Purple:27} },
-    "CAR": { body: 13, head: 20, rpm: 930, mags: {White:20, Blue:22, Purple:27} },
+    "Havoc": { body: 18, head: 27, rpm: 672, mags: {White:24, Blue:28, Purple:32} },
+    "Flatline": { body: 18, head: 36, rpm: 600, mags: {White:24, Blue:28, Purple:30} },
+    "Hemlok": { body: 20, head: 35, rpm: 384, mags: {White:18, Blue:24, Purple:27} },
+    "R-301": { body: 14, head: 25, rpm: 810, mags: {White:18, Blue:20, Purple:25} },
+    "Nemesis": { body: 17, head: 26, rpm: 600, mags: {White:20, Blue:24, Purple:28} },
+    "Alternator": { body: 16, head: 24, rpm: 600, mags: {White:19, Blue:22, Purple:27} },
+    "Prowler": { body: 15, head: 23, rpm: 672, mags: {White:20, Blue:25, Purple:35} },
+    "R-99": { body: 11, head: 17, rpm: 1080, mags: {White:20, Blue:24, Purple:27} },
     "Volt": { body: 15, head: 23, rpm: 720, mags: {White:19, Blue:21, Purple:26} },
-    "Alternator": { body: 16, head: 24, rpm: 600, mags: {White:19, Blue:21, Purple:25} },
-    "Prowler": { body: 15, head: 23, rpm: 672, mags: {White:35, Blue:35, Purple:35} }
+    "C.A.R": { body: 13, head: 20, rpm: 930, mags: {White:20, Blue:22, Purple:27} },
+    "Devotion": { body: 17, head: 26, rpm: 900, mags: {White:36, Blue:40, Purple:44} },
+    "L-STAR": { body: 18, head: 27, rpm: 600, mags: {White:24, Blue:26, Purple:28} },
+    "Spitfire": { body: 18, head: 27, rpm: 512, mags: {White:35, Blue:40, Purple:45} },
+    "Rampage": { body: 26, head: 39, rpm: 360, mags: {White:28, Blue:32, Purple:40} },
+    "G7 Scout": { body: 34, head: 54, rpm: 240, mags: {White:10, Blue:12, Purple:15} },
+    "30-30 Repeater": { body: 42, head: 74, rpm: 216, mags: {White:6, Blue:8, Purple:10} },
+    "Bocek": { body: 60, head: 105, rpm: 60, mags: {White:1, Blue:1, Purple:1} },
+    "Charge Rifle": { body: 75, head: 120, rpm: 45, mags: {White:4, Blue:4, Purple:4} },
+    "Longbow": { body: 55, head: 97, rpm: 78, mags: {White:6, Blue:8, Purple:10} },
+    "Sentinel": { body: 70, head: 140, rpm: 50, mags: {White:4, Blue:5, Purple:6} },
+    "Kraber": { body: 145, head: 435, rpm: 30, mags: {White:4, Blue:4, Purple:4} },
+    "RE-45 (Energy)": { body: 12, head: 18, rpm: 900, mags: {White:16, Blue:19, Purple:24} },
+    "P2020": { body: 18, head: 27, rpm: 420, mags: {White:14, Blue:16, Purple:18} },
+    "P2020 Akimbo": { body: 18, head: 27, rpm: 840, mags: {White:14, Blue:16, Purple:18} },
+    "Wingman": { body: 45, head: 97, rpm: 156, mags: {White:6, Blue:8, Purple:9} },
+    "Triple Take": { body: 69, head: 138, rpm: 72, mags: {White:5, Blue:6, Purple:7} },
+    "EVA-8": { body: 63, head: 99, rpm: 120, mags: {White:6, Blue:8, Purple:9} },
+    "Mastiff": { body: 104, head: 130, rpm: 66, mags: {White:4, Blue:5, Purple:6} },
+    "Mozambique": { body: 45, head: 66, rpm: 132, mags: {White:6, Blue:8, Purple:9} },
+    "Mozambique Akimbo": { body: 45, head: 66, rpm: 264, mags: {White:6, Blue:8, Purple:9} },
+    "Peacekeeper": { body: 110, head: 165, rpm: 60, mags: {White:5, Blue:6, Purple:7} }
 };
 
 function populateDropdowns() {
@@ -112,38 +135,26 @@ function populateDropdowns() {
 }
 
 function setWeaponStats(num) {
-    const weapon = document.getElementById(`weapon${num}`).value;
-    const mags = weapons[weapon].mags;
     document.getElementById(`mag${num}`).value = "White";
     updateAll();
 }
 
 function calculate(weaponName, magColor, hsPercent, accPercent, hp) {
     const w = weapons[weaponName];
-    const body = w.body;
-    const head = w.head;
-    const rpm = w.rpm;
+    const dmgPerShot = (w.body * (1 - (hsPercent / 100)) + w.head * (hsPercent / 100)) * (accPercent / 100);
+    const shotsPerKill = Math.ceil(hp / dmgPerShot);
+    const ttk = (shotsPerKill - 1) / (w.rpm / 60);
+    const dps = dmgPerShot * (w.rpm / 60);
     const magSize = w.mags[magColor];
-
-    const hsMulti = hsPercent / 100;
-    const accMulti = accPercent / 100;
-
-    const dmgPerShot = (body * (1 - hsMulti) + head * hsMulti);
-    const realDmgPerShot = dmgPerShot * accMulti;
-    const dps = realDmgPerShot * (rpm / 60);
-    const ttk = (hp / realDmgPerShot) / (rpm / 60);
-    const shotsPerKill = Math.ceil(hp / realDmgPerShot);
-    const shotsPerMag = magSize;
-    const dmgPerMag = shotsPerMag * realDmgPerShot;
+    const dmgPerMag = dmgPerShot * magSize;
     const killsPerMag = Math.floor(dmgPerMag / hp);
-
     return {
-        dmgPerShot: realDmgPerShot.toFixed(1),
+        dmgPerShot: dmgPerShot.toFixed(1),
         ttk: ttk.toFixed(2),
         dps: dps.toFixed(1),
         dmgPerMag: dmgPerMag.toFixed(0),
         killsPerMag: killsPerMag,
-        shotsPerMag: shotsPerMag
+        shotsPerMag: magSize
     };
 }
 
@@ -154,10 +165,10 @@ function updateAll() {
         const hs = parseFloat(document.getElementById(`hs${i}`).value) || 0;
         const acc = parseFloat(document.getElementById(`acc${i}`).value) || 100;
         const hp = parseFloat(document.getElementById(`hp${i}`).value) || 200;
-
         const res = calculate(weapon, mag, hs, acc, hp);
         document.getElementById(`result${i}`).innerHTML = 
-            `<span class="green">Schaden pro Schuss: ${res.dmgPerShot}</span><br>
+            `<span class="${res.killsPerMag >= 1 ? 'green' : 'red'}">
+             Schaden pro Schuss: ${res.dmgPerShot}</span><br>
              TTK: ${res.ttk}s<br>
              DPS: ${res.dps}<br>
              Schaden pro Mag: ${res.dmgPerMag}<br>
