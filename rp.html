@@ -3,150 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apex S26 RP-Rechner</title>
-<link rel="stylesheet" href="style.css">
-
+<title>Apex RP Rechner - Season 26</title>
 <style>
-/* Hintergrund mit deinem Wraith Bild */
-body {
-    background: url('Wraith PFP_V4_00000.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 20px;
-}
-
-/* Dunkler Overlay für Lesbarkeit */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.65);
-    z-index: -1;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Eingaben */
-label {
-    display: block;
-    margin: 10px 0 5px;
-}
-
-input, select, button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-}
-
-button {
-    background-color: #ff1744;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #ff4569;
-}
-
-/* Ergebnisbox */
-.result {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 1.2em;
-    text-align: center;
-    font-weight: bold;
-}
-.result.plus {
-    background-color: rgba(46, 125, 50, 0.9); /* Grün */
-}
-.result.minus {
-    background-color: rgba(198, 40, 40, 0.9); /* Rot */
-}
+  body { font-family: Arial, sans-serif; padding: 20px; background: #121212; color: #fff; }
+  h1 { font-size: 1.4em; text-align: center; margin-bottom: 20px; }
+  label { display: block; margin-top: 15px; font-weight: bold; }
+  input, select { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: none; font-size: 1em; }
+  .result { margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center; font-size: 1.2em; }
+  .plus { background: #2e7d32; }
+  .minus { background: #c62828; }
 </style>
 </head>
 <body>
 
-<h1>🔫 Apex S26 RP-Rechner</h1>
+<h1>🔫 Apex Legends RP Rechner<br>Season 26</h1>
 
 <label for="placement">Placement (1-20):</label>
-<input type="number" id="placement" min="1" max="20" value="10">
+<input type="number" id="placement" min="1" max="20" value="6">
 
 <label for="kills">Kills:</label>
-<input type="number" id="kills" min="0" value="0">
+<input type="number" id="kills" min="0" max="20" value="3">
 
 <label for="bonus">Challenger Bonus:</label>
 <select id="bonus">
-    <option value="0">Kein Bonus</option>
-    <option value="0.15">+15% (1 Tier höher)</option>
-    <option value="0.25">+25% (2 Tiers höher)</option>
-    <option value="0.35">+35% (3 Tiers höher)</option>
-    <option value="0.50">+50% (4+ Tiers höher)</option>
+  <option value="0">Kein Bonus</option>
+  <option value="0.15">+15% (1 tier höher)</option>
+  <option value="0.25">+25% (2 tiers höher)</option>
+  <option value="0.35">+35% (3 tiers höher)</option>
+  <option value="0.5">+50% (4+ tiers höher)</option>
 </select>
 
 <label for="entry">Entry Cost:</label>
 <input type="number" id="entry" value="65">
 
-<button onclick="calculateRP()">Berechnen</button>
-
-<div id="output" class="result"></div>
+<div class="result" id="output">Bitte Werte eingeben...</div>
 
 <script>
-function calculateRP() {
+function calcRP(placement, kills, bonusFactor, entryCost) {
+    let killValue, placementPoints;
+    if (placement === 1) { killValue = 20; placementPoints = 125; }
+    else if (placement === 2) { killValue = 18; placementPoints = 100; }
+    else if (placement === 3) { killValue = 16; placementPoints = 75; }
+    else if (placement === 4) { killValue = 14; placementPoints = 60; }
+    else if (placement === 5) { killValue = 12; placementPoints = 50; }
+    else if (placement === 6) { killValue = 10; placementPoints = 40; }
+    else if (placement === 7) { killValue = 10; placementPoints = 35; }
+    else if (placement === 8) { killValue = 10; placementPoints = 30; }
+    else if (placement === 9) { killValue = 8; placementPoints = 25; }
+    else if (placement === 10) { killValue = 8; placementPoints = 20; }
+    else if (placement >= 11 && placement <= 13) { killValue = 6; placementPoints = 15; }
+    else if (placement >= 14 && placement <= 15) { killValue = 6; placementPoints = 10; }
+    else { killValue = 4; placementPoints = 5; }
+
+    let killPoints = kills * killValue * (1 + bonusFactor);
+    let total = killPoints + placementPoints - entryCost;
+
+    return { killValue, placementPoints, killPoints, total };
+}
+
+function update() {
     let placement = parseInt(document.getElementById('placement').value);
     let kills = parseInt(document.getElementById('kills').value);
-    let bonus = parseFloat(document.getElementById('bonus').value);
+    let bonusFactor = parseFloat(document.getElementById('bonus').value);
     let entry = parseInt(document.getElementById('entry').value);
 
-    if (isNaN(placement) || placement < 1 || placement > 20) return alert("Placement 1-20 eingeben!");
-    if (isNaN(kills) || kills < 0) return alert("Kills eingeben!");
-    if (isNaN(entry)) return alert("Entry Cost eingeben!");
-
-    // Killwerte nach Platzierung (S26 Werte)
-    let killValues = {
-        1: 20, 2: 18, 3: 16, 4: 14, 5: 12, 6: 10, 7: 10, 8: 10, 9: 8, 10: 8,
-        11: 6, 12: 6, 13: 6, 14: 6, 15: 6, 16: 4, 17: 4, 18: 4, 19: 4, 20: 4
-    };
-
-    let killValue = killValues[placement] || 0;
-    let killPoints = kills * killValue;
-
-    // Challenger Bonus auf Killpunkte anwenden
-    killPoints += killPoints * bonus;
-
-    // Placement Punkte (vereinfacht aus Patchnotes)
-    let placementPoints = 0;
-    if (placement === 1) placementPoints = 125;
-    else if (placement === 2) placementPoints = 100;
-    else if (placement === 3) placementPoints = 75;
-    else if (placement === 4 || placement === 5) placementPoints = 40;
-    else if (placement >= 6 && placement <= 10) placementPoints = 20;
-    else placementPoints = 0;
-
-    let totalRP = (placementPoints + killPoints) - entry;
-
+    let res = calcRP(placement, kills, bonusFactor, entry);
     let output = document.getElementById('output');
-    output.innerHTML = `
-        Killwert: ${killValue} RP<br>
-        Killpunkte: ${killPoints.toFixed(1)} RP<br>
-        Placementpunkte: ${placementPoints} RP<br>
-        Entry-Cost: -${entry} RP<br>
-        <strong>Netto RP: ${totalRP.toFixed(1)}</strong>
-    `;
-    output.className = "result " + (totalRP >= 0 ? "plus" : "minus");
+
+    output.innerHTML = `Killwert: ${res.killValue} RP<br>` +
+                       `Killpunkte: ${res.killPoints.toFixed(1)} RP<br>` +
+                       `Placementpunkte: ${res.placementPoints} RP<br>` +
+                       `<strong>Netto RP: ${res.total.toFixed(1)}</strong>`;
+    output.className = 'result ' + (res.total >= 0 ? 'plus' : 'minus');
 }
+
+document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', update));
+update();
 </script>
 
 </body>
