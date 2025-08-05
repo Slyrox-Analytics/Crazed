@@ -4,178 +4,169 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Weapon Comparison</title>
-<link rel="stylesheet" href="style.css">
 <style>
+body {
+    font-family: Arial, sans-serif;
+    background: url('Wraith PFP_V4_00000.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    margin: 0;
+}
 .container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-}
-.weapon-box {
     background: rgba(0,0,0,0.7);
-    padding: 15px;
+    padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20px;
-}
-label {
-    display: block;
-    margin-top: 8px;
-    font-weight: bold;
+    display: inline-block;
+    margin-top: 20px;
 }
 select, input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 3px;
+    width: 90%;
+    padding: 5px;
+    margin: 5px 0;
     border: none;
     border-radius: 5px;
-    font-size: 14px;
 }
 .result {
-    margin-top: 10px;
+    background: black;
     padding: 10px;
-    background: rgba(255,255,255,0.1);
     border-radius: 5px;
+    text-align: left;
+    margin-top: 10px;
 }
-.green { color: #00ff88; font-weight: bold; }
-.red { color: #ff4444; font-weight: bold; }
+.green { color: #00ff00; font-weight: bold; }
+.red { color: #ff0000; font-weight: bold; }
+.yellow { color: #ffff00; font-weight: bold; }
 </style>
 </head>
 <body>
 
-<div class="container">
 <h1>🔫 Weapon Comparison</h1>
 
-<div class="weapon-box">
+<div class="container">
     <h2>Waffe 1</h2>
-    <label>Waffe:</label>
     <select id="weapon1" onchange="setWeaponStats(1)"></select>
-
     <label>Magazin:</label>
-    <select id="mag1" onchange="updateTTK(1)">
+    <select id="mag1" onchange="updateAll()">
         <option value="White">White</option>
         <option value="Blue">Blue</option>
         <option value="Purple">Purple</option>
     </select>
-
     <label>Headshot-Anteil (%):</label>
-    <input type="number" id="hs1" value="0" onchange="updateTTK(1)">
-
+    <input type="number" id="hs1" value="0">
     <label>Trefferquote (%):</label>
-    <input type="number" id="acc1" value="100" onchange="updateTTK(1)">
-
+    <input type="number" id="acc1" value="100">
     <label>Ziel-HP:</label>
-    <input type="number" id="hp1" value="200" onchange="updateTTK(1)">
-
-    <div class="result" id="result1">Noch keine Berechnung</div>
+    <input type="number" id="hp1" value="200">
+    <div id="result1" class="result"></div>
 </div>
 
-<div class="weapon-box">
+<div class="container">
     <h2>Waffe 2</h2>
-    <label>Waffe:</label>
     <select id="weapon2" onchange="setWeaponStats(2)"></select>
-
     <label>Magazin:</label>
-    <select id="mag2" onchange="updateTTK(2)">
+    <select id="mag2" onchange="updateAll()">
         <option value="White">White</option>
         <option value="Blue">Blue</option>
         <option value="Purple">Purple</option>
     </select>
-
     <label>Headshot-Anteil (%):</label>
-    <input type="number" id="hs2" value="0" onchange="updateTTK(2)">
-
+    <input type="number" id="hs2" value="0">
     <label>Trefferquote (%):</label>
-    <input type="number" id="acc2" value="100" onchange="updateTTK(2)">
-
+    <input type="number" id="acc2" value="100">
     <label>Ziel-HP:</label>
-    <input type="number" id="hp2" value="200" onchange="updateTTK(2)">
+    <input type="number" id="hp2" value="200">
+    <div id="result2" class="result"></div>
+</div>
 
-    <div class="result" id="result2">Noch keine Berechnung</div>
-</div>
-</div>
+<br><br>
+<button onclick="updateAll()">Berechnen</button>
 
 <script>
 const weapons = {
-    "Havoc": { body: 18, head: 27, fireRate: 10, mags: {White: 24, Blue: 28, Purple: 32}},
-    "Flatline": { body: 18, head: 36, fireRate: 10, mags: {White: 24, Blue: 28, Purple: 30}},
-    "Hemlok": { body: 20, head: 35, fireRate: 6.4, mags: {White: 18, Blue: 24, Purple: 27}},
-    "R-301": { body: 14, head: 25, fireRate: 13.5, mags: {White: 18, Blue: 20, Purple: 25}},
-    "Nemesis": { body: 17, head: 26, fireRate: 7, mags: {White: 20, Blue: 24, Purple: 28}},
-    "Alternator": { body: 16, head: 24, fireRate: 11, mags: {White: 19, Blue: 22, Purple: 27}},
-    "Prowler": { body: 15, head: 23, fireRate: 9, mags: {White: 20, Blue: 25, Purple: 35}},
-    "R-99": { body: 11, head: 17, fireRate: 18, mags: {White: 20, Blue: 24, Purple: 27}},
-    "Volt": { body: 15, head: 23, fireRate: 16, mags: {White: 19, Blue: 21, Purple: 26}},
-    "C.A.R": { body: 13, head: 20, fireRate: 16.2, mags: {White: 20, Blue: 22, Purple: 27}},
-    "Devotion": { body: 17, head: 26, fireRate: 15, mags: {White: 36, Blue: 40, Purple: 44}},
-    "L-STAR": { body: 18, head: 27, fireRate: 10, mags: {White: 24, Blue: 26, Purple: 28}},
-    "Spitfire": { body: 18, head: 27, fireRate: 8, mags: {White: 35, Blue: 40, Purple: 45}},
-    "Rampage": { body: 26, head: 39, fireRate: 6, mags: {White: 28, Blue: 32, Purple: 40}},
-    "G7 Scout": { body: 34, head: 54, fireRate: 4, mags: {White: 10, Blue: 12, Purple: 15}},
-    "30-30 Repeater": { body: 42, head: 74, fireRate: 3.6, mags: {White: 6, Blue: 8, Purple: 10}},
-    "Bocek": { body: 60, head: 105, fireRate: 1, mags: {White: 1, Blue: 1, Purple: 1}},
-    "Charge Rifle": { body: 75, head: 120, fireRate: 1, mags: {White: 4, Blue: 4, Purple: 4}},
-    "Longbow": { body: 55, head: 97, fireRate: 1.3, mags: {White: 6, Blue: 8, Purple: 10}},
-    "Sentinel": { body: 70, head: 140, fireRate: 1, mags: {White: 4, Blue: 5, Purple: 6}},
-    "Kraber": { body: 145, head: 435, fireRate: 0.5, mags: {White: 4, Blue: 4, Purple: 4}},
-    "RE-45 (Energy)": { body: 12, head: 18, fireRate: 15, mags: {White: 16, Blue: 19, Purple: 24}},
-    "P2020": { body: 18, head: 27, fireRate: 7, mags: {White: 14, Blue: 16, Purple: 18}},
-    "P2020 Akimbo": { body: 18, head: 27, fireRate: 14, mags: {White: 14, Blue: 16, Purple: 18}},
-    "Wingman": { body: 45, head: 97, fireRate: 2.6, mags: {White: 6, Blue: 8, Purple: 9}},
-    "Triple Take": { body: 69, head: 138, fireRate: 1.2, mags: {White: 5, Blue: 6, Purple: 7}},
-    "EVA-8": { body: 63, head: 99, fireRate: 2, mags: {White: 6, Blue: 8, Purple: 9}},
-    "Mastiff": { body: 104, head: 130, fireRate: 1.1, mags: {White: 4, Blue: 5, Purple: 6}},
-    "Mozambique": { body: 45, head: 66, fireRate: 2.3, mags: {White: 6, Blue: 8, Purple: 9}},
-    "Mozambique Akimbo": { body: 45, head: 66, fireRate: 4.6, mags: {White: 6, Blue: 8, Purple: 9}},
-    "Peacekeeper": { body: 110, head: 165, fireRate: 1, mags: {White: 5, Blue: 6, Purple: 7}}
+    "Flatline": { body: 19, head: 25, rpm: 600, mags: {White:20, Blue:25, Purple:28} },
+    "Havoc": { body: 18, head: 24, rpm: 672, mags: {White:24, Blue:28, Purple:32} },
+    "R-301": { body: 14, head: 20, rpm: 810, mags: {White:18, Blue:20, Purple:25} },
+    "R-99": { body: 12, head: 18, rpm: 1080, mags: {White:20, Blue:22, Purple:27} },
+    "CAR": { body: 13, head: 20, rpm: 930, mags: {White:20, Blue:22, Purple:27} },
+    "Volt": { body: 15, head: 23, rpm: 720, mags: {White:19, Blue:21, Purple:26} },
+    "Alternator": { body: 16, head: 24, rpm: 600, mags: {White:19, Blue:21, Purple:25} },
+    "Prowler": { body: 15, head: 23, rpm: 672, mags: {White:35, Blue:35, Purple:35} }
 };
 
 function populateDropdowns() {
-    const selects = [document.getElementById("weapon1"), document.getElementById("weapon2")];
-    for (let sel of selects) {
-        sel.innerHTML = "";
-        for (let w in weapons) {
-            let opt = document.createElement("option");
-            opt.value = w;
-            opt.textContent = w;
-            sel.appendChild(opt);
-        }
+    const w1 = document.getElementById("weapon1");
+    const w2 = document.getElementById("weapon2");
+    for (let name in weapons) {
+        let opt1 = document.createElement("option");
+        let opt2 = document.createElement("option");
+        opt1.value = opt2.value = name;
+        opt1.text = opt2.text = name;
+        w1.add(opt1);
+        w2.add(opt2);
     }
+    w1.selectedIndex = 0;
+    w2.selectedIndex = 1;
+    setWeaponStats(1);
+    setWeaponStats(2);
 }
 
 function setWeaponStats(num) {
+    const weapon = document.getElementById(`weapon${num}`).value;
+    const mags = weapons[weapon].mags;
     document.getElementById(`mag${num}`).value = "White";
-    updateTTK(num);
+    updateAll();
 }
 
-function updateTTK(num) {
-    const weaponName = document.getElementById(`weapon${num}`).value;
-    const data = weapons[weaponName];
-    const hsPerc = parseFloat(document.getElementById(`hs${num}`).value) / 100;
-    const accPerc = parseFloat(document.getElementById(`acc${num}`).value) / 100;
-    const hp = parseInt(document.getElementById(`hp${num}`).value);
-    const magSize = data.mags[document.getElementById(`mag${num}`).value];
+function calculate(weaponName, magColor, hsPercent, accPercent, hp) {
+    const w = weapons[weaponName];
+    const body = w.body;
+    const head = w.head;
+    const rpm = w.rpm;
+    const magSize = w.mags[magColor];
 
-    const avgDmg = (data.body * (1 - hsPerc) + data.head * hsPerc);
-    const adjDmg = avgDmg * accPerc;
-    const shotsToKill = Math.ceil(hp / adjDmg);
-    const ttk = ((shotsToKill - 1) / data.fireRate).toFixed(2);
-    const dmgPerMag = avgDmg * magSize;
+    const hsMulti = hsPercent / 100;
+    const accMulti = accPercent / 100;
+
+    const dmgPerShot = (body * (1 - hsMulti) + head * hsMulti);
+    const realDmgPerShot = dmgPerShot * accMulti;
+    const dps = realDmgPerShot * (rpm / 60);
+    const ttk = (hp / realDmgPerShot) / (rpm / 60);
+    const shotsPerKill = Math.ceil(hp / realDmgPerShot);
+    const shotsPerMag = magSize;
+    const dmgPerMag = shotsPerMag * realDmgPerShot;
     const killsPerMag = Math.floor(dmgPerMag / hp);
 
-    let res = `Schaden pro Schuss: ${avgDmg.toFixed(1)}<br>` +
-              `TTK: ${ttk}s<br>` +
-              `DPS: ${(avgDmg * data.fireRate).toFixed(1)}<br>` +
-              `Schaden pro Mag: ${dmgPerMag.toFixed(0)}<br>` +
-              `Kills pro Mag: ${killsPerMag}`;
+    return {
+        dmgPerShot: realDmgPerShot.toFixed(1),
+        ttk: ttk.toFixed(2),
+        dps: dps.toFixed(1),
+        dmgPerMag: dmgPerMag.toFixed(0),
+        killsPerMag: killsPerMag,
+        shotsPerMag: shotsPerMag
+    };
+}
 
-    document.getElementById(`result${num}`).innerHTML = res;
-    document.getElementById(`result${num}`).className = "result " + (killsPerMag >= 1 ? "green" : "red");
+function updateAll() {
+    for (let i = 1; i <= 2; i++) {
+        const weapon = document.getElementById(`weapon${i}`).value;
+        const mag = document.getElementById(`mag${i}`).value;
+        const hs = parseFloat(document.getElementById(`hs${i}`).value) || 0;
+        const acc = parseFloat(document.getElementById(`acc${i}`).value) || 100;
+        const hp = parseFloat(document.getElementById(`hp${i}`).value) || 200;
+
+        const res = calculate(weapon, mag, hs, acc, hp);
+        document.getElementById(`result${i}`).innerHTML = 
+            `<span class="green">Schaden pro Schuss: ${res.dmgPerShot}</span><br>
+             TTK: ${res.ttk}s<br>
+             DPS: ${res.dps}<br>
+             Schaden pro Mag: ${res.dmgPerMag}<br>
+             Kills pro Mag: ${res.killsPerMag}<br>
+             Schüsse pro Mag: ${res.shotsPerMag}`;
+    }
 }
 
 populateDropdowns();
-setWeaponStats(1);
-setWeaponStats(2);
 </script>
-
 </body>
 </html>
