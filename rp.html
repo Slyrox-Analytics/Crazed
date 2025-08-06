@@ -51,12 +51,31 @@
   <option value="0.5">+50% (4+ tiers höher)</option>
 </select>
 
+<label for="rank">Rangbereich:</label>
+<select id="rank" onchange="update()">
+  <option value="Bronze">Bronze</option>
+  <option value="Silver">Silver</option>
+  <option value="Gold">Gold</option>
+  <option value="Platinum">Platinum</option>
+  <option value="Diamond">Diamond</option>
+  <option value="Master">Master / Predator</option>
+</select>
+
 <label for="entry">Entry Cost:</label>
-<input type="number" id="entry" value="65">
+<input type="number" id="entry" value="65" readonly>
 
 <div class="result" id="output">Bitte Werte eingeben...</div>
 
 <script>
+const entryCosts = {
+  Bronze: 10,
+  Silver: 20,
+  Gold: 38,
+  Platinum: 48,
+  Diamond: 65,
+  Master: 90
+};
+
 function calcRP(placement, kills, bonusFactor, entryCost) {
     let killValue, placementPoints;
     if (placement === 1) { killValue = 20; placementPoints = 125; }
@@ -83,7 +102,10 @@ function update() {
     let placement = parseInt(document.getElementById('placement').value);
     let kills = parseInt(document.getElementById('kills').value);
     let bonusFactor = parseFloat(document.getElementById('bonus').value);
-    let entry = parseInt(document.getElementById('entry').value);
+
+    let rank = document.getElementById('rank').value;
+    let entry = entryCosts[rank] || 0;
+    document.getElementById('entry').value = entry;
 
     let res = calcRP(placement, kills, bonusFactor, entry);
     let output = document.getElementById('output');
