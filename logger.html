@@ -32,17 +32,6 @@
     background: #d32f2f;
   }
 </style>
-
-<script>
-// Admin-Passwortschutz für direkten Aufruf des Match Loggers
-document.addEventListener("DOMContentLoaded", function () {
-    var adminPass = prompt("🔒 Admin-Passwort für Match Logger:");
-    if (adminPass !== "Admin8112") { // Muss gleich wie in index.html sein
-        alert("Kein Zugriff auf Match Logger!");
-        window.location.href = "index.html";
-    }
-});
-</script>
 </head>
 <body>
 
