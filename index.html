@@ -27,17 +27,13 @@
 <script>
 // Passwortschutz für das Dashboard
 document.addEventListener("DOMContentLoaded", function () {
-
-    // Prüfen ob bereits eingeloggt
     if (!localStorage.getItem("dashboardLoggedIn")) {
-        // 1. Hauptpasswort abfragen
         var pass = prompt("🔑 Passwort erforderlich:");
         if (pass !== "Analytics1337") {
             alert("Falsches Passwort! Zugriff verweigert.");
             window.location.href = "https://google.com";
             return;
         }
-        // Standard-User speichern
         localStorage.setItem("dashboardLoggedIn", "user");
     }
 });
@@ -66,7 +62,8 @@ function openAdmin() {
     <a href="legend.html" class="card">📊 Legend Meta</a>
     <a href="weaponmeta.html" class="card">🔫 Weapon Meta</a>
     <a href="rankpercentiles.html" class="card">📊 Rank Percentiles</a>
-    <a href="legendinfo.html" class="card">🛡 Legend Info</a> <!-- NEU -->
+    <a href="legendinfo.html" class="card">🛡 Legend Info</a>
+    <a href="classinfo.html" class="card">🏷 Klassenübersicht</a> <!-- NEU -->
 </div>
 
 </body>
