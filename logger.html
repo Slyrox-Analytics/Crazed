@@ -16,8 +16,6 @@
   th { background: #222; }
   .stats { margin-top: 20px; background: #1e1e1e; padding: 15px; border-radius: 8px; }
   canvas { background: #1e1e1e; border-radius: 8px; padding: 10px; }
-
-  /* Stil für den Zurück-Button */
   .back-btn {
     display: inline-block;
     margin-bottom: 15px;
@@ -35,40 +33,38 @@
 </head>
 <body>
 
-<!-- Zurück zum Dashboard -->
 <a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
 
 <h1>🔫 Apex Match Logger</h1>
 
-<!-- Neues Datumseingabefeld -->
 <label>Datum:</label>
 <input type="date" id="date">
-
 <label>Placement:</label>
 <input type="number" id="placement" min="1" max="20">
-
 <label>Kills:</label>
 <input type="number" id="kills" min="0">
-
 <label>Tode:</label>
 <input type="number" id="deaths" min="0">
-
 <label>Damage:</label>
 <input type="number" id="damage" min="0">
-
 <label>RP Gewinn/Verlust:</label>
 <input type="number" id="rp" min="-500">
 
 <button onclick="addMatch()">Match speichern</button>
+<button onclick="exportCSV()">CSV exportieren</button>
+<button onclick="resetLogger()">Zurücksetzen</button>
 
 <div class="stats">
   <p><strong>Durchschnitt Kills:</strong> <span id="avgKills">0</span></p>
   <p><strong>Durchschnitt Damage:</strong> <span id="avgDamage">0</span></p>
   <p><strong>Gesamt RP:</strong> <span id="totalRP">0</span></p>
-  <p><strong>K/D‑Quote:</strong> <span id="kdRatio">0</span></p>
+  <p><strong>K/D​-Quote:</strong> <span id="kdRatio">0</span></p>
+  <p><strong>Durchschnittlicher RP-Gewinn:</strong> <span id="avgRP">0</span></p>
 </div>
 
 <canvas id="rpChart" height="100"></canvas>
+<canvas id="kdChart" height="100"></canvas>
+<canvas id="placementChart" height="100"></canvas>
 
 <table id="matchTable">
   <thead>
@@ -88,9 +84,17 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 let matches = JSON.parse(localStorage.getItem('apexMatches')) || [];
+let rpChart, kdChart, placementChart;
 
 function updateStats() {
-  if (matches.length === 0) return;
+  if (matches.length === 0) {
+    document.getElementById('avgKills').textContent = 0;
+    document.getElementById('avgDamage').textContent = 0;
+    document.getElementById('totalRP').textContent = 0;
+    document.getElementById('kdRatio').textContent = 0;
+    document.getElementById('avgRP').textContent = 0;
+    return;
+  }
 
   let totalKills = matches.reduce((sum, m) => sum + m.kills, 0);
   let totalDamage = matches.reduce((sum, m) => sum + m.damage, 0);
@@ -99,12 +103,14 @@ function updateStats() {
 
   let avgKills = totalKills / matches.length;
   let avgDamage = totalDamage / matches.length;
+  let avgRP = totalRP / matches.length;
   let kdRatio = totalDeaths > 0 ? (totalKills / totalDeaths).toFixed(2) : totalKills.toFixed(2);
 
   document.getElementById('avgKills').textContent = avgKills.toFixed(1);
   document.getElementById('avgDamage').textContent = avgDamage.toFixed(0);
   document.getElementById('totalRP').textContent = totalRP;
   document.getElementById('kdRatio').textContent = kdRatio;
+  document.getElementById('avgRP').textContent = avgRP.toFixed(1);
 }
 
 function renderTable() {
@@ -124,17 +130,54 @@ function renderTable() {
   });
 }
 
-function renderChart() {
-  let ctx = document.getElementById('rpChart').getContext('2d');
-  new Chart(ctx, {
+function renderCharts() {
+  if (rpChart) rpChart.destroy();
+  if (kdChart) kdChart.destroy();
+  if (placementChart) placementChart.destroy();
+
+  const labels = matches.map((m, i) => m.date || `Match ${i + 1}`);
+
+  rpChart = new Chart(document.getElementById('rpChart').getContext('2d'), {
     type: 'line',
     data: {
-      labels: matches.map((m, i) => m.date ? `${m.date}` : `Match ${i+1}`),
+      labels: labels,
       datasets: [{
         label: 'RP-Verlauf',
         data: matches.map(m => m.rp),
         borderColor: '#e53935',
         fill: false
+      }]
+    }
+  });
+
+  kdChart = new Chart(document.getElementById('kdChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'K/D-Verlauf',
+        data: matches.map(m => m.deaths > 0 ? m.kills / m.deaths : m.kills),
+        borderColor: '#29b6f6',
+        fill: false
+      }]
+    }
+  });
+
+  const placementGroups = { '1-3': 0, '4-10': 0, '11-20': 0 };
+  matches.forEach(m => {
+    if (m.placement <= 3) placementGroups['1-3']++;
+    else if (m.placement <= 10) placementGroups['4-10']++;
+    else placementGroups['11-20']++;
+  });
+
+  placementChart = new Chart(document.getElementById('placementChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: Object.keys(placementGroups),
+      datasets: [{
+        label: 'Placement-Verteilung',
+        data: Object.values(placementGroups),
+        backgroundColor: ['#66bb6a', '#ffa726', '#ef5350']
       }]
     }
   });
@@ -153,12 +196,34 @@ function addMatch() {
 
   updateStats();
   renderTable();
-  renderChart();
+  renderCharts();
+}
+
+function exportCSV() {
+  const header = ['Datum', 'Placement', 'Kills', 'Tode', 'Damage', 'RP'];
+  const rows = matches.map(m => [m.date, m.placement, m.kills, m.deaths, m.damage, m.rp]);
+  const csvContent = [header, ...rows].map(e => e.join(",")).join("\n");
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "apex_match_log.csv";
+  a.click();
+}
+
+function resetLogger() {
+  if (!confirm("Willst du wirklich alle Matches löschen?")) return;
+  matches = [];
+  localStorage.removeItem('apexMatches');
+  updateStats();
+  renderTable();
+  renderCharts();
 }
 
 updateStats();
 renderTable();
-renderChart();
+renderCharts();
 </script>
 
 </body>
