@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apex RP Rechner - Season 26</title>
-<style>
-  body { font-family: Arial, sans-serif; padding: 20px; background: #121212; color: #fff; }
-  h1 { font-size: 1.4em; text-align: center; margin-bottom: 20px; }
-  label { display: block; margin-top: 15px; font-weight: bold; }
-  input, select { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: none; font-size: 1em; }
-  .result { margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center; font-size: 1.2em; }
-  .plus { background: #2e7d32; }
-  .minus { background: #c62828; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex RP Rechner - Season 26</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #121212; color: #fff; }
+    h1 { font-size: 1.4em; text-align: center; margin-bottom: 20px; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: none; font-size: 1em; }
+    .result { margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center; font-size: 1.2em; }
+    .plus { background: #2e7d32; }
+    .minus { background: #c62828; }
 
-  /* Stil für den Zurück-Button */
-  .back-btn {
-    display: inline-block;
-    margin-bottom: 15px;
-    padding: 8px 12px;
-    background: #e53935;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-  }
-  .back-btn:hover {
-    background: #d32f2f;
-  }
-</style>
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 15px;
+      padding: 8px 12px;
+      background: #e53935;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .back-btn:hover {
+      background: #d32f2f;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Zurück zum Dashboard -->
 <a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
 
 <h1>🔫 Apex Legends RP Rechner<br>Season 26</h1>
@@ -40,7 +38,13 @@
 <input type="number" id="placement" min="1" max="20" value="6">
 
 <label for="kills">Kills:</label>
-<input type="number" id="kills" min="0" max="20" value="3">
+<input type="number" id="kills" min="0" max="30" value="3">
+
+<label for="assists">Assists:</label>
+<input type="number" id="assists" min="0" max="30" value="2">
+
+<label for="knocks">Knockdowns:</label>
+<input type="number" id="knocks" min="0" max="30" value="2">
 
 <label for="bonus">Challenger Bonus:</label>
 <select id="bonus">
@@ -57,7 +61,7 @@
   <option value="Silver">Silver</option>
   <option value="Gold">Gold</option>
   <option value="Platinum">Platinum</option>
-  <option value="Diamond">Diamond</option>
+  <option value="Diamond" selected>Diamond</option>
   <option value="Master">Master / Predator</option>
 </select>
 
@@ -67,17 +71,18 @@
 <div class="result" id="output">Bitte Werte eingeben...</div>
 
 <script>
-const entryCosts = {
-  Bronze: 10,
-  Silver: 20,
-  Gold: 38,
-  Platinum: 48,
-  Diamond: 65,
-  Master: 90
-};
+  const entryCosts = {
+    Bronze: 10,
+    Silver: 20,
+    Gold: 38,
+    Platinum: 48,
+    Diamond: 65,
+    Master: 90
+  };
 
-function calcRP(placement, kills, bonusFactor, entryCost) {
+  function calcRP(placement, kills, assists, knocks, bonusFactor, entryCost) {
     let killValue, placementPoints;
+
     if (placement === 1) { killValue = 20; placementPoints = 125; }
     else if (placement === 2) { killValue = 18; placementPoints = 100; }
     else if (placement === 3) { killValue = 16; placementPoints = 75; }
@@ -92,33 +97,37 @@ function calcRP(placement, kills, bonusFactor, entryCost) {
     else if (placement >= 14 && placement <= 15) { killValue = 6; placementPoints = 10; }
     else { killValue = 4; placementPoints = 5; }
 
-    let killPoints = kills * killValue * (1 + bonusFactor);
+    let totalCombat = kills + assists + (knocks * 0.7);
+    let killPoints = totalCombat * killValue * (1 + bonusFactor);
     let total = killPoints + placementPoints - entryCost;
 
-    return { killValue, placementPoints, killPoints, total };
-}
+    return { killValue, placementPoints, totalCombat, killPoints, total };
+  }
 
-function update() {
+  function update() {
     let placement = parseInt(document.getElementById('placement').value);
     let kills = parseInt(document.getElementById('kills').value);
+    let assists = parseInt(document.getElementById('assists').value);
+    let knocks = parseInt(document.getElementById('knocks').value);
     let bonusFactor = parseFloat(document.getElementById('bonus').value);
-
     let rank = document.getElementById('rank').value;
+
     let entry = entryCosts[rank] || 0;
     document.getElementById('entry').value = entry;
 
-    let res = calcRP(placement, kills, bonusFactor, entry);
+    let res = calcRP(placement, kills, assists, knocks, bonusFactor, entry);
     let output = document.getElementById('output');
 
     output.innerHTML = `Killwert: ${res.killValue} RP<br>` +
+                       `Effektive KP-Quellen (Kills + Assists + 0.7 × Knocks): ${res.totalCombat.toFixed(2)}<br>` +
                        `Killpunkte: ${res.killPoints.toFixed(1)} RP<br>` +
                        `Placementpunkte: ${res.placementPoints} RP<br>` +
                        `<strong>Netto RP: ${res.total.toFixed(1)}</strong>`;
     output.className = 'result ' + (res.total >= 0 ? 'plus' : 'minus');
-}
+  }
 
-document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', update));
-update();
+  document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', update));
+  update();
 </script>
 
 </body>
