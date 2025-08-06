@@ -1,89 +1,120 @@
+<!-- BEGIN LEGENDINFO.HTML -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Legend Info</title>
+<title>Legend Info – Apex Season 26</title>
 <style>
-  body { background:#121212; color:#fff; font-family:Arial,sans-serif; padding:20px; }
-  h1 { text-align:center; margin-bottom:20px; }
-  select { width:100%; padding:8px; margin:10px 0; border-radius:5px; background:#1e1e1e; color:#fff; border:none; }
-  .info-box { background:#1e1e1e; padding:15px; border-radius:8px; margin-top:15px; }
-  .ability { margin-bottom:15px; }
-  .ability h3 { color:#ffcc00; margin-bottom:5px; }
-  .perks { background:#222; padding:10px; border-radius:6px; margin-top:10px; }
-  .perks h4 { margin-bottom:5px; color:#4FC3F7; }
-  .perks ul { margin:0; padding-left:20px; }
-  .back-btn { display:inline-block; margin-bottom:15px; padding:8px 12px; background:#e53935; color:white; text-decoration:none; border-radius:5px; font-weight:bold; }
-  .back-btn:hover { background:#d32f2f; }
+/* Grundlayout */
+body { background:#121212; color:#fff; font-family:Arial,sans-serif; padding:20px; }
+h1 { text-align:center; margin-bottom:20px; }
+select { width:100%; padding:8px; margin:15px 0; background:#1e1e1e; color:#fff; border:none; border-radius:5px; }
+/* Fähigkeitsblock */
+.legend-section { background:#1e1e1e; padding:15px; border-radius:8px; margin-top:20px; display:none; }
+.legend-name { font-size:1.4em; color:#ffcc00; margin-bottom:10px; }
+.ability { margin-bottom:10px; }
+.ability .icon { font-size:1.2em; margin-right:6px; }
+.ability-title { font-weight:bold; }
+/* Perksblock */
+.perk-block { border:2px solid #555; border-radius:6px; padding:10px; margin-top:15px; }
+.perk-block.blue { border-color:#2196F3; }
+.perk-block.purple { border-color:#9C27B0; }
+.perk-title { font-weight:bold; margin-bottom:6px; }
+.perk-list { margin:0; padding-left:20px; list-style:disc; }
+.back-btn { display:inline-block; margin-bottom:15px; padding:8px 12px; background:#e53935; color:white; text-decoration:none; border-radius:5px; font-weight:bold; }
+.back-btn:hover { background:#d32f2f; }
 </style>
 </head>
 <body>
+<a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
+<h1>📜 Legend Info</h1>
 
-<a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
-<h1>🛡 Legend Info</h1>
-
+<label>Legende wählen:</label>
 <select id="legendSelect" onchange="showLegendInfo()">
-  <option value="">-- Legende wählen --</option>
-  <option value="Ash">Ash</option>
-  <option value="Bangalore">Bangalore</option>
-  <option value="Caustic">Caustic</option>
-  <option value="Gibraltar">Gibraltar</option>
-  <option value="Lifeline">Lifeline</option>
-  <option value="Wraith">Wraith</option>
-  <option value="Pathfinder">Pathfinder</option>
-  <option value="Mirage">Mirage</option>
-  <option value="Octane">Octane</option>
-  <option value="Wattson">Wattson</option>
-  <option value="Crypto">Crypto</option>
-  <option value="Revenant">Revenant</option>
-  <option value="Loba">Loba</option>
-  <option value="Rampart">Rampart</option>
-  <option value="Horizon">Horizon</option>
-  <option value="Fuse">Fuse</option>
-  <option value="Valkyrie">Valkyrie</option>
-  <option value="Seer">Seer</option>
-  <option value="Ash">Ash</option> <!-- Duplicate removed? -->
-  <option value="Mad Maggie">Mad Maggie</option>
-  <option value="Newcastle">Newcastle</option>
-  <option value="Vantage">Vantage</option>
-  <option value="Catalyst">Catalyst</option>
-  <option value="Ballistic">Ballistic</option>
-  <option value="Aren">Aren</option>
+  <option value="">-- auswählen --</option>
 </select>
 
-<div id="legendInfo" class="info-box" style="display:none;"></div>
+<div id="legendInfo" class="legend-section">
+  <div class="legend-name"></div>
+  <div class="ability"><span class="icon" style="color:#4fc3f7;">🟢</span><span class="ability-title">Passive:</span> <span class="ability-text"></span></div>
+  <div class="ability"><span class="icon" style="color:#2196F3;">🔵</span><span class="ability-title">Taktisch:</span> <span class="ability-text"></span></div>
+  <div class="ability"><span class="icon" style="color:#f44336;">🔴</span><span class="ability-title">Ultimativ:</span> <span class="ability-text"></span></div>
+  <div class="perk-block blue">
+    <div class="perk-title">🔵 Blue‑Perks:</div>
+    <ul class="perk-list"></ul>
+  </div>
+  <div class="perk-block purple">
+    <div class="perk-title">🟣 Purple‑Perks:</div>
+    <ul class="perk-list"></ul>
+  </div>
+</div>
 
 <script>
-const legends = {
-  "Ash": {
-    passive: { name: "Predator’s Pursuit", desc: "Zeigt Todesbox‑Standorte an.", cd: "Permanent" },
-    tactical: { name: "Arc Snare", desc: "Falle ankettet Gegner.", cd: "25 s" },
-    ultimate: { name: "Phase Breach", desc: "Einseitiges Portal.", cd: "120 s" },
-    perks: { blue: ["Greedy Snare (+20% Dauer)","Quick Snare (+10% Cooldown)"], purple: ["Twin Snare (2 Fallen)","Rapid Snare (+25% Speed)"] }
+// Legendendaten
+const legends = [
+  {
+    name: "Ash",
+    passive: "Predator’s Pursuit – zeigt Todesboxen & markiert Feinde.",
+    tactical: "Arc Snare (Cooldown 25 s) – Falle verlangsamt + hält fest.",
+    ultimate: "Phase Breach (Cooldown 120 s) – Portal über mittlere Distanz.",
+    perksBlue: ["Greedy Snare: Snare bleibt **15 s** aktiv", "Quick Snare: **−10 % CD**"],
+    perksPurple: ["Twin Snare: **+1 Tac‑Charge**", "Rapid Velocity: **+25 % Speed nach Kill**"]
   },
-  "Bangalore": {
-    passive: { name: "Double Time", desc: "Kurz schneller beim Sprint unter Feuer.", cd: "Permanent" },
-    tactical: { name: "Smoke Launcher", desc: "Werft eine dicke Rauchwand.", cd: "35 s" },
-    ultimate: { name: "Rolling Thunder", desc: "Artillerie‑Strike im Gebiet.", cd: "210 s" },
-    perks: { blue: ["Cover Me (Heilt Ally beim Trigger)","Extra Smoke"], purple: ["Electric Smoke (DMG to Ultimates)","Smoke Cascade (Hijump)"] }
+  {
+    name: "Bangalore",
+    passive: "Double Time – **+5 % Bewegungsgeschw.** bei Beschuss.",
+    tactical: "Smoke Launcher (**Cooldown 30 s**) wirft dichte Rauchgranate.",
+    ultimate: "Rolling Thunder (**Cooldown 210 s**) – Artillerieschlag.",
+    perksBlue: ["Cover Me: Heilung beim Trigger + Ping", "Extra Smoke Charge"],
+    perksPurple: ["Electric Smoke: zerstört Tac/Ultimates +100 DMG", "ECM Payload: Ult +10 DMG & zerstört Deployables"]
   },
-  // ... hier alle weiteren Legends vollständig ergänzen ...
+  {
+    name: "Caustic",
+    passive: "Field Research – Sammle Punkte für Gas‑Upgrades.",
+    tactical: "Nox Gas Trap (**Cooldown 22 s**) – Gasradius +17 %.",
+    ultimate: "Nox Gas Grenade (**Cooldown 120 s**, Dauer **20 s**) – verlangsamt & schadet.",
+    perksBlue: ["Extra Traps: **+2 Traps** & +1 Charge", "Breathe It In: HP‑Regeneration im Gas"],
+    perksPurple: ["Gas Fighter: Tac lädt **300  % schneller** im Gas", "Particle Diffuser: Gas‑Radius **+50 %**"]
+  },
+  // ► Rest der Legends analog: Nutzung von Season 25-Daten
+  {
+    name: "Bloodhound",
+    passive: "Tracker – zeigt frische Spuren und Gegnerdetails.",
+    tactical: "Eye of the Allfather (Cooldown 25 s) – scannt Feinde & Fallen.",
+    ultimate: "Beast of the Hunt (Cooldown 180 s, Dauer 30 s) – Speed + Threat‑Vision.",
+    perksBlue: ["Hunter’s Focus: Tac‑Cooldown **−5 s**", "Echo Locator: längere Reveal"],
+    perksPurple: ["Tactical Vision: längeres Reveal", "Beast Enhanced: **+10 % Speed** während Ult"]
+  }
+  // ► Alle weiteren Legends ergänzen …
+];
+
+window.onload = () => {
+  const sel = document.getElementById("legendSelect");
+  legends.forEach(l => {
+    const opt = document.createElement("option");
+    opt.value = l.name;
+    opt.textContent = l.name;
+    sel.appendChild(opt);
+  });
 };
 
-function showLegendInfo() {
-  const sel = document.getElementById("legendSelect").value;
+function showLegendInfo(){
+  const name = document.getElementById("legendSelect").value;
+  const legend = legends.find(l => l.name === name);
   const info = document.getElementById("legendInfo");
-  if (!sel || !legends[sel]) { info.style.display="none"; return; }
-
-  const d = legends[sel];
-  info.innerHTML = `
-    <div class="ability"><h3>Passive: ${d.passive.name}</h3><p>${d.passive.desc} <br><small>Cooldown: ${d.passive.cd}</small></p></div>
-    <div class="ability"><h3>Taktisch: ${d.tactical.name}</h3><p>${d.tactical.desc} <br><small>Cooldown: ${d.tactical.cd}</small></p></div>
-    <div class="ability"><h3>Ultimate: ${d.ultimate.name}</h3><p>${d.ultimate.desc} <br><small>Cooldown: ${d.ultimate.cd}</small></p></div>
-    <div class="perks"><h4>Blue Perks:</h4><ul>${d.perks.blue.map(p=>`<li>${p}</li>`).join("")}</ul><h4>Purple Perks:</h4><ul>${d.perks.purple.map(p=>`<li>${p}</li>`).join("")}</ul></div>`;
+  if (!legend) { info.style.display = "none"; return; }
+  document.querySelector(".legend-name").textContent = legend.name;
+  const texts = document.querySelectorAll(".ability-text");
+  texts[0].textContent = legend.passive;
+  texts[1].textContent = legend.tactical;
+  texts[2].textContent = legend.ultimate;
+  const blues = document.querySelector(".perk-block.blue .perk-list");
+  const purples = document.querySelector(".perk-block.purple .perk-list");
+  blues.innerHTML = legend.perksBlue.map(p => `<li>${p}</li>`).join("");
+  purples.innerHTML = legend.perksPurple.map(p => `<li>${p}</li>`).join("");
   info.style.display = "block";
 }
 </script>
-
 </body>
 </html>
+<!-- END LEGENDINFO.HTML -->
