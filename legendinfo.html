@@ -670,46 +670,47 @@ const metaData = [
   "meta": "Defensiver Tank mit starkem Team-Support und Zonenkontrolle. Ideal für Defensive Plays und Team-Revives.",
   "passive": {
     "name": "Gun Shield",
-    "description": "Aiming down sights deploys a gun shield that blocks incoming fire.",
-    "extra": "Fortified: Incoming damage reduced by 15%. Not slowed by bullets."
+    "description": "Zielt man über Kimme und Korn, wird ein Schutzschild aktiviert, der eingehendes Feuer blockiert.",
+    "extra": "Fortified: Erlittener Schaden um 15 % reduziert. Nicht durch Kugeln verlangsamt."
   },
   "tactical": {
     "name": "Dome of Protection",
-    "description": "Blocks incoming and outgoing attacks.",
-    "cooldown": "30s"
+    "description": "Errichtet eine Kuppel, die eingehende und ausgehende Angriffe blockiert.",
+    "cooldown": "30 Sek."
   },
   "ultimate": {
     "name": "Defensive Bombardment",
-    "description": "Call in a concentrated mortar strike on a position you mark with smoke.",
-    "cooldown": "180s"
+    "description": "Ruft einen konzentrierten Mörserangriff auf eine mit Rauch markierte Position.",
+    "cooldown": "180 Sek."
   },
   "perks": {
-    "class_perks": [
-      "Access Extended Supply Bins: Access the hidden loot in blue Extended Supply Bins for Healing and Survival Items.",
-      "Revive Expert: Revives are faster (unless revived by D.O.C.) and grant HP regen. Banner Crafting & Ally Deathboxes spawn Mobile Respawn Beacons."
-    ]
+    "blue": [
+      "Access Extended Supply Bins – Zugriff auf versteckte Fächer in blauen Supply Bins für Heil- und Überlebensausrüstung.",
+      "Revive Expert – Schnellere Wiederbelebung (außer bei Wiederbelebung durch D.O.C.) und HP-Regeneration beim Wiederbeleben. Banner-Crafting und Respawn-Beacons platzieren möglich."
+    ],
+    "purple": []
   },
   "upgrades": {
     "lvl1": [
       {
         "name": "Big Bruddah",
-        "description": "Increase Ult radius by 20%."
+        "description": "Erhöht den Radius der Ultimate um 20 %."
       }
     ],
     "lvl2": [
       {
         "name": "Fast Shotties",
-        "description": "Move faster with Shotguns. Auto-Reload shotguns on knocks."
+        "description": "Bewegt sich schneller mit Schrotflinten. Lädt Schrotflinten automatisch nach, wenn ein Gegner ausgeschaltet wird."
       }
     ],
     "lvl3": [
       {
         "name": "Baby Bubble",
-        "description": "Reduce Tactical size and cooldown by 25%."
+        "description": "Reduziert die Größe der Taktik-Kuppel und die Abklingzeit um 25 %."
       },
       {
         "name": "Bubble Bunker",
-        "description": "Increase Tactical lifetime by 4 seconds."
+        "description": "Erhöht die Wirkungsdauer der Taktik-Kuppel um 4 Sekunden."
       }
     ]
   }
@@ -719,218 +720,166 @@ const metaData = [
   "class": "Support",
   "age": 24,
   "meta": "Starker Support‑Pick für aggressives und defensives Spiel. D.O.C. erlaubt kontinuierliche Heilung auch unter Beschuss, und die Passive ermöglicht sichere Revives ohne Lifeline selbst zu gefährden. Die Ultimate gibt Teamfights einen Vorteil durch schnelleres Heilen und Schilden. Besonders effektiv in Teams, die auf Durchhaltevermögen setzen.",
+  "passive": {
+    "name": "Combat Glide",
+    "description": "Halte SPACE in der Luft gedrückt, um D.O.C. zu nutzen und kurz zu gleiten. Setze D.O.C. ein, um Teamkameraden zu reviven, während Lifeline frei kämpfen kann."
+  },
   "tactical": {
     "name": "D.O.C. Heal Drone",
     "description": "D.O.C. heilt alle nahen Verbündeten. Kann so eingestellt werden, dass er Verbündete nach Deployment automatisch folgt.",
-    "cooldown": "30s"
-  },
-  "passive": {
-    "name": "Combat Glide",
-    "description": "Halte SPACE in der Luft gedrückt, um D.O.C. zu nutzen und kurz zu gleiten. + Setze D.O.C. ein, um Teamkameraden zu reviven, während Lifeline frei kämpfen kann."
+    "cooldown": "30 Sek."
   },
   "ultimate": {
     "name": "D.O.C. Halo",
     "description": "Wirf D.O.C., um das Halo-Schild-System zu aktivieren. Alle Spieler im Bereich verwenden Heil- und Schild-Items schneller.",
-    "cooldown": "210s"
+    "cooldown": "210 Sek."
   },
   "perks": {
-    "class_perks": [
-      "Access Extended Supply Bins: Zugriff auf versteckten Loot in blauen erweiterten Versorgungsboxen für Heil- und Überlebensgegenstände.",
-      "Revive Expert: Schnelleres Reviven (außer durch D.O.C.), gewährt HP-Regeneration. Banner-Crafting & Verbündeten-Deathboxes spawnen mobile Respawn-Baken."
-    ]
+    "blue": [
+      "Access Extended Supply Bins – Zugriff auf versteckten Loot in blauen erweiterten Versorgungsboxen für Heil- und Überlebensgegenstände.",
+      "Revive Expert – Schnelleres Reviven (außer durch D.O.C.), gewährt HP-Regeneration. Banner-Crafting & Verbündeten-Deathboxes spawnen mobile Respawn-Baken."
+    ],
+    "purple": []
   },
   "upgrades": {
     "lvl1": [
-      { "name": "Extended Flight", "effect": "Erhöht die Zeit, bevor D.O.C. den Treibstoff verliert, um 1.5 Sekunden." },
-      { "name": "Battpack", "effect": "+1 Schildbatterie-Stacklimit. Zeigt die Anzahl der Schildbatterien auf Deathboxes an." }
+      { "name": "Extended Flight", "description": "Erhöht die Zeit, bevor D.O.C. den Treibstoff verliert, um 1,5 Sekunden." },
+      { "name": "Battpack", "description": "+1 Schildbatterie-Stacklimit. Zeigt die Anzahl der Schildbatterien auf Deathboxes an." }
     ],
     "lvl2": [
-      { "name": "Enhanced Radio", "effect": "Erhöht die Distanz, in der D.O.C. zugewiesen werden kann, um 50%." },
-      { "name": "Tactical Cooldown+", "effect": "Reduziert die Abklingzeit der Taktik um 10 Sekunden." }
+      { "name": "Enhanced Radio", "description": "Erhöht die Distanz, in der D.O.C. zugewiesen werden kann, um 50 %." },
+      { "name": "Tactical Cooldown+", "description": "Reduziert die Abklingzeit der Taktik um 10 Sekunden." }
     ]
   }
 },
 {
   "name": "Mirage",
-  "meta": "Situationsabhängig stark in unübersichtlichen Kämpfen. Besonders effektiv für Ablenkung, Revives und Pushes – weniger nützlich gegen sehr erfahrene Gegner, die Decoys leicht erkennen.",
   "class": "Support",
   "age": 30,
+  "meta": "Situationsabhängig stark in unübersichtlichen Kämpfen. Besonders effektiv für Ablenkung, Revives und Pushes – weniger nützlich gegen sehr erfahrene Gegner, die Decoys leicht erkennen.",
   "passive": {
     "name": "Now You See Me…",
-    "description": "Automatisch unsichtbar, wenn Respawn Beacons benutzt werden oder beim Heilen/Reviven von Teammates."
+    "description": "Automatisch unsichtbar, wenn Respawn Beacons benutzt werden oder beim Heilen/Reviven von Teamkameraden."
   },
   "tactical": {
     "name": "Psyche Out",
     "description": "Sendet einen holografischen Köder aus, um Gegner zu verwirren. Mit [5] kann der Köder gesteuert werden.",
-    "cooldown": "15 Sekunden"
+    "cooldown": "15 Sek."
   },
   "ultimate": {
     "name": "Life of the Party",
     "description": "Setzt mehrere steuerbare Köder gleichzeitig ein, um Gegner zu verwirren.",
-    "cooldown": "60 Sekunden"
+    "cooldown": "60 Sek."
   },
   "perks": {
-    "lvl1": [
-      {
-        "name": "Renaissance Man",
-        "description": "Kann nun Survey Beacons, Ring Consoles, Munitionskisten nutzen und Care Packages scannen."
-      }
+    "blue": [
+      "Renaissance Man – Kann nun Survey Beacons, Ring Consoles, Munitionskisten nutzen und Care Packages scannen."
     ],
-    "lvl2": [
-      {
-        "name": "Boozle-Eye",
-        "description": "Erfolgreiche Täuschungen markieren Gegner für kurze Zeit."
-      }
-    ],
-    "lvl3": [
-      {
-        "name": "Me Two",
-        "description": "Erhält eine zweite Köder-Aufladung (beide können gleichzeitig aktiv sein)."
-      },
-      {
-        "name": "Bamboozle Bonus",
-        "description": "Erfrischt die Taktik-Abklingzeit bei erfolgreicher Täuschung."
-      }
+    "purple": [
+      "Boozle-Eye – Erfolgreiche Täuschungen markieren Gegner für kurze Zeit.",
+      "Me Two – Erhält eine zweite Köder-Aufladung (beide können gleichzeitig aktiv sein).",
+      "Bamboozle Bonus – Erfrischt die Taktik-Abklingzeit bei erfolgreicher Täuschung."
     ]
   }
 },
 {
   "name": "Loba",
-  "meta": "Loot-orientierte Support-Legende mit starker Team-Utility. Ermöglicht schnellen Zugriff auf hochwertigen Loot und Ressourcen für das gesamte Squad. Besonders effektiv in längeren Matches und beim Ausrüsten des Teams, schwächelt aber im direkten 1v1-Kampf.",
-  "age": 34,
-  "abilities": {
-    "passive": {
-      "name": "Eye for Quality",
-      "description": "Nearby epic and legendary loot can be seen through walls. Aim down sights when unarmed to ping highlighted loot. Open loot vaults without a key."
-    },
-    "tactical": {
-      "name": "Burglar's Best Friend",
-      "description": "Teleport to hard-to-reach places or escape trouble quickly by throwing your jump drive bracelet."
-    },
-    "ultimate": {
-      "name": "Black Market Boutique",
-      "description": "Place a portable device that allows you to teleport nearby loot to your inventory. Ammo, small meds and teammate banners are free."
-    }
-  },
   "class": "Support",
-  "class_perks": [
-    "Access Extended Supply Bins: Access the hidden loot in blue Extended Supply Bins for Healing and Survival Items.",
-    "Revive Expert: Revives are faster (unless revived by D.O.C.) and grant HP regen. Banner Crafting & Ally Deathboxes spawn Mobile Respawn Beacons."
-  ],
-  "upgrades": {
-    "level_1": [
-      {
-        "name": "Wolf's Claws",
-        "description": "Faster weapon draw and speed boost after translocating."
-      }
+  "age": 34,
+  "meta": "Loot-orientierte Support-Legende mit starker Team-Utility. Ermöglicht schnellen Zugriff auf hochwertigen Loot und Ressourcen für das gesamte Squad. Besonders effektiv in längeren Matches und beim Ausrüsten des Teams, schwächelt aber im direkten 1v1-Kampf.",
+  "passive": {
+    "name": "Eye for Quality",
+    "description": "Kann epische und legendäre Beute durch Wände sehen. Beim Zielen ohne Waffe werden hervorgehobene Gegenstände markiert. Öffnet Beute-Kammern ohne Schlüssel."
+  },
+  "tactical": {
+    "name": "Burglar's Best Friend",
+    "description": "Teleportiert zu schwer erreichbaren Orten oder entkommt schnell, indem das Jump-Drive-Armband geworfen wird."
+  },
+  "ultimate": {
+    "name": "Black Market Boutique",
+    "description": "Platziert ein tragbares Gerät, das es erlaubt, nahe Beute ins Inventar zu teleportieren. Munition, kleine Heilmittel und Teamkameraden-Banner sind kostenlos."
+  },
+  "perks": {
+    "blue": [
+      "Access Extended Supply Bins – Zugriff auf versteckte Fächer in blauen Supply Bins für Heil- und Überlebensausrüstung.",
+      "Revive Expert – Schnellere Wiederbelebung (außer bei Wiederbelebung durch D.O.C.) und HP-Regeneration beim Wiederbeleben. Banner-Crafting und Respawn-Beacons platzieren möglich."
     ],
-    "level_2": [
-      {
-        "name": "Shopping Spree",
-        "description": "Squad can take an extra item from Black Market."
-      }
-    ],
-    "level_3": [
-      {
-        "name": "Escape Artist",
-        "description": "After translocating, regenerate 25 Shields."
-      },
-      {
-        "name": "Brand New Bag",
-        "description": "Grants entire squad gold backpacks when upgrade selected."
-      }
+    "purple": [
+      "Wolf's Claws – Schnellere Waffenbereitstellung und Geschwindigkeitsbonus nach Teleportation.",
+      "Shopping Spree – Das Team kann einen zusätzlichen Gegenstand aus dem Black Market nehmen.",
+      "Escape Artist – Nach der Teleportation werden 25 Schilde regeneriert.",
+      "Brand New Bag – Das gesamte Team erhält goldene Rucksäcke, wenn Upgrade gewählt."
     ]
   }
 },
 {
   "name": "Newcastle",
   "class": "Support",
-  "meta": "Sehr stark in defensiven und teamorientierten Situationen. Ideal zum Retten und Beschützen von Teammates unter Feuer, aber weniger mobil als andere Defender.",
+  "meta": "Sehr stark in defensiven und teamorientierten Situationen. Ideal zum Retten und Beschützen von Teamkameraden unter Feuer, aber weniger mobil als andere Defender.",
   "passive": {
     "name": "Retrieve the Wounded",
-    "description": "Ziehe gefallene Verbündete beim Wiederbeleben hinter dich und schütze sie mit deinem Revive-Schild."
+    "description": "Zieht gefallene Verbündete beim Wiederbeleben hinter sich her und schützt sie mit einem Revive-Schild."
   },
   "tactical": {
     "name": "Mobile Shield",
-    "description": "Wirf eine Drohne, die einen beweglichen Energieschild projiziert.",
-    "cooldown": "20 Sekunden"
+    "description": "Wirft eine Drohne, die einen beweglichen Energieschild projiziert.",
+    "cooldown": "20 Sek."
   },
   "ultimate": {
     "name": "Castle Wall",
-    "description": "Springe zu einem Verbündeten oder einem Zielgebiet und ramme dich in den Boden, um eine befestigte Barrikade zu errichten.",
-    "cooldown": "120 Sekunden"
+    "description": "Springt zu einem Verbündeten oder einem Zielgebiet und rammt sich in den Boden, um eine befestigte Barrikade zu errichten.",
+    "cooldown": "120 Sek."
   },
-  "fortified": "Erlittener Schaden um 15 % reduziert. Nicht durch Kugeln verlangsamt.",
-  "perks": [
-    "Access Extended Supply Bins: Zugriff auf versteckte Fächer in blauen Supply Bins für Heil- und Überlebensausrüstung.",
-    "Revive Expert: Schnellere Wiederbelebung (außer bei Wiederbelebung durch D.O.C.) und HP-Regeneration beim Wiederbeleben. Banner-Crafting und Respawn-Beacons platzieren möglich."
-  ],
-  "upgrades": {
-    "level1": [
-      { "name": "Hero's Hustle", "description": "Erhöht die Bewegungsgeschwindigkeit während des Revive." }
+  "perks": {
+    "blue": [
+      "Access Extended Supply Bins – Zugriff auf versteckte Fächer in blauen Supply Bins für Heil- und Überlebensausrüstung.",
+      "Revive Expert – Schnellere Wiederbelebung (außer bei Wiederbelebung durch D.O.C.) und HP-Regeneration beim Wiederbeleben. Banner-Crafting und Respawn-Beacons platzieren möglich."
     ],
-    "level2": [
-      { "name": "Swift Shield", "description": "Erhöht die Mobile-Shield-Geschwindigkeit auf Sprintgeschwindigkeit und reduziert Abklingzeit um 8 Sekunden." }
-    ],
-    "level3": [
-      { "name": "Ultimate Savior", "description": "Castle-Wall-Slam gewährt allen Verbündeten im Wirkungsbereich 15 Sekunden Schildregeneration." },
-      { "name": "Stronghold", "description": "+500 Castle-Wall-HP und verlängert die Barriere-Dauer auf 4 Minuten." }
+    "purple": [
+      "Hero's Hustle – Erhöht die Bewegungsgeschwindigkeit während des Revive.",
+      "Swift Shield – Erhöht die Mobile-Shield-Geschwindigkeit auf Sprintgeschwindigkeit und reduziert Abklingzeit um 8 Sekunden.",
+      "Ultimate Savior – Castle-Wall-Slam gewährt allen Verbündeten im Wirkungsbereich 15 Sekunden Schildregeneration.",
+      "Stronghold – +500 Castle-Wall-HP und verlängert die Barriere-Dauer auf 4 Minuten."
     ]
   }
 },
 {
   "name": "Conduit",
+  "class": "Support",
   "age": 27,
-  "tactical": {
-    "name": "Radiant Transfer",
-    "description": "Send a surge of energy to a teammate, generating temporary shields for them and Conduit when in danger.",
-    "cooldown": "20 Sekunden",
-    "duration": "Unbekannt",
-    "effects": "Gibt temporäre Schilde für Conduit und Ziel-Teammate."
-  },
+  "meta": "Gut geeignet für aggressives Teamplay mit Schildunterstützung, stark in Push-Situationen und zur Unterstützung im Nah- bis Midrange-Kampf.",
   "passive": {
     "name": "Savior's Speed",
-    "description": "Gain a burst of speed when running toward a teammate out of Tactical range, ally banners or respawn beacons."
+    "description": "Erhält einen Geschwindigkeitsschub, wenn man zu einem Teamkameraden außerhalb der Taktik-Reichweite, zu Verbündeten-Bannern oder zu Respawn-Beacons läuft."
+  },
+  "tactical": {
+    "name": "Radiant Transfer",
+    "description": "Sendet eine Energiewelle an einen Teamkameraden und erzeugt temporäre Schilde für diesen und Conduit, wenn Gefahr droht.",
+    "cooldown": "20 Sek."
   },
   "ultimate": {
     "name": "Energy Barricade",
-    "description": "Deploy an array of shield jamming devices which damage and slow enemies.",
-    "cooldown": "120 Sekunden",
-    "duration": "Unbekannt",
-    "effects": "Verlangsamt Gegner und verursacht Schaden."
+    "description": "Platziert 7 Schild-Jammer in einer Linie, die Gegner verlangsamen und über Zeit schaden.",
+    "cooldown": "120 Sek.",
+    "primeTime": "4 Sek.",
+    "duration": "45 Sek. (bis 60 Sek. mit guter Positionierung)",
+    "radius": "10 Meter (±20 % mit Upgrade)",
+    "damagePerSecond": "10 Schaden pro Sekunde",
+    "slow": "15 % Bewegungsgeschwindigkeit",
+    "hpPerJammer": "200–250 HP"
   },
-  "class": {
-    "name": "Support",
-    "perks": [
-      "Access Extended Supply Bins",
-      "Revive Expert"
-    ]
-  },
-  "upgrades": {
-    "level_1": [
-      {
-        "name": "Battpack",
-        "description": "+1 Shield Battery stack limit. Shield Battery count shown on deathboxes."
-      }
+  "perks": {
+    "blue": [
+      "Access Extended Supply Bins – Zugriff auf versteckte Fächer in blauen Supply Bins für Heil- und Überlebensausrüstung.",
+      "Revive Expert – Schnellere Wiederbelebung (außer bei Wiederbelebung durch D.O.C.) und HP-Regeneration beim Wiederbeleben."
     ],
-    "level_2": [
-      {
-        "name": "Bigger Jam",
-        "description": "Each Ultimate jammer's damage radius increased by 10%."
-      }
-    ],
-    "level_3": [
-      {
-        "name": "Split Charge",
-        "description": "Gain a Tactical charge but halve shield regen duration."
-      },
-      {
-        "name": "Radiant Transfer",
-        "description": "Increase Tactical range by 10 meters."
-      }
+    "purple": [
+      "Battpack – +1 Schildbatterie-Stacklimit. Zeigt die Anzahl der Schildbatterien auf Deathboxes an.",
+      "Bigger Jam – Vergrößert den Schadenradius jedes Ultimate-Jammers um 10 %.",
+      "Split Charge – Gewährt eine zusätzliche Taktik-Aufladung, halbiert jedoch die Schildregenerationsdauer.",
+      "Radiant Transfer – Erhöht die Reichweite der Taktik um 10 Meter."
     ]
-  },
-  "meta": "Gut geeignet für aggressives Teamplay mit Schildunterstützung, stark in Push-Situationen und zur Unterstützung im Nah- bis Midrange-Kampf."
+  }
 },
 {
   "name": "Caustic",
