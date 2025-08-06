@@ -4,40 +4,51 @@
 <meta charset="UTF-8">
 <title>Slyrox-Analytics Dashboard</title>
 <link rel="stylesheet" href="style.css">
+<style>
+/* Admin Button Style */
+#admin-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: #e53935;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+#admin-btn:hover {
+    background: #d32f2f;
+}
+</style>
 
 <script>
-// Passwortschutz für das Dashboard
+// Passwortschutz fürs Dashboard (nur Hauptpasswort)
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Prüfen ob bereits eingeloggt
-    if (!localStorage.getItem("dashboardLoggedIn")) {
-        // 1. Hauptpasswort abfragen
+    // Prüfen ob Hauptpasswort bereits eingegeben wurde
+    if (!localStorage.getItem("dashboardMainAccess")) {
         var pass = prompt("🔑 Passwort erforderlich:");
-        if (pass !== "Analytics1337") { // <-- Dein aktuelles Hauptpasswort hier eintragen
+        if (pass !== "Analytics1337") {
             alert("Falsches Passwort! Zugriff verweigert.");
             window.location.href = "https://google.com";
             return;
         }
-
-        // 2. Admin-Passwort für Logger-Zugriff abfragen
-        var isAdmin = false;
-        var adminPass = prompt("🔒 Admin-Passwort für Match Logger (leer lassen für normalen Zugriff):");
-        if (adminPass === "Admin8112") { // <-- Festgelegtes Admin-Passwort
-            isAdmin = true;
-        }
-
-        // In localStorage merken, dass eingeloggt wurde
-        localStorage.setItem("dashboardLoggedIn", isAdmin ? "admin" : "user");
+        localStorage.setItem("dashboardMainAccess", "true");
     }
 
-    // 3. Match Logger-Button nur anzeigen, wenn Admin
-    var role = localStorage.getItem("dashboardLoggedIn");
-    if (role !== "admin") {
-        var loggerButton = document.getElementById("logger-btn");
-        if (loggerButton) {
-            loggerButton.remove();
+    // Admin-Button Klick-Handler
+    document.getElementById("admin-btn").addEventListener("click", function (e) {
+        e.preventDefault();
+        var adminPass = prompt("🔒 Admin-Passwort erforderlich:");
+        if (adminPass === "Admin8112") {
+            window.location.href = "logger.html";
+        } else {
+            alert("Falsches Admin-Passwort! Zugriff verweigert.");
         }
-    }
+    });
 });
 </script>
 </head>
@@ -45,12 +56,15 @@ document.addEventListener("DOMContentLoaded", function () {
 <body>
 <h1>Welcome to Slyrox-Analytics</h1>
 
+<!-- Admin Button immer sichtbar -->
+<a id="admin-btn">⚙ Admin</a>
+
 <div class="dashboard">
     <a href="weapon.html" class="card">🔫 Weapon Comparison</a>
     <a href="rp.html" class="card">📈 Apex S26 RP-Rechner</a>
     <a href="logger.html" id="logger-btn" class="card">📄 Match Logger</a>
     <a href="legend.html" class="card">📊 Legend Meta</a>
-    <a href="weaponmeta.html" class="card">🔫 Weapon Meta</a> <!-- NEU -->
+    <a href="weaponmeta.html" class="card">🔫 Weapon Meta</a>
 </div>
 
 </body>
