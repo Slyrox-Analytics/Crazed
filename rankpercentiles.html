@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rank Percentiles</title>
+<style>
+  body { background:#121212; color:#fff; font-family:Arial, sans-serif; padding:20px; }
+  h1 { text-align:center; margin-bottom:20px; }
+  table { width:100%; border-collapse:collapse; margin-top:20px; }
+  th, td { padding:10px; text-align:left; border-bottom:1px solid #333; }
+  th { background:#222; }
+  .rank-name { font-weight:bold; font-size:1.1em; color:#ffcc00; }
+  .percent-top { font-weight:bold; }
+  .low { color:#00e676; }   /* sehr selten → grün */
+  .mid { color:#ffeb3b; }   /* mittel → gelb */
+  .high { color:#ff5252; }  /* häufig → rot */
+
+  .back-btn {
+    display:inline-block; margin-bottom:15px; padding:8px 12px;
+    background:#e53935; color:white; text-decoration:none; border-radius:5px; font-weight:bold;
+  }
+  .back-btn:hover { background:#d32f2f; }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
+<h1>📊 Rank Percentiles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Rang</th>
+      <th>Top % der Spieler</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Daten basieren auf Apex Season 25/26 Verteilung 1 -->
+    <tr><td class="rank-name">Bronze IV</td><td class="percent-top high">98,7 %</td></tr>
+    <tr><td class="rank-name">Bronze III</td><td class="percent-top high">97,7 %</td></tr>
+    <tr><td class="rank-name">Bronze II</td><td class="percent-top high">96,3 %</td></tr>
+    <tr><td class="rank-name">Bronze I</td><td class="percent-top high">94,3 %</td></tr>
+
+    <tr><td class="rank-name">Silver IV</td><td class="percent-top high">92,4 %</td></tr>
+    <tr><td class="rank-name">Silver III</td><td class="percent-top high">89,7 %</td></tr>
+    <tr><td class="rank-name">Silver II</td><td class="percent-top high">85,9 %</td></tr>
+    <tr><td class="rank-name">Silver I</td><td class="percent-top high">82,7 %</td></tr>
+
+    <tr><td class="rank-name">Gold IV</td><td class="percent-top mid">79,4 %</td></tr>
+    <tr><td class="rank-name">Gold III</td><td class="percent-top mid">75,4 %</td></tr>
+    <tr><td class="rank-name">Gold II</td><td class="percent-top mid">70,4 %</td></tr>
+    <tr><td class="rank-name">Gold I</td><td class="percent-top mid">65,7 %</td></tr>
+
+    <tr><td class="rank-name">Platinum IV</td><td class="percent-top mid">61,5 %</td></tr>
+    <tr><td class="rank-name">Platinum III</td><td class="percent-top mid">56,6 %</td></tr>
+    <tr><td class="rank-name">Platinum II</td><td class="percent-top mid">49,9 %</td></tr>
+    <tr><td class="rank-name">Platinum I</td><td class="percent-top mid">44,0 %</td></tr>
+
+    <tr><td class="rank-name">Diamond IV</td><td class="percent-top low">38,5 %</td></tr>
+    <tr><td class="rank-name">Diamond III</td><td class="percent-top low">29,2 %</td></tr>
+    <tr><td class="rank-name">Diamond II</td><td class="percent-top low">15,5 %</td></tr>
+    <tr><td class="rank-name">Diamond I</td><td class="percent-top low">8,6 %</td></tr>
+
+    <tr><td class="rank-name">Master</td><td class="percent-top low">4,0 %</td></tr>
+    <tr><td class="rank-name">Apex Predator</td><td class="percent-top low">0,5 %</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>
