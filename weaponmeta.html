@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weapon Meta</title>
+<style>
+  body { background:#121212; color:#fff; font-family:Arial, sans-serif; padding:20px; }
+  h1 { text-align:center; margin-bottom:20px; }
+  select { padding:8px; border:none; border-radius:5px; margin:5px; background:#1e1e1e; color:#fff; }
+  table { width:100%; border-collapse:collapse; margin-top:20px; }
+  th, td { padding:10px; text-align:left; border-bottom:1px solid #333; }
+  th { background:#222; }
+  .weapon-name { font-weight:bold; font-size:1.1em; color:#ffcc00; }
+  .small-data { font-size:0.9em; color:#bbb; }
+  .back-btn {
+    display:inline-block; margin-bottom:15px; padding:8px 12px;
+    background:#e53935; color:white; text-decoration:none; border-radius:5px; font-weight:bold;
+  }
+  .back-btn:hover { background:#d32f2f; }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
+<h1>🔫 Weapon Meta</h1>
+
+<div style="text-align:center;">
+  <label>Plattform:</label>
+  <select id="platform" onchange="updateTable()">
+    <option value="all">Alle</option>
+    <option value="PC">PC</option>
+    <option value="PlayStation">PlayStation</option>
+    <option value="Xbox">Xbox</option>
+  </select>
+
+  <label>Rangbereich:</label>
+  <select id="rank" onchange="updateTable()">
+    <option value="all">Alle Ränge</option>
+    <option value="Bronze">Bronze</option>
+    <option value="Silver">Silber</option>
+    <option value="Gold">Gold</option>
+    <option value="Platinum">Platin</option>
+    <option value="Diamond">Diamant</option>
+    <option value="Master/Predator">Master / Predator</option>
+  </select>
+</div>
+
+<table id="metaTable">
+  <thead>
+    <tr>
+      <th>Platz</th>
+      <th>Waffe</th>
+      <th>Pick-Rate</th>
+      <th>Win-Rate</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+// Beispiel-Daten – später durch echte Live-Daten oder manuelle Updates ersetzen
+const metaData = [
+  { rank: "all", platform: "all", weapon: "R-301 Carbine", pick: "14.5%", win: "53.2%" },
+  { rank: "all", platform: "all", weapon: "Flatline", pick: "12.1%", win: "52.0%" },
+  { rank: "all", platform: "all", weapon: "Nemesis", pick: "10.8%", win: "51.4%" },
+  { rank: "all", platform: "all", weapon: "CAR SMG", pick: "9.9%", win: "50.2%" },
+  { rank: "all", platform: "all", weapon: "R-99", pick: "8.6%", win: "48.9%" },
+  { rank: "all", platform: "all", weapon: "Peacekeeper", pick: "7.5%", win: "49.7%" },
+  { rank: "all", platform: "all", weapon: "Volt SMG", pick: "6.9%", win: "48.4%" },
+  { rank: "all", platform: "all", weapon: "Charge Rifle", pick: "5.7%", win: "47.8%" },
+  { rank: "all", platform: "all", weapon: "G7 Scout", pick: "5.1%", win: "46.9%" },
+  { rank: "all", platform: "all", weapon: "Wingman", pick: "4.8%", win: "46.2%" }
+];
+
+function updateTable() {
+  const tbody = document.querySelector("#metaTable tbody");
+  tbody.innerHTML = "";
+  const plat = document.getElementById("platform").value;
+  const rank = document.getElementById("rank").value;
+
+  const filtered = metaData.filter(m => 
+    (plat === "all" || m.platform === plat) &&
+    (rank === "all" || m.rank === rank)
+  );
+
+  filtered.forEach((m, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${i+1}</td>
+        <td><span class="weapon-name">${m.weapon}</span><br>
+            <span class="small-data">Pick: ${m.pick} | Win: ${m.win}</span></td>
+        <td>${m.pick}</td>
+        <td>${m.win}</td>
+      </tr>
+    `;
+  });
+}
+
+updateTable();
+</script>
+
+</body>
+</html>
