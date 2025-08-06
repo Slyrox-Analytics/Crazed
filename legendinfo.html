@@ -529,54 +529,44 @@ const metaData = [
 },
 {
   "name": "Seer",
-  class: "Recon",
-  "age": 26,
-  "meta": "Mid-Tier Recon Legend, stark in Scans und Gegner-Tracking, sehr effektiv im 1v1 und beim Dritten.",
-  "abilities": {
-    "passive": {
-      "name": "Heart Seeker",
-      "description": "Hört und visualisiert Herzschläge von Gegnern innerhalb von 50m beim Zielen durchs Visier."
+    "class": "Recon",
+    "age": 26,
+    "meta": "Mid-Tier Recon Legend, stark in Scans und Gegner-Tracking, sehr effektiv im 1v1 und beim Dritten.",
+    "abilities": {
+        "passive": {
+            "name": "Heart Seeker",
+            "description": "Hört und visualisiert Herzschläge von Gegnern innerhalb von 50m beim Zielen durchs Visier."
+        },
+        "tactical": {
+            "name": "Focus of Attention",
+            "description": "Ruft Mikro-Drohnen, die eine verzögerte Explosion auslösen, durch Wände gehen, Gegner zum Schweigen bringen und aufdecken.",
+            "cooldown": "30s"
+        },
+        "ultimate": {
+            "name": "Exhibit",
+            "description": "Erstellt eine Sphäre aus Mikro-Drohnen, die Gegner beim schnellen Bewegen oder Schießen innerhalb sichtbar machen.",
+            "cooldown": "120s"
+        }
     },
-    "tactical": {
-      "name": "Focus of Attention",
-      "description": "Ruft Mikro-Drohnen, die eine verzögerte Explosion auslösen, durch Wände gehen, Gegner zum Schweigen bringen und aufdecken.",
-      "cooldown": "30s"
+    "Class": {
+        "name": "Recon",
+        "perks": [
+            "Access Survey Beacons: Kann Beacons scannen, um Gegnerpositionen in der Nähe aufzudecken.",
+            "Threat Vision: Gegner im Scan-Bereich werden beim Zielen hervorgehoben."
+        ]
     },
-    "ultimate": {
-      "name": "Exhibit",
-      "description": "Erstellt eine Sphäre aus Mikro-Drohnen, die Gegner beim schnellen Bewegen oder Schießen innerhalb sichtbar machen.",
-      "cooldown": "120s"
+    "upgrades": {
+        "level1": [
+            {
+                "name": "Artist's Reach",
+                "description": "Erhöht die Wurfweite des Ultimates um 20 Meter."
+            },
+            {
+                "name": "Ultimate Cooldown",
+                "description": "Reduziert die Abklingzeit des Ultimates um 20%."
+            }
+        ]
     }
-  },
-  "class": {
-    "name": "Recon",
-    "perks": [
-      "Access Survey Beacons: Kann Beacons scannen, um Gegnerpositionen in der Nähe aufzudecken.",
-      "Threat Vision: Gegner im Scan-Bereich werden beim Zielen hervorgehoben."
-    ]
-  },
-  "upgrades": {
-    "level1": [
-      {
-        "name": "Artist's Reach",
-        "description": "Erhöht die Wurfweite des Ultimates um 20 Meter."
-      },
-      {
-        "name": "Ultimate Cooldown",
-        "description": "Reduziert die Abklingzeit des Ultimates um 20%."
-      }
-    ],
-    "level2": [
-      {
-        "name": "Long View",
-        "description": "Erhöht Reichweite von Passiv und Taktik auf 75 Meter."
-      },
-      {
-        "name": "Split Focus",
-        "description": "Erhält eine zusätzliche Taktik-Aufladung; verringert die Dauer der Stille um 50%."
-      }
-    ]
-  }
 },
 {
   "name": "Vantage",
