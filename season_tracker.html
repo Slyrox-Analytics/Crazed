@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Season Performance Tracker</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #121212; color: #fff; padding: 20px; }
+    h1 { text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input { width: 100%; padding: 8px; margin-top: 5px; border: none; border-radius: 5px; }
+    button { margin-top: 15px; padding: 10px; border: none; background: #e53935; color: white; cursor: pointer; border-radius: 5px; width: 100%; }
+    button:hover { background: #d32f2f; }
+    canvas { background: #1e1e1e; border-radius: 8px; margin-top: 20px; padding: 10px; }
+  </style>
+</head>
+<body>
+
+<h1>📊 Season Performance Tracker</h1>
+
+<label>Season:</label>
+<input type="text" id="season">
+
+<label>KD-Wert:</label>
+<input type="number" id="kd" step="0.01" min="0">
+
+<label>Average Damage:</label>
+<input type="number" id="avgDamage" step="1" min="0">
+
+<button onclick="addSeasonData()">Season speichern</button>
+<button onclick="resetSeasonData()">Zurücksetzen</button>
+
+<canvas id="kdChart" height="100"></canvas>
+<canvas id="avgChart" height="100"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let seasonData = JSON.parse(localStorage.getItem('seasonPerformance')) || [];
+let kdChart, avgChart;
+
+function renderCharts() {
+  if (kdChart) kdChart.destroy();
+  if (avgChart) avgChart.destroy();
+
+  const labels = seasonData.map(d => d.season);
+
+  kdChart = new Chart(document.getElementById('kdChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'KD-Verlauf',
+        data: seasonData.map(d => d.kd),
+        borderColor: '#29b6f6',
+        fill: false
+      }]
+    }
+  });
+
+  avgChart = new Chart(document.getElementById('avgChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Average Damage Verlauf',
+        data: seasonData.map(d => d.avgDamage),
+        borderColor: '#66bb6a',
+        fill: false
+      }]
+    }
+  });
+}
+
+function addSeasonData() {
+  const season = document.getElementById('season').value.trim();
+  const kd = parseFloat(document.getElementById('kd').value);
+  const avgDamage = parseInt(document.getElementById('avgDamage').value);
+
+  if (!season || isNaN(kd) || isNaN(avgDamage)) {
+    alert("Bitte alle Felder korrekt ausfüllen.");
+    return;
+  }
+
+  seasonData.push({ season, kd, avgDamage });
+  localStorage.setItem('seasonPerformance', JSON.stringify(seasonData));
+  renderCharts();
+}
+
+function resetSeasonData() {
+  if (!confirm("Willst du wirklich alle Season-Daten löschen?")) return;
+  seasonData = [];
+  localStorage.removeItem('seasonPerformance');
+  renderCharts();
+}
+
+renderCharts();
+</script>
+
+</body>
+</html>
