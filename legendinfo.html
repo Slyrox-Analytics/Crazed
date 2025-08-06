@@ -1,120 +1,1166 @@
-<!-- BEGIN LEGENDINFO.HTML -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Legend Info – Apex Season 26</title>
+<title>Legend Info – Apex Legends</title>
 <style>
-/* Grundlayout */
-body { background:#121212; color:#fff; font-family:Arial,sans-serif; padding:20px; }
-h1 { text-align:center; margin-bottom:20px; }
-select { width:100%; padding:8px; margin:15px 0; background:#1e1e1e; color:#fff; border:none; border-radius:5px; }
-/* Fähigkeitsblock */
-.legend-section { background:#1e1e1e; padding:15px; border-radius:8px; margin-top:20px; display:none; }
-.legend-name { font-size:1.4em; color:#ffcc00; margin-bottom:10px; }
-.ability { margin-bottom:10px; }
-.ability .icon { font-size:1.2em; margin-right:6px; }
-.ability-title { font-weight:bold; }
-/* Perksblock */
-.perk-block { border:2px solid #555; border-radius:6px; padding:10px; margin-top:15px; }
-.perk-block.blue { border-color:#2196F3; }
-.perk-block.purple { border-color:#9C27B0; }
-.perk-title { font-weight:bold; margin-bottom:6px; }
-.perk-list { margin:0; padding-left:20px; list-style:disc; }
-.back-btn { display:inline-block; margin-bottom:15px; padding:8px 12px; background:#e53935; color:white; text-decoration:none; border-radius:5px; font-weight:bold; }
-.back-btn:hover { background:#d32f2f; }
+  body {
+    background: #121212;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  select {
+    padding: 8px;
+    margin: 10px 0;
+    background: #1e1e1e;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 5px;
+  }
+  h2 { margin-top: 20px; }
+  h3 { margin-bottom: 5px; }
+  p { margin: 5px 0; }
+  .section {
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+  }
 </style>
 </head>
 <body>
-<a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
-<h1>📜 Legend Info</h1>
 
-<label>Legende wählen:</label>
-<select id="legendSelect" onchange="showLegendInfo()">
-  <option value="">-- auswählen --</option>
+<h1>Legend Info – Apex Legends</h1>
+
+<label for="classSelect">Klasse wählen:</label>
+<select id="classSelect">
+  <option value="">-- Wähle eine Klasse --</option>
+  <option value="Skirmisher">Skirmisher</option>
+  <option value="Assault">Assault</option>
+  <option value="Support">Support</option>
+  <option value="Controller">Controller</option>
+  <option value="Recon">Recon</option>
 </select>
 
-<div id="legendInfo" class="legend-section">
-  <div class="legend-name"></div>
-  <div class="ability"><span class="icon" style="color:#4fc3f7;">🟢</span><span class="ability-title">Passive:</span> <span class="ability-text"></span></div>
-  <div class="ability"><span class="icon" style="color:#2196F3;">🔵</span><span class="ability-title">Taktisch:</span> <span class="ability-text"></span></div>
-  <div class="ability"><span class="icon" style="color:#f44336;">🔴</span><span class="ability-title">Ultimativ:</span> <span class="ability-text"></span></div>
-  <div class="perk-block blue">
-    <div class="perk-title">🔵 Blue‑Perks:</div>
-    <ul class="perk-list"></ul>
-  </div>
-  <div class="perk-block purple">
-    <div class="perk-title">🟣 Purple‑Perks:</div>
-    <ul class="perk-list"></ul>
-  </div>
-</div>
+<label for="legendSelect">Legende wählen:</label>
+<select id="legendSelect">
+  <option value="">-- Wähle eine Legende --</option>
+</select>
+
+<div id="legendInfo" class="section"></div>
 
 <script>
-// Legendendaten
-const legends = [
-  {
-    name: "Ash",
-    passive: "Predator’s Pursuit – zeigt Todesboxen & markiert Feinde.",
-    tactical: "Arc Snare (Cooldown 25 s) – Falle verlangsamt + hält fest.",
-    ultimate: "Phase Breach (Cooldown 120 s) – Portal über mittlere Distanz.",
-    perksBlue: ["Greedy Snare: Snare bleibt **15 s** aktiv", "Quick Snare: **−10 % CD**"],
-    perksPurple: ["Twin Snare: **+1 Tac‑Charge**", "Rapid Velocity: **+25 % Speed nach Kill**"]
-  },
+const metaData = [
   {
     name: "Bangalore",
-    passive: "Double Time – **+5 % Bewegungsgeschw.** bei Beschuss.",
-    tactical: "Smoke Launcher (**Cooldown 30 s**) wirft dichte Rauchgranate.",
-    ultimate: "Rolling Thunder (**Cooldown 210 s**) – Artillerieschlag.",
-    perksBlue: ["Cover Me: Heilung beim Trigger + Ping", "Extra Smoke Charge"],
-    perksPurple: ["Electric Smoke: zerstört Tac/Ultimates +100 DMG", "ECM Payload: Ult +10 DMG & zerstört Deployables"]
+    class: "Assault",
+    age: 38,
+    tactical: {
+      name: "Smoke Launcher",
+      description: "Feuert eine Rauchgranate mit hoher Geschwindigkeit, die beim Aufprall explodiert und eine Rauchwand erzeugt.",
+      cooldown: "33 Sek.",
+      duration: "23 Sek. Rauchdauer",
+      range: "75 Meter"
+    },
+    passive: {
+      name: "Double Time",
+      description: "Erhöht die Sprintgeschwindigkeit um 30 %, wenn sie unter Beschuss gerät.",
+      duration: "2 Sek."
+    },
+    ultimate: {
+      name: "Rolling Thunder",
+      description: "Fordert einen Artillerieschlag an, der langsam über das Zielgebiet rollt.",
+      cooldown: "180 Sek.",
+      detonationDelay: "8 Sek. nach Aufschlag",
+      radius: "ca. 70 Meter"
+    },
+    perks: {
+      blue: [
+        "Electric Smoke – Elektrisiert Smoke Launcher, verursacht 100 Schaden an feindlichen Ultimates und zerstört gegnerische Tacticals",
+        "Cover Me! – Verbündete regenerieren HP im Rauch. Auto‑Ping für Gegner, die die Passive auslösen"
+      ],
+      purple: [
+        "ECM Payload – Elektrisiert Rolling Thunder, verursacht 10 zusätzlichen Schaden und zerstört alle gegnerischen Deployables",
+        "Medal of Honor – Schnellere Revives und Passive wird ausgelöst, wenn man zu einem niedergeschlagenen Verbündeten sprintet"
+      ]
+    },
+    meta: "Aggressive Allrounderin mit starkem Area‑Denial. Rauch blockiert Sichtlinien und eröffnet Push‑Optionen, Perks erweitern Utility und Support‑Potenzial.",
+    tier: "A"
   },
   {
-    name: "Caustic",
-    passive: "Field Research – Sammle Punkte für Gas‑Upgrades.",
-    tactical: "Nox Gas Trap (**Cooldown 22 s**) – Gasradius +17 %.",
-    ultimate: "Nox Gas Grenade (**Cooldown 120 s**, Dauer **20 s**) – verlangsamt & schadet.",
-    perksBlue: ["Extra Traps: **+2 Traps** & +1 Charge", "Breathe It In: HP‑Regeneration im Gas"],
-    perksPurple: ["Gas Fighter: Tac lädt **300  % schneller** im Gas", "Particle Diffuser: Gas‑Radius **+50 %**"]
+    name: "Revenant",
+    class: "Assault",
+    age: "Unbekannt",
+    tactical: {
+      name: "Shadow Pounce",
+      description: "Springt mit einem kraftvollen Satz nach vorne. Gedrückt halten, um weiter zu springen.",
+      cooldown: "25 Sek.",
+      range: "ca. 35 Meter (geladen), 20 Meter (sofort)"
+    },
+    passive: {
+      name: "Assassin's Instinct",
+      description: "Markiert verletzte sichtbare Gegner in der Nähe. Erhöht Kletterhöhe, schnelleres Schleichen."
+    },
+    ultimate: {
+      name: "Forged Shadows",
+      description: "Erzeugt eine Hülle aus gehärteten Schatten, die Schaden blockt und regeneriert. Knockdowns regenerieren Schatten.",
+      cooldown: "180 Sek.",
+      duration: "25 Sek."
+    },
+    perks: {
+      blue: [
+        "Ultimate Cooldown – Verringert Ultimate‑Abklingzeit um 30 Sekunden",
+        "Try To Hide – Verdoppelt die Markierungsdauer von Gegnern mit wenig Gesundheit"
+      ],
+      purple: [
+        "Tactical Cooldown – Verringert Tactical‑Abklingzeit um 5 Sekunden",
+        "Agile Assassin – Reduziert Lade‑ und Ausführungszeit von Shadow Pounce um ca. 50 %"
+      ]
+    },
+    meta: "Extrem mobiler Assassin mit Burst‑Initiation und Self‑Sustain. Perfekt für schnelle Eliminierungen und Flank‑Plays.",
+    tier: "A"
   },
-  // ► Rest der Legends analog: Nutzung von Season 25-Daten
+  {
+    name: "Ballistic",
+    class: "Assault",
+    age: 63,
+    tactical: {
+      name: "Whistler",
+      description: "Feuert ein Projektil, das die Waffe eines Gegners überhitzt und Schaden verursacht. Gedrückt halten zum Anvisieren.",
+      cooldown: "16 Sek.",
+      duration: "3 Sek. Überhitzungswirkung",
+      range: "ca. 50 Meter"
+    },
+    passive: {
+      name: "Sling",
+      description: "Ermöglicht das Tragen einer dritten Waffe im Sling-Slot (keine Aufsätze möglich). Zugriff über Inventar oder Taste 5."
+    },
+    ultimate: {
+      name: "Tempest",
+      description: "Verbündete in der Nähe erhalten schnellere Nachladegeschwindigkeit und unendliche Munition. Die Sling‑Waffe wird zu Gold aufgewertet.",
+      cooldown: "120 Sek.",
+      duration: "25 Sek."
+    },
+    perks: {
+      blue: [
+        "Extra Bullets – Verdoppelt die Anzahl der Whistler‑Aufladungen",
+        "Killing Time – Erhöht die Dauer der Ultimate um 15 Sek."
+      ],
+      purple: [
+        "Lasting Bullet – Verdreifacht die Wirkungsdauer des Whistler‑Projektils in der Welt",
+        "Quiet Time – Überhitzt ein Gegner durch Whistler, wird er für kurze Zeit zum Schweigen gebracht"
+      ]
+    },
+    meta: "Starker Waffen‑Disruptor und Support‑Assault. Mit Whistler lassen sich Gegner gezielt im Feuerkampf schwächen, während Tempest das Team im Push stark macht.",
+    tier: "A"
+  },
+  {
+    name: "Fuse",
+    class: "Assault",
+    age: 55,
+    tactical: {
+      name: "Knuckle Cluster",
+      description: "Feuert eine Granate, die beim Aufprall in mehrere Explosionen splittert und kontinuierlich Sprengladungen abgibt.",
+      cooldown: "20 Sek.",
+      duration: "6 Sek. Explosionsserie",
+      range: "ca. 30 Meter"
+    },
+    passive: {
+      name: "Grenadier",
+      description: "Kann Granaten weiter, schneller und präziser werfen. Trägt doppelt so viele Granaten pro Inventar‑Slot."
+    },
+    ultimate: {
+      name: "The Motherlode",
+      description: "Feuert einen Raketenwerfer, der ein Zielgebiet in einem Feuerring einschließt.",
+      cooldown: "120 Sek.",
+      duration: "17 Sek. Feuerring"
+    },
+    perks: {
+      blue: [
+        "Ringmaster – Erhält Zugang zu Ring‑Konsolen",
+        "Scar Tissue – Nimmt deutlich weniger Schaden und ignoriert Verlangsamungseffekte von The Motherlode"
+      ],
+      purple: [
+        "Knuckle Hustler – Erhält kurzzeitig erhöhte Bewegungsgeschwindigkeit bei einem Treffer mit Knuckle Cluster",
+        "Wreckless – Erleidet 50 % weniger Explosionsschaden"
+      ]
+    },
+    meta: "Explosiver Area‑Denial‑Spezialist. Stört Gegner mit kontinuierlichem Granatendruck und kann mit Motherlode ganze Bereiche absperren.",
+    tier: "B"
+  },
+  {
+    name: "Mad Maggie",
+    class: "Assault",
+    age: 55,
+    tactical: {
+      name: "Riot Drill",
+      description: "Feuert eine Bohrladung, die sich an Hindernissen festsetzt und die andere Seite mit Feuer verbrennt.",
+      cooldown: "22 Sek.",
+      duration: "10 Sek. Brenndauer",
+      range: "ca. 20 Meter"
+    },
+    passive: {
+      name: "Warlord's Ire",
+      description: "Markiert kurzzeitig Gegner, die sie beschädigt hat. Erhöhte Bewegungsgeschwindigkeit mit Schrotflinten."
+    },
+    ultimate: {
+      name: "Wrecking Ball",
+      description: "Wirft eine Kugel, die Speed‑Pads platziert und in der Nähe von Gegnern explodiert.",
+      cooldown: "120 Sek.",
+      duration: "Bis zur letzten Explosion (~10 Sek. nach Aufprall)"
+    },
+    perks: {
+      blue: [
+        "Shots Shots Shots – Lädt Schrotflinten nach einem Knock automatisch nach",
+        "Fire Ball – Wrecking Ball fängt Feuer und explodiert in Thermit"
+      ],
+      purple: [
+        "Drillslinger – Erhält eine zusätzliche Riot Drill‑Ladung, aktive Dauer reduziert um 25 %",
+        "Big Drill – Erhöht Tiefe und Breite der Riot Drill um 50 %"
+      ]
+    },
+    meta: "Aggressive Nahkampf‑ und Anti‑Deckungs‑Legende. Perfekt für Push‑Plays und das Aufbrechen fester Gegnerpositionen.",
+    tier: "B"
+  },
+  {
+    name: "Pathfinder",
+    class: "Skirmisher",
+    age: "Unbekannt (MRVN‑Roboter)",
+    tactical: {
+      name: "Grappling Hook",
+      description: "Feuert einen Enterhaken, um schnell schwer erreichbare Orte zu erreichen.",
+      cooldown: "10–30 Sek. (abhängig von zurückgelegter Distanz)",
+      range: "ca. 21 Meter"
+    },
+    passive: {
+      name: "Insider Knowledge",
+      description: "Scanne Care Packages, Ring‑Konsolen oder Survey Beacons, um 25 % der Aufladezeit der Zipline Gun wiederherzustellen und die Abklingzeit dauerhaft um 10 Sek. zu verringern."
+    },
+    ultimate: {
+      name: "Zipline Gun",
+      description: "Erstellt eine Zipline für alle Spieler. Benutzer erleiden 50 % weniger Schaden, solange sie aufgeladen ist.",
+      cooldown: "120 Sek.",
+      range: "ca. 100 Meter"
+    },
+    perks: {
+      blue: [
+        "Field Research – Zugriff auf Survey Beacons",
+        "Ringmaster – Zugriff auf Ring‑Konsolen"
+      ],
+      purple: [
+        "Grapple God – Zweite Grapple‑Ladung",
+        "Feeling Zippy – Zweite Zipline‑Ladung"
+      ]
+    },
+    meta: "Sehr mobiler Aufklärer mit Team‑Utility durch Zipline. Flexibel einsetzbar für schnelles Rotieren und High‑Ground‑Plays.",
+    tier: "A"
+  },
+  {
+    name: "Wraith",
+    class: "Skirmisher",
+    age: 32,
+    tactical: {
+      name: "Into the Void",
+      description: "Teleportiert dich kurzzeitig in den 'Void'-Raum, wodurch du allen Schaden vermeidest und dich neu positionieren kannst.",
+      cooldown: "25 Sek.",
+      duration: "4 Sek."
+    },
+    passive: {
+      name: "Voices from the Void",
+      description: "Warnt dich mit einer Stimme, wenn Gefahr naht."
+    },
+    ultimate: {
+      name: "Dimensional Rift",
+      description: "Verbindet zwei Orte mit einem Portal für 45 Sekunden.",
+      cooldown: "180 Sek.",
+      duration: "45 Sek."
+    },
+    perks: {
+      blue: [
+        "Sixth Sense – Passive warnt, wenn sich die Anzahl der Gegnertrupps in der Nähe erhöht",
+        "Ultimate Cooldown+ – Verringert Ultimate‑Abklingzeit um 60 Sekunden"
+      ],
+      purple: [
+        "Fast Phase – Verkürzt die Aufladezeit von Into the Void um 30 %",
+        "Tactical Cooldown – Verringert Tactical‑Abklingzeit um 5 Sekunden"
+      ]
+    },
+    meta: "Sehr mobile Legende für Flankenangriffe und schnelles Entkommen. Portale ermöglichen taktische Rotationen für das ganze Team.",
+    tier: "A"
+  },
+  {
+    name: "Octane",
+    class: "Skirmisher",
+    age: 24,
+    tactical: {
+      name: "Stim",
+      description: "Erhöht Gehgeschwindigkeit um 30 % und Sprintgeschwindigkeit um 40 % für 6 Sekunden. Kostet Gesundheit, reduziert Verlangsamungseffekte während der Dauer.",
+      cooldown: "1 Sek. zwischen Nutzungen",
+      duration: "6 Sek."
+    },
+    passive: {
+      name: "Swift Mend",
+      description: "Regeneriert Gesundheit automatisch, wenn kein Schaden genommen wird."
+    },
+    ultimate: {
+      name: "Launch Pad",
+      description: "Platziert ein Sprungpad, das Spieler weit in die Luft katapultiert. Ermöglicht Doppelsprung in der Luft.",
+      cooldown: "90 Sek.",
+      range: "Variabel (abhängig vom Absprungwinkel)"
+    },
+    perks: {
+      blue: [
+        "Thick Skin – Nimmt 5 weniger Stim‑Schaden",
+        "Mad Hops – Erhält eine zusätzliche Launch Pad‑Ladung"
+      ],
+      purple: [
+        "Thick Skin – Nimmt 5 weniger Stim‑Schaden",
+        "Airborne Agility – Ändert die Richtung beim Launch Pad‑Doppelsprung"
+      ]
+    },
+    meta: "Extrem mobiler Aggressor mit Dauer‑Push‑Potenzial. Stim ermöglicht konstantes Re‑Engagen, Launch Pad bringt das ganze Team schnell in Position.",
+    tier: "A"
+  },
+  {
+    name: "Horizon",
+    class: "Skirmisher",
+    age: 39,
+    tactical: {
+      name: "Gravity Lift",
+      description: "Kehrt den Gravitationsfluss um, hebt Spieler nach oben und stößt sie beim Verlassen nach außen.",
+      cooldown: "21 Sek.",
+      duration: "10 Sek.",
+      range: "ca. 20 Meter"
+    },
+    passive: {
+      name: "Spacewalk",
+      description: "Erhöht die Luftkontrolle und reduziert Fallschaden dank Horizons Raumanzug."
+    },
+    ultimate: {
+      name: "Black Hole",
+      description: "Platziert NEWT, um ein Mikro‑Schwarzes Loch zu erzeugen, das Gegner anzieht.",
+      cooldown: "210 Sek.",
+      duration: "12 Sek. Anziehung"
+    },
+    perks: {
+      blue: [
+        "Tactical Cooldown – Verringert Tactical‑Abklingzeit um 5 Sekunden",
+        "Ultimate Cooldown – Verringert Ultimate‑Abklingzeit um 30 Sekunden"
+      ],
+      purple: [
+        "Conservation of Energy – Horizons Spacewalk gewährt 25 Schildpunkte Regeneration bei weichen Landungen",
+        "Combat Reserve – Zugriff auf Assault‑Klassenkisten, zusätzliche Munition pro Stapel und zusätzliche Granatenslots"
+      ]
+    },
+    meta: "Extrem starker Vertikal‑Controller. Perfekt zum Rotieren, Kämpfe von oben zu eröffnen und Gegner in Kombination mit Area‑Damage‑Ultimates festzusetzen.",
+    tier: "S"
+  },
+  {
+    name: "Ash",
+    class: "Skirmisher",
+    age: 48,
+    tactical: {
+      name: "Arc Snare",
+      description: "Wirft eine rotierende Falle, die den ersten Gegner in der Nähe verletzt und fesselt.",
+      cooldown: "25 Sek.",
+      duration: "3 Sek. Fesselung",
+      range: "ca. 20 Meter"
+    },
+    passive: {
+      name: "Predator's Pursuit",
+      description: "Führe in der Luft einen Dash aus, um Distanz zu überbrücken oder Angriffswinkel zu verändern."
+    },
+    ultimate: {
+      name: "Phase Breach",
+      description: "Reißt ein Einweg‑Portal zu einer anvisierten Position auf.",
+      cooldown: "120 Sek.",
+      range: "ca. 60 Meter"
+    },
+    perks: {
+      blue: [
+        "Dual Breach – Erhält eine zusätzliche Phase Breach‑Ladung",
+        "Marked for Death – Gegner‑Todeskisten sind auf der Karte sichtbar"
+      ],
+      purple: [
+        "Twin Snares – Erhält eine zusätzliche Arc Snare‑Ladung",
+        "Greedy Snare – Arc Snare‑Dauer im Spiel verdreifacht und kann mehrere Gegner fangen"
+      ]
+    },
+    meta: "Extrem starke Engage‑Legende mit aggressiven Entry‑Möglichkeiten. Perfekt für schnelle Pushes und das Ausschalten isolierter Gegner.",
+    tier: "A"
+  },
+  {
+    name: "Alter",
+    class: "Skirmisher",
+    age: "Unbekannt",
+    tactical: {
+      name: "Void Passage",
+      description: "Erstellt einen Portal‑Durchgang durch eine feste Oberfläche.",
+      cooldown: "25 Sek.",
+      duration: "Portal bleibt 15 Sek. offen",
+      range: "ca. 20 Meter"
+    },
+    passive: {
+      name: "Gift from the Rift",
+      description: "Kann mit Deathboxes aus der Ferne interagieren, um einen Gegenstand zu nehmen (außer Schildkerne). Kann Banner von Teamkameraden aus der Ferne einsammeln."
+    },
+    ultimate: {
+      name: "Void Nexus",
+      description: "Platziert einen Sammelpunkt, über den Verbündete aus der Ferne ein Portal zurück zu diesem Punkt öffnen können. Es können bis zu zwei Void Nexuses gleichzeitig existieren.",
+      cooldown: "180 Sek.",
+      duration: "Portal bleibt 30 Sek. aktiv"
+    },
+    perks: {
+      blue: [
+        "Eye to Another World – Zugriff auf Survey Beacons, Zielmarkierung mit Bedrohungssicht beim Zielen",
+        "Controller of Worlds – Zugriff auf Ring‑Konsolen, erhält Zonen‑Überladung"
+      ],
+      purple: [
+        "Staring into the Void – Verlängert die Scan‑Dauer bei Void Passage um 15 Sek.",
+        "Void Breacher – Verbündete erhalten beim Durchqueren einer Void Passage erhöhte Bewegungsgeschwindigkeit und Waffenhandhabung"
+      ]
+    },
+    meta: "Flexible Skirmisher‑Legende mit einzigartiger Portal‑Mechanik für aggressives Eindringen oder sicheren Rückzug. Perfekt für Team‑Rotationen und taktische Überraschungen.",
+    tier: "A"
+  },
   {
     name: "Bloodhound",
-    passive: "Tracker – zeigt frische Spuren und Gegnerdetails.",
-    tactical: "Eye of the Allfather (Cooldown 25 s) – scannt Feinde & Fallen.",
-    ultimate: "Beast of the Hunt (Cooldown 180 s, Dauer 30 s) – Speed + Threat‑Vision.",
-    perksBlue: ["Hunter’s Focus: Tac‑Cooldown **−5 s**", "Echo Locator: längere Reveal"],
-    perksPurple: ["Tactical Vision: längeres Reveal", "Beast Enhanced: **+10 % Speed** während Ult"]
+    class: "Recon",
+    age: "Unbekannt",
+    tactical: {
+      name: "Eye of the Allfather",
+      description: "Scannt kurzzeitig Gegner, Fallen und Hinweise in einem Kegel vor dir, auch durch Wände.",
+      cooldown: "25 Sek.",
+      duration: "3 Sek. Markierung",
+      range: "75 Meter"
+    },
+    passive: {
+      name: "Tracker",
+      description: "Sieht Spuren von Gegnern und kann sie markieren. Weiße Raben erscheinen gelegentlich und führen zu Gegnern."
+    },
+    ultimate: {
+      name: "Beast of the Hunt",
+      description: "Erhöht Bewegungsgeschwindigkeit und hebt Gegner optisch hervor. Beschwört beim Aktivieren einen Weißen Raben.",
+      cooldown: "180 Sek.",
+      duration: "30 Sek."
+    },
+    perks: {
+      blue: [
+        "Odin's Glare – Verdoppelt die Dauer der Gegner‑Markierung von Eye of the Allfather",
+        "Raven's Blessing – Aktivierte Weiße Raben laden das Ultimate zu 20 % auf"
+      ],
+      purple: [
+        "Sighthound – Reduziert Tactical‑Abklingzeit um 50 % während das Ultimate aktiv ist",
+        "Flock – Entfernt die Reichweitenbegrenzung für das Erscheinen Weißer Raben"
+      ]
+    },
+    meta: "Aufklärungsexperte für aggressives oder defensives Spiel. Starker Scout mit hervorragender Team‑Synergie durch Scans und Zielverfolgung.",
+    tier: "A"
+  },
+  {
+    name: "Crypto",
+    class: "Recon",
+    age: 31,
+    tactical: {
+      name: "Surveillance Drone",
+      description: "Steuert eine Drohne zur Aufklärung, Markierung von Gegnern und Interaktion mit Objekten wie Survey Beacons, Respawn Beacons und Banner-Karten.",
+      cooldown: "40 Sek.",
+      range: "ca. 200 Meter"
+    },
+    passive: {
+      name: "Neurolink",
+      description: "Gegner und Fallen, die von der Drohne erfasst werden, sind für Crypto und Verbündete bis zu einer Reichweite von 30 Metern sichtbar."
+    },
+    ultimate: {
+      name: "Drone EMP",
+      description: "Löst ein EMP von der Drohne aus, das 50 Schildschaden verursacht, Gegner verlangsamt und Fallen zerstört.",
+      cooldown: "180 Sek.",
+      radius: "30 Meter"
+    },
+    perks: {
+      blue: [
+        "Network Expansion – Erhöht Neurolink‑ und EMP‑Reichweite um 25 %",
+        "Off the Grid – Crypto wird beim Wechsel in die Drohne für kurze Zeit getarnt"
+      ],
+      purple: [
+        "Satellite Imagery – Drohnen‑Scan hält 1,5 Sek. an und scannt erneut nach EMP‑Treffer",
+        "Hackathon – Erhöht Drohnen‑Aufladerate und gewährt einen Speed‑Boost, wenn sie explodiert"
+      ]
+    },
+    meta: "Starker Recon‑Controller mit ständiger Übersicht über das Schlachtfeld. Drohne ermöglicht sichere Revives, EMP bricht gegnerische Verteidigungslinien.",
+    tier: "B"
+  },
+{
+  name: "Valkyrie",
+  class: "Recon",
+  age: 30,
+  tactical: {
+    name: "Missile Swarm",
+    description: "Feuert eine Salve aus Mini-Raketen, die Gegner beschädigen und desorientieren.",
+    cooldown: "30 Sek.",
+    damage: "Ca. 25 pro Treffer",
+    effect: "Kurzer Stun-Effekt (~2 Sek.), Flächenschaden"
+  },
+  passive: {
+    name: "VTOL Jets",
+    description: "Drücke SPACE in der Luft, um den Jetpack zu aktivieren und Threat Vision zu erhalten. Umschaltbar zwischen Halten und Umschalten in den Einstellungen.",
+    fuelUsage: "Ca. 8 %/Sek. im Flug",
+    fuelRecharge: "Beginnt nach 8 Sek. ohne Nutzung, volle Ladung in ca. 10 Sek."
+  },
+  ultimate: {
+    name: "Skyward Dive",
+    description: "Starte nach kurzer Vorbereitung in die Luft. Teammitglieder können beitreten. Zweiter Tastendruck startet den Aufstieg. Scannt Gegner in großem Umkreis während des Fluges.",
+    cooldown: "120 Sek.",
+    prepTime: "2 Sek."
+  },
+  perks: {
+    blue: [
+      "Afterburners – Startet 15 % höher mit Skyward Dive",
+      "Full Coverage – -5 Sek. Tactical-Cooldown; Raketenmuster von 4×3 auf 3×5 geändert"
+    ],
+    purple: [
+      "Full Tank – 25 % mehr Treibstoff und kürzere Verzögerung bis zur Regeneration",
+      "Eyes in the Sky – Gegner werden während Skyward Dive aus größerer Entfernung und durch Wände erkannt"
+    ]
+  },
+  meta: "Extrem starke Mobilitäts-Legende für schnelle Positionswechsel, Flankenangriffe und Endzone-Rotation. Jetpack erlaubt flexible Vertikalität, Skyward Dive ermöglicht sichere Team-Rotationen.",
+  tier: "A"
+},
+{
+  "name": "Seer",
+  "age": 26,
+  "meta": "Mid-Tier Recon Legend, stark in Scans und Gegner-Tracking, sehr effektiv im 1v1 und beim Dritten.",
+  "abilities": {
+    "passive": {
+      "name": "Heart Seeker",
+      "description": "Hört und visualisiert Herzschläge von Gegnern innerhalb von 50m beim Zielen durchs Visier."
+    },
+    "tactical": {
+      "name": "Focus of Attention",
+      "description": "Ruft Mikro-Drohnen, die eine verzögerte Explosion auslösen, durch Wände gehen, Gegner zum Schweigen bringen und aufdecken.",
+      "cooldown": "30s"
+    },
+    "ultimate": {
+      "name": "Exhibit",
+      "description": "Erstellt eine Sphäre aus Mikro-Drohnen, die Gegner beim schnellen Bewegen oder Schießen innerhalb sichtbar machen.",
+      "cooldown": "120s"
+    }
+  },
+  "class": {
+    "name": "Recon",
+    "perks": [
+      "Access Survey Beacons: Kann Beacons scannen, um Gegnerpositionen in der Nähe aufzudecken.",
+      "Threat Vision: Gegner im Scan-Bereich werden beim Zielen hervorgehoben."
+    ]
+  },
+  "upgrades": {
+    "level1": [
+      {
+        "name": "Artist's Reach",
+        "description": "Erhöht die Wurfweite des Ultimates um 20 Meter."
+      },
+      {
+        "name": "Ultimate Cooldown",
+        "description": "Reduziert die Abklingzeit des Ultimates um 20%."
+      }
+    ],
+    "level2": [
+      {
+        "name": "Long View",
+        "description": "Erhöht Reichweite von Passiv und Taktik auf 75 Meter."
+      },
+      {
+        "name": "Split Focus",
+        "description": "Erhält eine zusätzliche Taktik-Aufladung; verringert die Dauer der Stille um 50%."
+      }
+    ]
   }
-  // ► Alle weiteren Legends ergänzen …
+},
+{
+  "name": "Vantage",
+  "alter": 19,
+  "meta": "Mid-Range Recon / Sniper Support",
+  "klasse": "Recon",
+  "passive": {
+    "name": "Spotter’s Lens",
+    "beschreibung": "ADS mit dem Monokular zeigt gegnerische Gesundheitsbalken und Schildstufen. Ping-System zur Markierung mehrerer weit entfernter Ziele. Zeigt bei mittleren bis langen Distanzen Kugelfall-Indikator an."
+  },
+  "tactical": {
+    "name": "Echo Relocation",
+    "beschreibung": "Positioniere Echo (Fledermaus-Begleiter) und launche dich zu ihm. Muss in Echos Richtung schauen, um zu starten. Beim Erreichen: Double Jump möglich oder Crouch zum Abbrechen.",
+    "cooldown": "20 Sekunden"
+  },
+  "ultimate": {
+    "name": "Sniper’s Mark",
+    "beschreibung": "Custom-Scharfschützengewehr markiert Gegner, gewährt Schadensbonus für dich und dein Team. Markierte Gegner werden kurz hervorgehoben, Gesundheitsinfos sichtbar.",
+    "magazin": "5 Schuss pro Ladezyklus",
+    "cooldown": "120 Sekunden (Vollaufladung)"
+  },
+  "upgrades": {
+    "level1": {
+      "Controlling My Prey": "Zugriff auf Ring-Konsolen, Gain Zone Overcharge"
+    },
+    "level2": {
+      "Improved Mark": "Sniper’s Mark sichtbar durch Wände, Markierung zeigt Lebensbalken",
+      "Tactical Cooldown": "-5 Sekunden Cooldown auf Echo Relocation"
+    },
+    "level3": {
+      "Sniper Cover": "Schildaufsatz für das Scharfschützen-Ultimate"
+    }
+  }
+},
+{
+  "name": "Sparrow",
+  "age": 20,
+  "class": "Recon",
+  "meta": "Recon Mobility & Zoning Specialist – stark für Flankierungsdruck und Area Control",
+  "passive": {
+    "name": "Double Jump",
+    "description": "Drücke SPRACHE (SPACE) in der Luft zum zweiten Sprung; Springt beim Klettern an Wänden nach oben. Zusätzliche Pfeile (inkl. Sprengpfeile) für den Bocek.",
+    "cooldown": "ca. 2 Sek. nach Landung oder Wandkontakt"
+  },
+  "tactical": {
+    "name": "Tracker Dart",
+    "description": "Schießt einen Tracker, der Gegner innerhalb von Sichtlinie scannt und bewegt markiert; aktiviert Survey Beacons aus der Ferne.",
+    "cooldown": "35 Sekunden pro Charge",
+    "maxCharges": 3,
+    "scanRadius": "12 Meter",
+    "damage": "10 (wenn direkt getroffen)",
+    "trackingDuration": "10 Sek. Trail/Marker sichtbar"
+  },
+  "ultimate": {
+    "name": "Stinger Bolt",
+    "description": "Pfeil bohrt sich ein und lädt über ~3 Sek. auf; anschließend 6 elektrische Entladungen, die Gegner in ~20 m Radius treffen, Schaden verursachen und verlangsamen.",
+    "chargeTime": "ca. 3 Sek.",
+    "cooldown": "180 Sekunden",
+    "radius": "20 Meter",
+    "damagePerPulse": "20 Schaden",
+    "totalPulses": 6
+  },
+  "upgrades": {
+    "level2": [
+      {
+        "name": "Hunt Target",
+        "description": "Tracker Dart markierte Gegner geben dir einen Geschwindigkeitsschub beim Hinlaufen."
+      },
+      {
+        "name": "Extra Traps",
+        "description": "Erhält +1 Tracker Dart Charge und +2 Fallen-Pfeile auf der Karte."
+      }
+    ],
+    "level3": [
+      {
+        "name": "Life Siphon",
+        "description": "Sparrow erhält Gesundheit und Schilde, wenn Gegner von seinem Ultimate getroffen werden."
+      },
+      {
+        "name": "Alternate Mode",
+        "description": "Stinger Bolt erhält 3 Ladungen, verringert Radius und Feuerrate pro Charge."
+      }
+    ]
+  },
+  "class_perks": [
+    {
+      "name": "Access Survey Beacons",
+      "description": "Kann Survey Beacons aus der Ferne scannen."
+    },
+    {
+      "name": "Threat Vision",
+      "description": "Zielverfolgung beim Zielen durch ADS."
+    }
+  ],
+  "tier": "B"
+},
+{
+  "name": "Gibraltar",
+  "class": "Support",
+  "age": 30,
+  "meta": "Defensiver Tank mit starkem Team-Support und Zonenkontrolle. Ideal für Defensive Plays und Team-Revives.",
+  "passive": {
+    "name": "Gun Shield",
+    "description": "Aiming down sights deploys a gun shield that blocks incoming fire.",
+    "extra": "Fortified: Incoming damage reduced by 15%. Not slowed by bullets."
+  },
+  "tactical": {
+    "name": "Dome of Protection",
+    "description": "Blocks incoming and outgoing attacks.",
+    "cooldown": "30s"
+  },
+  "ultimate": {
+    "name": "Defensive Bombardment",
+    "description": "Call in a concentrated mortar strike on a position you mark with smoke.",
+    "cooldown": "180s"
+  },
+  "perks": {
+    "class_perks": [
+      "Access Extended Supply Bins: Access the hidden loot in blue Extended Supply Bins for Healing and Survival Items.",
+      "Revive Expert: Revives are faster (unless revived by D.O.C.) and grant HP regen. Banner Crafting & Ally Deathboxes spawn Mobile Respawn Beacons."
+    ]
+  },
+  "upgrades": {
+    "lvl1": [
+      {
+        "name": "Big Bruddah",
+        "description": "Increase Ult radius by 20%."
+      }
+    ],
+    "lvl2": [
+      {
+        "name": "Fast Shotties",
+        "description": "Move faster with Shotguns. Auto-Reload shotguns on knocks."
+      }
+    ],
+    "lvl3": [
+      {
+        "name": "Baby Bubble",
+        "description": "Reduce Tactical size and cooldown by 25%."
+      },
+      {
+        "name": "Bubble Bunker",
+        "description": "Increase Tactical lifetime by 4 seconds."
+      }
+    ]
+  }
+},
+{
+  "name": "Lifeline",
+  "class": "Support",
+  "age": 24,
+  "meta": "Starker Support‑Pick für aggressives und defensives Spiel. D.O.C. erlaubt kontinuierliche Heilung auch unter Beschuss, und die Passive ermöglicht sichere Revives ohne Lifeline selbst zu gefährden. Die Ultimate gibt Teamfights einen Vorteil durch schnelleres Heilen und Schilden. Besonders effektiv in Teams, die auf Durchhaltevermögen setzen.",
+  "tactical": {
+    "name": "D.O.C. Heal Drone",
+    "description": "D.O.C. heilt alle nahen Verbündeten. Kann so eingestellt werden, dass er Verbündete nach Deployment automatisch folgt.",
+    "cooldown": "30s"
+  },
+  "passive": {
+    "name": "Combat Glide",
+    "description": "Halte SPACE in der Luft gedrückt, um D.O.C. zu nutzen und kurz zu gleiten. + Setze D.O.C. ein, um Teamkameraden zu reviven, während Lifeline frei kämpfen kann."
+  },
+  "ultimate": {
+    "name": "D.O.C. Halo",
+    "description": "Wirf D.O.C., um das Halo-Schild-System zu aktivieren. Alle Spieler im Bereich verwenden Heil- und Schild-Items schneller.",
+    "cooldown": "210s"
+  },
+  "perks": {
+    "class_perks": [
+      "Access Extended Supply Bins: Zugriff auf versteckten Loot in blauen erweiterten Versorgungsboxen für Heil- und Überlebensgegenstände.",
+      "Revive Expert: Schnelleres Reviven (außer durch D.O.C.), gewährt HP-Regeneration. Banner-Crafting & Verbündeten-Deathboxes spawnen mobile Respawn-Baken."
+    ]
+  },
+  "upgrades": {
+    "lvl1": [
+      { "name": "Extended Flight", "effect": "Erhöht die Zeit, bevor D.O.C. den Treibstoff verliert, um 1.5 Sekunden." },
+      { "name": "Battpack", "effect": "+1 Schildbatterie-Stacklimit. Zeigt die Anzahl der Schildbatterien auf Deathboxes an." }
+    ],
+    "lvl2": [
+      { "name": "Enhanced Radio", "effect": "Erhöht die Distanz, in der D.O.C. zugewiesen werden kann, um 50%." },
+      { "name": "Tactical Cooldown+", "effect": "Reduziert die Abklingzeit der Taktik um 10 Sekunden." }
+    ]
+  }
+},
+{
+  "name": "Mirage",
+  "meta": "Situationsabhängig stark in unübersichtlichen Kämpfen. Besonders effektiv für Ablenkung, Revives und Pushes – weniger nützlich gegen sehr erfahrene Gegner, die Decoys leicht erkennen.",
+  "class": "Support",
+  "age": 30,
+  "passive": {
+    "name": "Now You See Me…",
+    "description": "Automatisch unsichtbar, wenn Respawn Beacons benutzt werden oder beim Heilen/Reviven von Teammates."
+  },
+  "tactical": {
+    "name": "Psyche Out",
+    "description": "Sendet einen holografischen Köder aus, um Gegner zu verwirren. Mit [5] kann der Köder gesteuert werden.",
+    "cooldown": "15 Sekunden"
+  },
+  "ultimate": {
+    "name": "Life of the Party",
+    "description": "Setzt mehrere steuerbare Köder gleichzeitig ein, um Gegner zu verwirren.",
+    "cooldown": "60 Sekunden"
+  },
+  "perks": {
+    "lvl1": [
+      {
+        "name": "Renaissance Man",
+        "description": "Kann nun Survey Beacons, Ring Consoles, Munitionskisten nutzen und Care Packages scannen."
+      }
+    ],
+    "lvl2": [
+      {
+        "name": "Boozle-Eye",
+        "description": "Erfolgreiche Täuschungen markieren Gegner für kurze Zeit."
+      }
+    ],
+    "lvl3": [
+      {
+        "name": "Me Two",
+        "description": "Erhält eine zweite Köder-Aufladung (beide können gleichzeitig aktiv sein)."
+      },
+      {
+        "name": "Bamboozle Bonus",
+        "description": "Erfrischt die Taktik-Abklingzeit bei erfolgreicher Täuschung."
+      }
+    ]
+  }
+},
+{
+  "legend": "Loba",
+  "meta": "Loot-orientierte Support-Legende mit starker Team-Utility. Ermöglicht schnellen Zugriff auf hochwertigen Loot und Ressourcen für das gesamte Squad. Besonders effektiv in längeren Matches und beim Ausrüsten des Teams, schwächelt aber im direkten 1v1-Kampf.",
+  "age": 34,
+  "abilities": {
+    "passive": {
+      "name": "Eye for Quality",
+      "description": "Nearby epic and legendary loot can be seen through walls. Aim down sights when unarmed to ping highlighted loot. Open loot vaults without a key."
+    },
+    "tactical": {
+      "name": "Burglar's Best Friend",
+      "description": "Teleport to hard-to-reach places or escape trouble quickly by throwing your jump drive bracelet."
+    },
+    "ultimate": {
+      "name": "Black Market Boutique",
+      "description": "Place a portable device that allows you to teleport nearby loot to your inventory. Ammo, small meds and teammate banners are free."
+    }
+  },
+  "class": "Support",
+  "class_perks": [
+    "Access Extended Supply Bins: Access the hidden loot in blue Extended Supply Bins for Healing and Survival Items.",
+    "Revive Expert: Revives are faster (unless revived by D.O.C.) and grant HP regen. Banner Crafting & Ally Deathboxes spawn Mobile Respawn Beacons."
+  ],
+  "upgrades": {
+    "level_1": [
+      {
+        "name": "Wolf's Claws",
+        "description": "Faster weapon draw and speed boost after translocating."
+      }
+    ],
+    "level_2": [
+      {
+        "name": "Shopping Spree",
+        "description": "Squad can take an extra item from Black Market."
+      }
+    ],
+    "level_3": [
+      {
+        "name": "Escape Artist",
+        "description": "After translocating, regenerate 25 Shields."
+      },
+      {
+        "name": "Brand New Bag",
+        "description": "Grants entire squad gold backpacks when upgrade selected."
+      }
+    ]
+  }
+},
+{
+  "legend": "Newcastle",
+  "class": "Support",
+  "meta": "Sehr stark in defensiven und teamorientierten Situationen. Ideal zum Retten und Beschützen von Teammates unter Feuer, aber weniger mobil als andere Defender.",
+  "passive": {
+    "name": "Retrieve the Wounded",
+    "description": "Ziehe gefallene Verbündete beim Wiederbeleben hinter dich und schütze sie mit deinem Revive-Schild."
+  },
+  "tactical": {
+    "name": "Mobile Shield",
+    "description": "Wirf eine Drohne, die einen beweglichen Energieschild projiziert.",
+    "cooldown": "20 Sekunden"
+  },
+  "ultimate": {
+    "name": "Castle Wall",
+    "description": "Springe zu einem Verbündeten oder einem Zielgebiet und ramme dich in den Boden, um eine befestigte Barrikade zu errichten.",
+    "cooldown": "120 Sekunden"
+  },
+  "fortified": "Erlittener Schaden um 15 % reduziert. Nicht durch Kugeln verlangsamt.",
+  "perks": [
+    "Access Extended Supply Bins: Zugriff auf versteckte Fächer in blauen Supply Bins für Heil- und Überlebensausrüstung.",
+    "Revive Expert: Schnellere Wiederbelebung (außer bei Wiederbelebung durch D.O.C.) und HP-Regeneration beim Wiederbeleben. Banner-Crafting und Respawn-Beacons platzieren möglich."
+  ],
+  "upgrades": {
+    "level1": [
+      { "name": "Hero's Hustle", "description": "Erhöht die Bewegungsgeschwindigkeit während des Revive." }
+    ],
+    "level2": [
+      { "name": "Swift Shield", "description": "Erhöht die Mobile-Shield-Geschwindigkeit auf Sprintgeschwindigkeit und reduziert Abklingzeit um 8 Sekunden." }
+    ],
+    "level3": [
+      { "name": "Ultimate Savior", "description": "Castle-Wall-Slam gewährt allen Verbündeten im Wirkungsbereich 15 Sekunden Schildregeneration." },
+      { "name": "Stronghold", "description": "+500 Castle-Wall-HP und verlängert die Barriere-Dauer auf 4 Minuten." }
+    ]
+  }
+},
+{
+  "legend": "Conduit",
+  "age": 27,
+  "tactical": {
+    "name": "Radiant Transfer",
+    "description": "Send a surge of energy to a teammate, generating temporary shields for them and Conduit when in danger.",
+    "cooldown": "20 Sekunden",
+    "duration": "Unbekannt",
+    "effects": "Gibt temporäre Schilde für Conduit und Ziel-Teammate."
+  },
+  "passive": {
+    "name": "Savior's Speed",
+    "description": "Gain a burst of speed when running toward a teammate out of Tactical range, ally banners or respawn beacons."
+  },
+  "ultimate": {
+    "name": "Energy Barricade",
+    "description": "Deploy an array of shield jamming devices which damage and slow enemies.",
+    "cooldown": "120 Sekunden",
+    "duration": "Unbekannt",
+    "effects": "Verlangsamt Gegner und verursacht Schaden."
+  },
+  "class": {
+    "name": "Support",
+    "perks": [
+      "Access Extended Supply Bins",
+      "Revive Expert"
+    ]
+  },
+  "upgrades": {
+    "level_1": [
+      {
+        "name": "Battpack",
+        "description": "+1 Shield Battery stack limit. Shield Battery count shown on deathboxes."
+      }
+    ],
+    "level_2": [
+      {
+        "name": "Bigger Jam",
+        "description": "Each Ultimate jammer's damage radius increased by 10%."
+      }
+    ],
+    "level_3": [
+      {
+        "name": "Split Charge",
+        "description": "Gain a Tactical charge but halve shield regen duration."
+      },
+      {
+        "name": "Radiant Transfer",
+        "description": "Increase Tactical range by 10 meters."
+      }
+    ]
+  },
+  "meta": "Gut geeignet für aggressives Teamplay mit Schildunterstützung, stark in Push-Situationen und zur Unterstützung im Nah- bis Midrange-Kampf."
+},
+{
+  "legend": "Caustic",
+  "class": "Controller",
+  "meta": "Stark in defensiven Situationen, ideal zur Gebietsverteidigung und Raumkontrolle.",
+  "passive": {
+    "name": "Field Research",
+    "description": "Gain extra upgrade points by causing damage with gas, opening deathboxes and scanning ring consoles."
+  },
+  "tactical": {
+    "name": "Nox Gas Trap",
+    "description": "Place up to 6 canisters that release deadly Nox Gas when shot or triggered by enemies. Nox Gas damages and grounds enemies.",
+    "cooldown": "Ca. 25s pro Falle"
+  },
+  "ultimate": {
+    "name": "Nox Gas Grenade",
+    "description": "Blanket a large area in Nox Gas. Nox Gas damages and grounds enemies.",
+    "cooldown": "Ca. 120s"
+  },
+  "perks": {
+    "perk1": {
+      "name": "Extra Traps",
+      "description": "Gain an additional Tactical charge and +2 traps in world."
+    },
+    "perk2": {
+      "name": "Breathe It In",
+      "description": "Regenerate HP while enveloped in Nox Gas."
+    },
+    "perk3": {
+      "name": "Particle Diffuser",
+      "description": "Increase Ultimate area of effect by 50%."
+    },
+    "perk4": {
+      "name": "Gas Fighter",
+      "description": "Tactical recharges 300% faster while enveloped in Nox Gas."
+    }
+  }
+},
+{
+  "legend": "Wattson",
+  "meta": "Starke Defensiv-Legende für Zonenkontrolle; ideal zum Halten von Gebäuden oder Engpässen, besonders im Late-Game.",
+  "class": "Controller",
+  "passive": {
+    "name": "Spark of Genius",
+    "description": "Ultimate Accelerants fully charge Wattson's ultimate. Sie kann mehr Ultimate Accelerants tragen und schneller nutzen. Regeneriert langsam Schilde über Zeit."
+  },
+  "tactical": {
+    "name": "Perimeter Security",
+    "description": "Errichte elektrifizierte Zäune, indem du Knoten verbindest. Zäune verlangsamen und beschädigen Gegner. Zäune in Türnähe elektrisieren sie.",
+    "cooldown": "15s pro Zaun-Segment",
+    "duration": "Bleibt bestehen bis zerstört oder deaktiviert",
+    "charges": "Bis zu 12 Knoten"
+  },
+  "ultimate": {
+    "name": "Interception Pylon",
+    "description": "Platziere einen Pylon (Max. 1), der eingehende Geschosse zerstört und beschädigte Schilde repariert. Abgefangene Granaten werden zu Arc Stars umgewandelt.",
+    "cooldown": "180s",
+    "duration": "Unbegrenzt bis zerstört",
+    "max_active": 1
+  },
+  "fortified": {
+    "description": "Erlittener Schaden reduziert um 15%. Nicht verlangsamt durch Kugeln."
+  },
+  "upgrades": {
+    "level1": [
+      {
+        "name": "Help is Here",
+        "description": "Zugang zu Support-Bins, verbesserte Wiederbelebung und Deathboxen mit MRBs."
+      }
+    ],
+    "level2": [
+      {
+        "name": "Ultimate Conductor",
+        "description": "Schaden an Gegnern reduziert die Ult-Cooldown-Zeit; Knockdowns geben 50% Ult-Ladung."
+      }
+    ],
+    "level3": [
+      {
+        "name": "Energized Healer",
+        "description": "Spritzen und Schildzellen heilen doppelt so viel."
+      },
+      {
+        "name": "Power Pylon",
+        "description": "Verdoppelt HP, maximale Kapazität und Schild-Reparaturgeschwindigkeit des Ultimates."
+      }
+    ]
+  }
+},
+{
+  "legend": "Rampart",
+  "class": "Controller",
+  "meta": "Sehr stark in defensiven Setups und bei der Gebietskontrolle, vor allem mit LMGs und Sheila. Schwächen bei aggressiven Pushes.",
+  "passive": {
+    "name": "Modded Loader",
+    "description": "Erhöhte Magazingröße und schnelleres Nachladen bei LMGs und der Minigun Sheila."
+  },
+  "tactical": {
+    "name": "Amped Cover",
+    "description": "Baut eine kniehohe Deckung, die eingehenden Schaden blockt und ausgehenden Schaden verstärkt."
+  },
+  "ultimate": {
+    "name": "Mobile Minigun 'Sheila'",
+    "description": "Führt eine mobile Minigun mit großem Magazin oder stellt sie als stationäre, nachladbare Waffe auf. Maximal 1 aktiv."
+  },
+  "cooldowns": {
+    "tactical_cooldown": "20s",
+    "ultimate_charge": "120s"
+  },
+  "upgrades": {
+    "lvl1": [
+      { "name": "Ultimate Cooldown", "effect": "Verringert Ultimate-Abklingzeit um 30 Sekunden." },
+      { "name": "Bandolier", "effect": "Trägt zusätzliche Munition pro Stack." }
+    ],
+    "lvl2": [
+      { "name": "Ramped Up", "effect": "Verbessert Handhabung und Anlaufzeit der mobilen Sheila um 20%." },
+      { "name": "Amped Reloads", "effect": "Lädt schneller nach mit Sheila oder hinter Amped Cover." }
+    ]
+  }
+},
+{
+  "name": "Catalyst",
+  "age": 29,
+  "meta": "Starker Bereichskontroll-Charakter, ideal zur Absicherung von Zonen und zum Blockieren von Sichtlinien. Besonders effektiv gegen aggressive Pushes und für Endgame-Positionierung.",
+  "passive": {
+    "name": "Barricade",
+    "description": "Verstärkt Türen (Max 2), verriegelt sie für Gegner und verstärkt zerstörte Türen.",
+    "cooldown": "Keine Abklingzeit"
+  },
+  "tactical": {
+    "name": "Piercing Spikes",
+    "description": "Wirft Ferrofluid, das bei Gegnernähe zu Spikes wird, die verlangsamen und Schaden verursachen. Catalyst ist immun gegen gegnerische Spikes.",
+    "maxCharges": 2,
+    "cooldown": "20s pro Einsatz",
+    "duration": "Bleibt bestehen, bis zerstört oder überschrieben"
+  },
+  "ultimate": {
+    "name": "Dark Veil",
+    "description": "Errichtet eine durchlässige Wand aus Ferrofluid, die Gegner verlangsamt und kurzzeitig blendet.",
+    "cooldown": "180s",
+    "duration": "30s",
+    "max": 1
+  },
+  "class": {
+    "type": "Controller",
+    "perks": [
+      "Access Ring Consoles: Aktiviert Ring-Konsolen, um die nächste Ring-Position anzuzeigen",
+      "Zone Overcharge: +25 Schildkapazität & langsame Regeneration im Safe-Zone-Bereich"
+    ]
+  },
+  "upgrades": {
+    "lvl1": [
+      {
+        "name": "Sister Spikes",
+        "description": "Erhöht die maximale Anzahl aktiver Spikes um eins"
+      }
+    ],
+    "lvl2": [
+      {
+        "name": "Long Veil",
+        "description": "Erhöht die Länge der Ultimate um 15 Meter"
+      }
+    ],
+    "lvl3": [
+      {
+        "name": "Ferro-Door",
+        "description": "Repariert und verstärkt fehlende Türen"
+      },
+      {
+        "name": "Resilient Veil",
+        "description": "Erhöht die Wirkungsdauer der Ultimate um 5 Sekunden"
+      }
+    ]
+  }
+}
 ];
 
-window.onload = () => {
-  const sel = document.getElementById("legendSelect");
-  legends.forEach(l => {
-    const opt = document.createElement("option");
-    opt.value = l.name;
-    opt.textContent = l.name;
-    sel.appendChild(opt);
-  });
-};
+// Filter für Legenden nach Klasse
+document.getElementById('classSelect').addEventListener('change', function() {
+  const selectedClass = this.value;
+  const legendSelect = document.getElementById('legendSelect');
+  legendSelect.innerHTML = '<option value="">-- Wähle eine Legende --</option>';
 
-function showLegendInfo(){
-  const name = document.getElementById("legendSelect").value;
-  const legend = legends.find(l => l.name === name);
-  const info = document.getElementById("legendInfo");
-  if (!legend) { info.style.display = "none"; return; }
-  document.querySelector(".legend-name").textContent = legend.name;
-  const texts = document.querySelectorAll(".ability-text");
-  texts[0].textContent = legend.passive;
-  texts[1].textContent = legend.tactical;
-  texts[2].textContent = legend.ultimate;
-  const blues = document.querySelector(".perk-block.blue .perk-list");
-  const purples = document.querySelector(".perk-block.purple .perk-list");
-  blues.innerHTML = legend.perksBlue.map(p => `<li>${p}</li>`).join("");
-  purples.innerHTML = legend.perksPurple.map(p => `<li>${p}</li>`).join("");
-  info.style.display = "block";
-}
+  metaData
+    .filter(l => l.class === selectedClass)
+    .forEach(legend => {
+      const opt = document.createElement('option');
+      opt.value = legend.name;
+      opt.textContent = legend.name;
+      legendSelect.appendChild(opt);
+    });
+
+  // Infofeld leeren
+  document.getElementById('legendInfo').innerHTML = '';
+});
+
+// Zeigt Infos zur gewählten Legende
+document.getElementById('legendSelect').addEventListener('change', function() {
+  const selectedLegend = this.value;
+  const legend = metaData.find(l => l.name === selectedLegend);
+  if (legend) {
+    document.getElementById('legendInfo').innerHTML = `
+      <h2>${legend.name}</h2>
+      <p><b>Klasse:</b> ${legend.class}</p>
+      <p><b>Alter:</b> ${legend.age}</p>
+
+      <h3>Fähigkeiten</h3>
+      <p><b>Tactical:</b> ${legend.tactical.name} – ${legend.tactical.description} <i>(${legend.tactical.cooldown}, ${legend.tactical.range || ''})</i></p>
+      <p><b>Passive:</b> ${legend.passive.name} – ${legend.passive.description}</p>
+      <p><b>Ultimate:</b> ${legend.ultimate.name} – ${legend.ultimate.description} <i>(${legend.ultimate.cooldown || ''}, ${legend.ultimate.range || ''})</i></p>
+
+      <h3>Perks</h3>
+      <p><b>Blue:</b> ${legend.perks.blue.join(', ')}</p>
+      <p><b>Purple:</b> ${legend.perks.purple.join(', ')}</p>
+
+      <h3>Meta</h3>
+      <p>${legend.meta}</p>
+      <p><b>Tier:</b> ${legend.tier}</p>
+    `;
+  }
+});
 </script>
+
 </body>
 </html>
-<!-- END LEGENDINFO.HTML -->
