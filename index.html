@@ -4,65 +4,65 @@
 <meta charset="UTF-8">
 <title>Slyrox-Analytics Dashboard</title>
 <link rel="stylesheet" href="style.css">
+
 <style>
-/* Admin Button Style */
-#admin-btn {
+/* Admin-Button Style */
+.admin-btn {
     position: absolute;
     top: 15px;
-    right: 20px;
-    background: #e53935;
+    right: 15px;
+    padding: 6px 12px;
+    background-color: #e53935;
     color: white;
-    padding: 6px 10px;
+    border: none;
     border-radius: 5px;
-    font-size: 0.9em;
     font-weight: bold;
-    text-decoration: none;
     cursor: pointer;
 }
-#admin-btn:hover {
-    background: #d32f2f;
+.admin-btn:hover {
+    background-color: #c62828;
 }
 </style>
 
 <script>
-// Passwortschutz fürs Dashboard (nur Hauptpasswort)
+// Passwortschutz für das Dashboard
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Prüfen ob Hauptpasswort bereits eingegeben wurde
-    if (!localStorage.getItem("dashboardMainAccess")) {
+    // Prüfen ob bereits eingeloggt
+    if (!localStorage.getItem("dashboardLoggedIn")) {
+        // 1. Hauptpasswort abfragen
         var pass = prompt("🔑 Passwort erforderlich:");
         if (pass !== "Analytics1337") {
             alert("Falsches Passwort! Zugriff verweigert.");
             window.location.href = "https://google.com";
             return;
         }
-        localStorage.setItem("dashboardMainAccess", "true");
+        // Standard-User speichern
+        localStorage.setItem("dashboardLoggedIn", "user");
     }
-
-    // Admin-Button Klick-Handler
-    document.getElementById("admin-btn").addEventListener("click", function (e) {
-        e.preventDefault();
-        var adminPass = prompt("🔒 Admin-Passwort erforderlich:");
-        if (adminPass === "Admin8112") {
-            window.location.href = "logger.html";
-        } else {
-            alert("Falsches Admin-Passwort! Zugriff verweigert.");
-        }
-    });
 });
+
+// Adminbereich öffnen
+function openAdmin() {
+    var adminPass = prompt("🔒 Admin-Passwort erforderlich:");
+    if (adminPass === "Admin8112") {
+        window.location.href = "logger.html";
+    } else {
+        alert("Falsches Admin-Passwort!");
+    }
+}
 </script>
 </head>
 
 <body>
 <h1>Welcome to Slyrox-Analytics</h1>
 
-<!-- Admin Button immer sichtbar -->
-<a id="admin-btn">⚙ Admin</a>
+<!-- Admin-Button -->
+<button class="admin-btn" onclick="openAdmin()">⚙ Admin</button>
 
 <div class="dashboard">
     <a href="weapon.html" class="card">🔫 Weapon Comparison</a>
     <a href="rp.html" class="card">📈 Apex S26 RP-Rechner</a>
-    <a href="logger.html" id="logger-btn" class="card">📄 Match Logger</a>
     <a href="legend.html" class="card">📊 Legend Meta</a>
     <a href="weaponmeta.html" class="card">🔫 Weapon Meta</a>
 </div>
