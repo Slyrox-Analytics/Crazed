@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Legend Info & Perks</title>
+<style>
+  body { background:#121212;color:#fff;font-family:Arial;padding:20px; }
+  h1,h2 { text-align:center; margin-bottom:10px; }
+  select, .info { width:100%; margin:10px 0; padding:10px; border-radius:5px; border:none; background:#1e1e1e;color:#fff; }
+  .info div { margin:8px 0; }
+  .perk-blue { color:#2196F3; }
+  .perk-purple { color:#9C27B0; }
+  .back-btn { display:inline-block;margin-bottom:15px;padding:8px 12px;background:#e53935;color:#fff;text-decoration:none;border-radius:5px;font-weight:bold; }
+  .back-btn:hover { background:#d32f2f; }
+</style>
+</head>
+<body>
+  <a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
+  <h1>Legend Info & Perks</h1>
+  <select id="legendSelect" onchange="showLegend()">
+    <option value="">Wähle eine Legend</option>
+    <option value="Ash">Ash</option>
+    <option value="Bangalore">Bangalore</option>
+    <option value="Caustic">Caustic</option>
+    <!-- Weitere Legends erweitern hier -->
+  </select>
+
+  <div id="legendInfo" class="info"></div>
+
+<script>
+// Daten für Season 26 basierend auf offiziellen Infos und Patch-Notes (Caustic Buffs etc.) 2
+const legendData = {
+  "Ash": {
+    passive: { name: "Predator’s Pursuit", desc: "Zeigt kürzlich zerstörte Death Boxes auf der Mini‑Map." },
+    tactical: { name: "Arc Snare", desc: "Wurf‑Falle, der Gegner ankettet und trifft.", cooldown: "20 s", duration:"3 s bis 5 s" },
+    ultimate: { name: "Phase Breach", desc: "Einseitiges Portal zu gewähltem Punkt.", cooldown:"60 s" },
+    perks: { blue:"Greedy Snare (längere Falle)", purple:"Twin Snare (zwei Fallen)" }
+  },
+  "Bangalore": {
+    passive: { name:"Double Time", desc:"Beim Sprinten und Beschuss bewegen – +30 % Speed kurz." },
+    tactical: { name:"Smoke Launcher", desc:"Rauchwand, die Sicht blockiert.", cooldown:"30 s" },
+    ultimate: { name:"Rolling Thunder", desc:"Artillerie‑Schläge über Zielgebiet.", cooldown:"210 s" },
+    perks: { blue:"Cover Me (Heilung + Ping beim Trigger)", purple:"Electric Smoke (100 DMG gegen Ultimates/deployables)" } 3
+  },
+  "Caustic": {
+    passive: {
+      name:"Field Research (neu)", desc:"Sammelt Punkte durch Gas/Death Boxes/Ring‑Interaktion für Upgrades.", cooldown:"keine"
+    },
+    tactical: {
+      name:"Nox Gas Trap", desc:"Gasfalle mit größerer Reichweite & Dauer", cooldown:"22 s aktiv", duration:"22 s"
+    },
+    ultimate: {
+      name:"Nox Gas Grenade", desc:"Große Gaswolke – Schaden + Grounds Gegner.", cooldown:"120 s"
+    },
+    perks: { blue:"Extra Traps (Bonus Charge)", purple:"Gas Fighter (Tac lädt schneller in Gas)" } 4
+  }
+};
+
+function showLegend(){
+  const sel = document.getElementById("legendSelect").value;
+  const info = document.getElementById("legendInfo");
+  if (!sel || !legendData[sel]) { info.innerHTML="Keine Daten verfügbar."; return; }
+  const d = legendData[sel];
+  info.innerHTML = `
+    <h2>${sel}</h2>
+    <div><strong>Passive:</strong> ${d.passive.name} – ${d.passive.desc}</div>
+    <div><strong>Taktisch (${d.tactical.cooldown || "–"}):</strong> ${d.tactical.name} – ${d.tactical.desc}</div>
+    ${d.tactical.duration ? `<div><strong>Wirkdauer:</strong> ${d.tactical.duration}</div>` : ""}
+    <div><strong>Ultimate (${d.ultimate.cooldown || "–"}):</strong> ${d.ultimate.name} – ${d.ultimate.desc}</div>
+    <div><strong class="perk-blue">Blue Perk:</strong> ${d.perks.blue}</div>
+    <div><strong class="perk-purple">Purple Perk:</strong> ${d.perks.purple}</div>
+  `;
+}
+</script>
+</body>
+</html>
