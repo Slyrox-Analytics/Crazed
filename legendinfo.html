@@ -529,139 +529,105 @@ const metaData = [
 },
 {
   "name": "Seer",
-    "class": "Recon",
-    "age": 26,
-    "meta": "Mid-Tier Recon Legend, stark in Scans und Gegner-Tracking, sehr effektiv im 1v1 und beim Dritten.",
-    "abilities": {
-        "passive": {
-            "name": "Heart Seeker",
-            "description": "Hört und visualisiert Herzschläge von Gegnern innerhalb von 50m beim Zielen durchs Visier."
-        },
-        "tactical": {
-            "name": "Focus of Attention",
-            "description": "Ruft Mikro-Drohnen, die eine verzögerte Explosion auslösen, durch Wände gehen, Gegner zum Schweigen bringen und aufdecken.",
-            "cooldown": "30s"
-        },
-        "ultimate": {
-            "name": "Exhibit",
-            "description": "Erstellt eine Sphäre aus Mikro-Drohnen, die Gegner beim schnellen Bewegen oder Schießen innerhalb sichtbar machen.",
-            "cooldown": "120s"
-        }
-    },
-    "Class": {
-        "name": "Recon",
-        "perks": [
-            "Access Survey Beacons: Kann Beacons scannen, um Gegnerpositionen in der Nähe aufzudecken.",
-            "Threat Vision: Gegner im Scan-Bereich werden beim Zielen hervorgehoben."
-        ]
-    },
-    "upgrades": {
-        "level1": [
-            {
-                "name": "Artist's Reach",
-                "description": "Erhöht die Wurfweite des Ultimates um 20 Meter."
-            },
-            {
-                "name": "Ultimate Cooldown",
-                "description": "Reduziert die Abklingzeit des Ultimates um 20%."
-            }
-        ]
-    }
+  "class": "Recon",
+  "age": 26,
+  "meta": "Mid-Tier Recon-Legende, stark in Scans und Gegner-Tracking, sehr effektiv im 1v1 und beim Dritten.",
+  "passive": {
+    "name": "Heart Seeker",
+    "description": "Hört und visualisiert Herzschläge von Gegnern innerhalb von 50 m beim Zielen durchs Visier."
+  },
+  "tactical": {
+    "name": "Focus of Attention",
+    "description": "Ruft Mikro-Drohnen, die eine verzögerte Explosion auslösen, durch Wände gehen, Gegner zum Schweigen bringen und aufdecken.",
+    "cooldown": "30 Sek."
+  },
+  "ultimate": {
+    "name": "Exhibit",
+    "description": "Erstellt eine Sphäre aus Mikro-Drohnen, die Gegner beim schnellen Bewegen oder Schießen innerhalb sichtbar macht.",
+    "cooldown": "120 Sek."
+  },
+  "perks": {
+    "blue": [
+      "Access Survey Beacons – Kann Beacons scannen, um Gegnerpositionen in der Nähe aufzudecken.",
+      "Threat Vision – Gegner im Scan-Bereich werden beim Zielen hervorgehoben."
+    ],
+    "purple": [
+      "Artist's Reach – Erhöht die Wurfweite des Ultimates um 20 Meter.",
+      "Ultimate Cooldown – Reduziert die Abklingzeit des Ultimates um 20 %."
+    ]
+  }
 },
 {
   "name": "Vantage",
-  "alter": 19,
-  "meta": "Mid-Range Recon / Sniper Support",
-  class: "Recon",
+  "class": "Recon",
+  "age": 19,
+  "meta": "Mid-Range Recon- und Sniper-Support-Legende, spezialisiert auf Aufklärung, Markierung von Zielen und Team-Unterstützung aus der Distanz.",
   "passive": {
     "name": "Spotter’s Lens",
-    "beschreibung": "ADS mit dem Monokular zeigt gegnerische Gesundheitsbalken und Schildstufen. Ping-System zur Markierung mehrerer weit entfernter Ziele. Zeigt bei mittleren bis langen Distanzen Kugelfall-Indikator an."
+    "description": "Zielen mit dem Monokular zeigt gegnerische Gesundheitsbalken und Schildstufen. Ermöglicht das Markieren mehrerer weit entfernter Ziele und zeigt einen Kugelfall-Indikator bei mittleren bis langen Distanzen."
   },
   "tactical": {
     "name": "Echo Relocation",
-    "beschreibung": "Positioniere Echo (Fledermaus-Begleiter) und launche dich zu ihm. Muss in Echos Richtung schauen, um zu starten. Beim Erreichen: Double Jump möglich oder Crouch zum Abbrechen.",
-    "cooldown": "20 Sekunden"
+    "description": "Platziert Echo (Fledermaus-Begleiter) und katapultiert sich zu ihm. Muss in Echos Richtung schauen, um zu starten. Beim Erreichen: Double Jump möglich oder Crouch zum Abbrechen.",
+    "cooldown": "20 Sek."
   },
   "ultimate": {
     "name": "Sniper’s Mark",
-    "beschreibung": "Custom-Scharfschützengewehr markiert Gegner, gewährt Schadensbonus für dich und dein Team. Markierte Gegner werden kurz hervorgehoben, Gesundheitsinfos sichtbar.",
-    "magazin": "5 Schuss pro Ladezyklus",
-    "cooldown": "120 Sekunden (Vollaufladung)"
+    "description": "Spezial-Scharfschützengewehr markiert Gegner und gewährt Schadensbonus für dich und dein Team. Markierte Gegner werden kurz hervorgehoben, Gesundheitsinfos sichtbar.",
+    "magazine": "5 Schuss pro Ladezyklus",
+    "cooldown": "120 Sek. (Vollaufladung)"
   },
-  "upgrades": {
-    "level1": {
-      "Controlling My Prey": "Zugriff auf Ring-Konsolen, Gain Zone Overcharge"
-    },
-    "level2": {
-      "Improved Mark": "Sniper’s Mark sichtbar durch Wände, Markierung zeigt Lebensbalken",
-      "Tactical Cooldown": "-5 Sekunden Cooldown auf Echo Relocation"
-    },
-    "level3": {
-      "Sniper Cover": "Schildaufsatz für das Scharfschützen-Ultimate"
-    }
+  "perks": {
+    "blue": [
+      "Controlling My Prey – Zugriff auf Ring-Konsolen und Zone Overcharge erhalten.",
+      "Tactical Cooldown – Reduziert die Abklingzeit von Echo Relocation um 5 Sekunden."
+    ],
+    "purple": [
+      "Improved Mark – Sniper’s Mark sichtbar durch Wände; Markierung zeigt Lebensbalken.",
+      "Sniper Cover – Schildaufsatz für das Scharfschützen-Ultimate."
+    ]
   }
 },
 {
   "name": "Sparrow",
-  "age": 20,
   "class": "Recon",
-  "meta": "Recon Mobility & Zoning Specialist – stark für Flankierungsdruck und Area Control",
+  "age": 20,
+  "meta": "Recon-Legende mit hoher Mobilität und starker Zonen-Kontrolle. Ideal für Flankierungsangriffe, schnellen Druckaufbau und gezielte Areal-Kontrolle im Mid- bis Lategame.",
   "passive": {
     "name": "Double Jump",
-    "description": "Drücke SPRACHE (SPACE) in der Luft zum zweiten Sprung; Springt beim Klettern an Wänden nach oben. Zusätzliche Pfeile (inkl. Sprengpfeile) für den Bocek.",
-    "cooldown": "ca. 2 Sek. nach Landung oder Wandkontakt"
+    "description": "Drücke SPRINGEN (SPACE) in der Luft für einen zweiten Sprung oder klettere höher an Wänden. Erhält zusätzliche Pfeile (inkl. Sprengpfeile) für den Bocek.",
+    "cooldown": "Ca. 2 Sek. nach Landung oder Wandkontakt"
   },
   "tactical": {
     "name": "Tracker Dart",
-    "description": "Schießt einen Tracker, der Gegner innerhalb von Sichtlinie scannt und bewegt markiert; aktiviert Survey Beacons aus der Ferne.",
-    "cooldown": "35 Sekunden pro Charge",
+    "description": "Schießt einen Tracker-Pfeil, der Gegner innerhalb der Sichtlinie scannt und markiert. Aktiviert Survey Beacons aus der Ferne.",
+    "cooldown": "35 Sek. pro Charge",
     "maxCharges": 3,
-    "scanRadius": "12 Meter",
-    "damage": "10 (wenn direkt getroffen)",
-    "trackingDuration": "10 Sek. Trail/Marker sichtbar"
+    "scanRadius": "12 Meter",
+    "damage": "10 (bei direktem Treffer)",
+    "trackingDuration": "10 Sek. Markierung sichtbar"
   },
   "ultimate": {
     "name": "Stinger Bolt",
-    "description": "Pfeil bohrt sich ein und lädt über ~3 Sek. auf; anschließend 6 elektrische Entladungen, die Gegner in ~20 m Radius treffen, Schaden verursachen und verlangsamen.",
-    "chargeTime": "ca. 3 Sek.",
-    "cooldown": "180 Sekunden",
-    "radius": "20 Meter",
-    "damagePerPulse": "20 Schaden",
+    "description": "Pfeil bohrt sich ein und lädt über ca. 3 Sek. auf; anschließend 6 elektrische Entladungen, die Gegner im Umkreis treffen, Schaden verursachen und verlangsamen.",
+    "chargeTime": "Ca. 3 Sek.",
+    "cooldown": "180 Sek.",
+    "radius": "20 Meter",
+    "damagePerPulse": "20 Schaden",
     "totalPulses": 6
   },
-  "upgrades": {
-    "level2": [
-      {
-        "name": "Hunt Target",
-        "description": "Tracker Dart markierte Gegner geben dir einen Geschwindigkeitsschub beim Hinlaufen."
-      },
-      {
-        "name": "Extra Traps",
-        "description": "Erhält +1 Tracker Dart Charge und +2 Fallen-Pfeile auf der Karte."
-      }
+  "perks": {
+    "blue": [
+      "Access Survey Beacons – Kann Survey Beacons aus der Ferne scannen.",
+      "Threat Vision – Gegner im Scan-Bereich werden beim Zielen hervorgehoben."
     ],
-    "level3": [
-      {
-        "name": "Life Siphon",
-        "description": "Sparrow erhält Gesundheit und Schilde, wenn Gegner von seinem Ultimate getroffen werden."
-      },
-      {
-        "name": "Alternate Mode",
-        "description": "Stinger Bolt erhält 3 Ladungen, verringert Radius und Feuerrate pro Charge."
-      }
+    "purple": [
+      "Hunt Target – Markierte Gegner durch den Tracker Dart gewähren einen Geschwindigkeitsschub beim Hinlaufen.",
+      "Extra Traps – +1 Tracker Dart Charge und +2 Fallen-Pfeile auf der Karte.",
+      "Life Siphon – Regeneriert Gesundheit und Schilde, wenn Gegner vom Ultimate getroffen werden.",
+      "Alternate Mode – Ultimate erhält 3 Ladungen, verringert Radius und Feuerrate pro Charge."
     ]
-  },
-  "class_perks": [
-    {
-      "name": "Access Survey Beacons",
-      "description": "Kann Survey Beacons aus der Ferne scannen."
-    },
-    {
-      "name": "Threat Vision",
-      "description": "Zielverfolgung beim Zielen durch ADS."
-    }
-  ],
-  "tier": "B"
+  }
 },
 {
   "name": "Gibraltar",
@@ -884,87 +850,72 @@ const metaData = [
 {
   "name": "Caustic",
   "class": "Controller",
-  "meta": "Stark in defensiven Situationen, ideal zur Gebietsverteidigung und Raumkontrolle.",
+  "meta": "Stark in defensiven Situationen, ideal zur Gebietsverteidigung und Raumkontrolle. Besonders effektiv, um Gegner zu verlangsamen und zu schwächen, bevor ein Push erfolgt.",
   "passive": {
     "name": "Field Research",
-    "description": "Gain extra upgrade points by causing damage with gas, opening deathboxes and scanning ring consoles."
+    "description": "Erhält zusätzliche Upgrade-Punkte, wenn er mit Gas Schaden verursacht, Deathboxes öffnet oder Ring-Konsolen scannt."
   },
   "tactical": {
     "name": "Nox Gas Trap",
-    "description": "Place up to 6 canisters that release deadly Nox Gas when shot or triggered by enemies. Nox Gas damages and grounds enemies.",
-    "cooldown": "Ca. 25s pro Falle"
+    "description": "Platziert bis zu 6 Kanister, die tödliches Nox-Gas freisetzen, wenn sie von Gegnern ausgelöst oder abgeschossen werden. Das Gas verursacht Schaden und verlangsamt Gegner.",
+    "cooldown": "25 Sek. pro Falle",
+    "maxCharges": "6 aktiv platzierbar",
+    "damagePerSecond": "4 → 10 Schaden pro Tick (steigend über Zeit)",
+    "slow": "Ca. 15–20 % Bewegungsgeschwindigkeit"
   },
   "ultimate": {
     "name": "Nox Gas Grenade",
-    "description": "Blanket a large area in Nox Gas. Nox Gas damages and grounds enemies.",
-    "cooldown": "Ca. 120s"
+    "description": "Deckt ein großes Gebiet mit Nox-Gas ein. Das Gas verursacht Schaden über Zeit und verlangsamt Gegner.",
+    "cooldown": "120 Sek.",
+    "duration": "Ca. 15 Sek.",
+    "radius": "Großes AoE, ~8–10 Meter",
+    "damagePerSecond": "4 → 10 Schaden pro Tick (steigend über Zeit)",
+    "slow": "Ca. 15–20 % Bewegungsgeschwindigkeit"
   },
   "perks": {
-    "perk1": {
-      "name": "Extra Traps",
-      "description": "Gain an additional Tactical charge and +2 traps in world."
-    },
-    "perk2": {
-      "name": "Breathe It In",
-      "description": "Regenerate HP while enveloped in Nox Gas."
-    },
-    "perk3": {
-      "name": "Particle Diffuser",
-      "description": "Increase Ultimate area of effect by 50%."
-    },
-    "perk4": {
-      "name": "Gas Fighter",
-      "description": "Tactical recharges 300% faster while enveloped in Nox Gas."
-    }
+    "blue": [
+      "Extra Traps – Erhält eine zusätzliche Taktik-Aufladung und +2 Fallen gleichzeitig platzierbar.",
+      "Breathe It In – Regeneriert HP, während er sich im Nox-Gas befindet."
+    ],
+    "purple": [
+      "Particle Diffuser – Erhöht den Wirkungsbereich der Ultimate um 50 %.",
+      "Gas Fighter – Die Taktik lädt sich 300 % schneller auf, während er sich im Nox-Gas befindet."
+    ]
   }
 },
 {
   "name": "Wattson",
-  "meta": "Starke Defensiv-Legende für Zonenkontrolle; ideal zum Halten von Gebäuden oder Engpässen, besonders im Late-Game.",
   "class": "Controller",
+  "meta": "Starke Defensiv-Legende für Zonenkontrolle; ideal zum Halten von Gebäuden oder Engpässen, besonders im Late-Game.",
   "passive": {
     "name": "Spark of Genius",
-    "description": "Ultimate Accelerants fully charge Wattson's ultimate. Sie kann mehr Ultimate Accelerants tragen und schneller nutzen. Regeneriert langsam Schilde über Zeit."
+    "description": "Ultimate-Beschleuniger laden Wattsons Ultimate vollständig auf. Sie kann mehr Ultimate-Beschleuniger tragen und schneller verwenden. Regeneriert langsam Schilde über Zeit."
   },
   "tactical": {
     "name": "Perimeter Security",
-    "description": "Errichte elektrifizierte Zäune, indem du Knoten verbindest. Zäune verlangsamen und beschädigen Gegner. Zäune in Türnähe elektrisieren sie.",
-    "cooldown": "15s pro Zaun-Segment",
-    "duration": "Bleibt bestehen bis zerstört oder deaktiviert",
-    "charges": "Bis zu 12 Knoten"
+    "description": "Errichtet elektrifizierte Zäune, indem Verbindungsknoten platziert werden. Zäune verlangsamen und verletzen Gegner. In Türnähe platzierte Zäune elektrisieren diese zusätzlich.",
+    "cooldown": "15 Sek. pro Segment",
+    "charges": "Bis zu 12 Knoten",
+    "duration": "Bleibt bestehen, bis zerstört oder deaktiviert",
+    "damagePerTick": "20 Schaden beim Durchqueren",
+    "slow": "Ca. 20 % Bewegungsgeschwindigkeit"
   },
   "ultimate": {
     "name": "Interception Pylon",
-    "description": "Platziere einen Pylon (Max. 1), der eingehende Geschosse zerstört und beschädigte Schilde repariert. Abgefangene Granaten werden zu Arc Stars umgewandelt.",
-    "cooldown": "180s",
-    "duration": "Unbegrenzt bis zerstört",
-    "max_active": 1
+    "description": "Platziert einen Pylon (max. 1), der eingehende Geschosse zerstört und beschädigte Schilde regeneriert. Abgefangene Granaten werden zu Arc Stars umgewandelt.",
+    "cooldown": "180 Sek.",
+    "duration": "Permanent, bis zerstört",
+    "maxActive": 1,
+    "shieldRegenRate": "Ca. 5 HP/Sek."
   },
-  "fortified": {
-    "description": "Erlittener Schaden reduziert um 15%. Nicht verlangsamt durch Kugeln."
-  },
-  "upgrades": {
-    "level1": [
-      {
-        "name": "Help is Here",
-        "description": "Zugang zu Support-Bins, verbesserte Wiederbelebung und Deathboxen mit MRBs."
-      }
+  "perks": {
+    "blue": [
+      "Help is Here – Zugang zu Support-Bins, verbesserte Wiederbelebung und Deathboxen mit Mobile Respawn Beacons.",
+      "Ultimate Conductor – Schaden an Gegnern reduziert die Ultimate-Abklingzeit; Knockdowns geben 50 % Ult-Ladung."
     ],
-    "level2": [
-      {
-        "name": "Ultimate Conductor",
-        "description": "Schaden an Gegnern reduziert die Ult-Cooldown-Zeit; Knockdowns geben 50% Ult-Ladung."
-      }
-    ],
-    "level3": [
-      {
-        "name": "Energized Healer",
-        "description": "Spritzen und Schildzellen heilen doppelt so viel."
-      },
-      {
-        "name": "Power Pylon",
-        "description": "Verdoppelt HP, maximale Kapazität und Schild-Reparaturgeschwindigkeit des Ultimates."
-      }
+    "purple": [
+      "Energized Healer – Spritzen und Schildzellen heilen doppelt so viel.",
+      "Power Pylon – Verdoppelt HP, maximale Kapazität und Schild-Reparaturgeschwindigkeit des Ultimates."
     ]
   }
 },
@@ -974,28 +925,30 @@ const metaData = [
   "meta": "Sehr stark in defensiven Setups und bei der Gebietskontrolle, vor allem mit LMGs und Sheila. Schwächen bei aggressiven Pushes.",
   "passive": {
     "name": "Modded Loader",
-    "description": "Erhöhte Magazingröße und schnelleres Nachladen bei LMGs und der Minigun Sheila."
+    "description": "Erhöht die Magazingröße und beschleunigt das Nachladen bei LMGs sowie bei der Minigun Sheila."
   },
   "tactical": {
     "name": "Amped Cover",
-    "description": "Baut eine kniehohe Deckung, die eingehenden Schaden blockt und ausgehenden Schaden verstärkt."
+    "description": "Errichtet eine kniehohe Deckung, die eingehenden Schaden blockiert und ausgehenden Schaden verstärkt.",
+    "cooldown": "20 Sek.",
+    "damageBoost": "+20 % ausgehend",
+    "coverHP": "Bariere ca. 400 HP"
   },
   "ultimate": {
     "name": "Mobile Minigun 'Sheila'",
-    "description": "Führt eine mobile Minigun mit großem Magazin oder stellt sie als stationäre, nachladbare Waffe auf. Maximal 1 aktiv."
+    "description": "Führt eine mobile Minigun mit großem Magazin oder stellt sie als stationäre, nachladbare Waffe auf. Maximal 1 aktiv.",
+    "cooldown": "120 Sek.",
+    "ammoCapacity": "173 Schuss (Mobile) / 150 Schuss (Stationär)",
+    "damagePerShot": "14 (Body) / 28 (Head)"
   },
-  "cooldowns": {
-    "tactical_cooldown": "20s",
-    "ultimate_charge": "120s"
-  },
-  "upgrades": {
-    "lvl1": [
-      { "name": "Ultimate Cooldown", "effect": "Verringert Ultimate-Abklingzeit um 30 Sekunden." },
-      { "name": "Bandolier", "effect": "Trägt zusätzliche Munition pro Stack." }
+  "perks": {
+    "blue": [
+      "Ultimate Cooldown – Verringert die Ultimate-Abklingzeit um 30 Sekunden.",
+      "Bandolier – Trägt zusätzliche Munition pro Stack."
     ],
-    "lvl2": [
-      { "name": "Ramped Up", "effect": "Verbessert Handhabung und Anlaufzeit der mobilen Sheila um 20%." },
-      { "name": "Amped Reloads", "effect": "Lädt schneller nach mit Sheila oder hinter Amped Cover." }
+    "purple": [
+      "Ramped Up – Verbessert Handhabung und Anlaufzeit der mobilen Sheila um 20 %. ",
+      "Amped Reloads – Lädt schneller nach mit Sheila oder hinter Amped Cover."
     ]
   }
 },
@@ -1006,52 +959,36 @@ const metaData = [
   "meta": "Starker Bereichskontroll-Charakter, ideal zur Absicherung von Zonen und zum Blockieren von Sichtlinien. Besonders effektiv gegen aggressive Pushes und für Endgame-Positionierung.",
   "passive": {
     "name": "Barricade",
-    "description": "Verstärkt Türen (Max 2), verriegelt sie für Gegner und verstärkt zerstörte Türen.",
+    "description": "Verstärkt Türen (maximal 2) und verriegelt sie für Gegner. Kann zerstörte Türen wiederherstellen.",
     "cooldown": "Keine Abklingzeit"
   },
   "tactical": {
     "name": "Piercing Spikes",
-    "description": "Wirft Ferrofluid, das bei Gegnernähe zu Spikes wird, die verlangsamen und Schaden verursachen. Catalyst ist immun gegen gegnerische Spikes.",
+    "description": "Wirft Ferrofluid, das bei Gegnernähe zu Spikes wird. Diese verlangsamen und verursachen Schaden. Catalyst ist immun gegen gegnerische Spikes.",
     "maxCharges": 2,
-    "cooldown": "20s pro Einsatz",
-    "duration": "Bleibt bestehen, bis zerstört oder überschrieben"
+    "cooldown": "20 Sek. pro Einsatz",
+    "duration": "Bleibt bestehen, bis zerstört oder überschrieben",
+    "damagePerSecond": "15 Schaden pro Sekunde",
+    "slow": "Ca. 20 % Bewegungsgeschwindigkeit"
   },
   "ultimate": {
     "name": "Dark Veil",
     "description": "Errichtet eine durchlässige Wand aus Ferrofluid, die Gegner verlangsamt und kurzzeitig blendet.",
-    "cooldown": "180s",
-    "duration": "30s",
-    "max": 1
+    "cooldown": "180 Sek.",
+    "duration": "30 Sek.",
+    "width": "55 Meter",
+    "effects": "Blockiert Scans (Bloodhound, Seer) und Sichtlinien"
   },
-  "class": {
-    "type": "Controller",
-    "perks": [
-      "Access Ring Consoles: Aktiviert Ring-Konsolen, um die nächste Ring-Position anzuzeigen",
-      "Zone Overcharge: +25 Schildkapazität & langsame Regeneration im Safe-Zone-Bereich"
-    ]
-  },
-  "upgrades": {
-    "lvl1": [
-      {
-        "name": "Sister Spikes",
-        "description": "Erhöht die maximale Anzahl aktiver Spikes um eins"
-      }
+  "perks": {
+    "blue": [
+      "Access Ring Consoles – Aktiviert Ring-Konsolen, um die nächste Ring-Position anzuzeigen.",
+      "Zone Overcharge – +25 Schildkapazität & langsame Regeneration im Safe-Zone-Bereich."
     ],
-    "lvl2": [
-      {
-        "name": "Long Veil",
-        "description": "Erhöht die Länge der Ultimate um 15 Meter"
-      }
-    ],
-    "lvl3": [
-      {
-        "name": "Ferro-Door",
-        "description": "Repariert und verstärkt fehlende Türen"
-      },
-      {
-        "name": "Resilient Veil",
-        "description": "Erhöht die Wirkungsdauer der Ultimate um 5 Sekunden"
-      }
+    "purple": [
+      "Sister Spikes – Erhöht die maximale Anzahl aktiver Spikes um eins.",
+      "Long Veil – Erhöht die Länge der Ultimate um 15 Meter.",
+      "Ferro-Door – Repariert und verstärkt fehlende Türen.",
+      "Resilient Veil – Erhöht die Wirkungsdauer der Ultimate um 5 Sekunden."
     ]
   }
 }
