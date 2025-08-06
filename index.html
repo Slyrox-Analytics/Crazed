@@ -8,23 +8,31 @@
 <script>
 // Passwortschutz für das Dashboard
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. Hauptpasswort abfragen
-    var pass = prompt("🔑 Passwort erforderlich:");
-    if (pass !== "Analytics1337") { // <-- Dein aktuelles Hauptpasswort hier eintragen
-        alert("Falsches Passwort! Zugriff verweigert.");
-        window.location.href = "https://google.com";
-        return;
-    }
 
-    // 2. Admin-Passwort für Logger-Zugriff abfragen
-    var isAdmin = false;
-    var adminPass = prompt("🔒 Admin-Passwort für Match Logger (leer lassen für normalen Zugriff):");
-    if (adminPass === "Admin8112") { // <-- Festgelegtes Admin-Passwort
-        isAdmin = true;
+    // Prüfen ob bereits eingeloggt
+    if (!localStorage.getItem("dashboardLoggedIn")) {
+        // 1. Hauptpasswort abfragen
+        var pass = prompt("🔑 Passwort erforderlich:");
+        if (pass !== "Analytics1337") { // <-- Dein aktuelles Hauptpasswort hier eintragen
+            alert("Falsches Passwort! Zugriff verweigert.");
+            window.location.href = "https://google.com";
+            return;
+        }
+
+        // 2. Admin-Passwort für Logger-Zugriff abfragen
+        var isAdmin = false;
+        var adminPass = prompt("🔒 Admin-Passwort für Match Logger (leer lassen für normalen Zugriff):");
+        if (adminPass === "Admin8112") { // <-- Festgelegtes Admin-Passwort
+            isAdmin = true;
+        }
+
+        // In localStorage merken, dass eingeloggt wurde
+        localStorage.setItem("dashboardLoggedIn", isAdmin ? "admin" : "user");
     }
 
     // 3. Match Logger-Button nur anzeigen, wenn Admin
-    if (!isAdmin) {
+    var role = localStorage.getItem("dashboardLoggedIn");
+    if (role !== "admin") {
         var loggerButton = document.getElementById("logger-btn");
         if (loggerButton) {
             loggerButton.remove();
