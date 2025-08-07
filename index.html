@@ -47,16 +47,16 @@
 </style>
 
 <script>
-// Passwortschutz für das Dashboard
+// Passwortschutz nur für die aktuelle Browsersitzung
 document.addEventListener("DOMContentLoaded", function () {
-    if (!localStorage.getItem("dashboardLoggedIn")) {
+    if (!sessionStorage.getItem("dashboardLoggedIn")) {
         var pass = prompt("🔑 Passwort erforderlich:");
         if (pass !== "Analytics1337") {
             alert("Falsches Passwort! Zugriff verweigert.");
             window.location.href = "https://google.com";
             return;
         }
-        localStorage.setItem("dashboardLoggedIn", "user");
+        sessionStorage.setItem("dashboardLoggedIn", "user");
     }
 });
 
