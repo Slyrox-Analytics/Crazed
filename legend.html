@@ -13,6 +13,7 @@
     th { background:#222; }
     .legend-name { font-weight:bold; font-size:1.1em; color:#ffcc00; }
     .small-data { font-size:0.9em; color:#bbb; }
+    .beyond-top10 { background-color:#1e1e1e; color:#888; }
     .back-btn {
       display:inline-block; margin-bottom:15px; padding:8px 12px;
       background:#e53935; color:white; text-decoration:none; border-radius:5px; font-weight:bold;
@@ -26,14 +27,6 @@
 <h1>📊 Legend Meta</h1>
 
 <div style="text-align:center;">
-  <label>Plattform:</label>
-  <select id="platform" onchange="updateTable()">
-    <option value="all">Alle</option>
-    <option value="PC">PC</option>
-    <option value="PlayStation">PlayStation</option>
-    <option value="Xbox">Xbox</option>
-  </select>
-
   <label>Rangbereich:</label>
   <select id="rank" onchange="updateTable()">
     <option value="all">Alle Ränge</option>
@@ -59,36 +52,81 @@
 </table>
 
 <script>
-const metaData = [/* gleichbleibend – nicht eingefügt aus Platzgründen */];
+const metaData = [
+  { rank: "Bronze", platform: "all", legend: "Bangalore", pick: "15.1%", win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Ash", pick: "12.9%", win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Lifeline", pick: "8.9%", win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Revenant", pick: "7.5%", win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Caustic", pick: "6.7%", win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Alter", pick: "6.1%", win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Mirage", pick: "5.2%", win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Sparrow", pick: "4.9%", win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Wraith", pick: "4.6%", win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Pathfinder", pick: "4.3%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Ash", pick: "15.2%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Bangalore", pick: "13.6%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Lifeline", pick: "9.3%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Caustic", pick: "7.9%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Revenant", pick: "6.8%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Alter", pick: "6.4%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Sparrow", pick: "5.8%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Pathfinder", pick: "5.2%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Mirage", pick: "5.0%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Wraith", pick: "4.7%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Ash", pick: "16.3%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Bangalore", pick: "13.5%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Lifeline", pick: "8.6%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Caustic", pick: "8.2%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Revenant", pick: "6.9%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Alter", pick: "5.5%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Sparrow", pick: "5.3%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Pathfinder", pick: "4.8%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Mirage", pick: "4.7%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Wraith", pick: "4.5%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Ash", pick: "17.5%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Bangalore", pick: "13.2%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Caustic", pick: "8.3%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Lifeline", pick: "7.5%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Revenant", pick: "6.3%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Sparrow", pick: "5.4%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Alter", pick: "5.2%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Pathfinder", pick: "4.7%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Mirage", pick: "4.1%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Wraith", pick: "3.9%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Ash", pick: "18.4%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Bangalore", pick: "13.6%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Caustic", pick: "8.5%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Revenant", pick: "7.2%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Lifeline", pick: "6.6%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Sparrow", pick: "5.2%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Pathfinder", pick: "5.0%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Alter", pick: "4.8%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Wraith", pick: "4.2%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Mirage", pick: "3.9%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Ash", pick: "19.7%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Bangalore", pick: "14.2%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Caustic", pick: "9.4%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Sparrow", pick: "6.6%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Lifeline", pick: "6.1%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Revenant", pick: "5.9%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Wraith", pick: "5.2%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Pathfinder", pick: "4.8%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Mirage", pick: "4.0%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Alter", pick: "2.7%", win: "–" }
+];
 
 function updateTable() {
   const tbody = document.querySelector("#metaTable tbody");
   tbody.innerHTML = "";
-  const plat = document.getElementById("platform").value;
   const rank = document.getElementById("rank").value;
 
-  let filtered;
-  if (rank === "all") {
-    const grouped = {};
-    metaData.forEach(entry => {
-      if ((plat === "all" || entry.platform === plat)) {
-        if (!grouped[entry.legend]) {
-          grouped[entry.legend] = entry;
-        } else {
-          const pick = parseFloat(grouped[entry.legend].pick);
-          const add = parseFloat(entry.pick);
-          grouped[entry.legend].pick = ((pick + add) / 2).toFixed(1) + "%";
-        }
-      }
-    });
-    filtered = Object.values(grouped).sort((a, b) => parseFloat(b.pick) - parseFloat(a.pick)).slice(0, 10);
-  } else {
-    filtered = metaData.filter(m => (plat === "all" || m.platform === plat) && m.rank === rank);
-  }
+  const filtered = metaData.filter(m =>
+    rank === "all" || m.rank === rank
+  );
 
   filtered.forEach((m, i) => {
     tbody.innerHTML += `
-      <tr>
+      <tr class="${rank === 'all' && i >= 10 ? 'beyond-top10' : ''}">
         <td>${i+1}</td>
         <td><span class="legend-name">${m.legend}</span><br>
             <span class="small-data">Pick: ${m.pick} | Win: ${m.win}</span></td>
