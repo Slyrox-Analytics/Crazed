@@ -1,84 +1,126 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>Slyrox-Analytics Dashboard</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Slyrox-Analytics Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 
-<style>
-/* Admin-Button Style */
-.admin-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    padding: 6px 12px;
-    background-color: #e53935;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.admin-btn:hover {
-    background-color: #c62828;
-}
+  <style>
+    /* Admin-Button Style */
+    .admin-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 6px 12px;
+      background-color: #e53935;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-/* Admin Cards */
-.admin-cards {
-    margin-top: 40px;
-    display: none;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 0 15px;
-}
-.admin-cards a {
-    display: block;
-    background-color: #1e1e1e;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    color: white;
-    text-decoration: none;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-}
-.admin-cards a:hover {
-    background-color: #2c2c2c;
-}
-</style>
+    .admin-btn:hover {
+      background-color: #c62828;
+    }
 
-<script>
-// Passwortschutz nur für die aktuelle Browsersitzung
-document.addEventListener("DOMContentLoaded", function () {
-    if (!sessionStorage.getItem("dashboardLoggedIn")) {
+    /* Dashboard Buttons */
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      display: inline-block;
+      background-color: #1e1e1e;
+      color: #fff;
+      text-decoration: none;
+      padding: 20px 25px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      transition: background-color 0.3s ease;
+      text-align: center;
+      min-width: 240px;
+    }
+
+    .card:hover {
+      background-color: #2c2c2c;
+    }
+
+    /* Admin Cards */
+    .admin-cards {
+      margin-top: 40px;
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 0 15px;
+    }
+
+    .admin-cards a {
+      display: block;
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    }
+
+    .admin-cards a:hover {
+      background-color: #2c2c2c;
+    }
+
+    /* Mobile Optimierung */
+    @media screen and (max-width: 768px) {
+      .card {
+        width: 90%;
+        font-size: 22px;
+        padding: 25px 20px;
+      }
+    }
+  </style>
+
+  <script>
+    // Passwortschutz nur für die aktuelle Browsersitzung
+    document.addEventListener("DOMContentLoaded", function () {
+      if (!sessionStorage.getItem("dashboardLoggedIn")) {
         var pass = prompt("🔑 Passwort erforderlich:");
         if (pass !== "Analytics1337") {
-            alert("Falsches Passwort! Zugriff verweigert.");
-            window.location.href = "https://google.com";
-            return;
+          alert("Falsches Passwort! Zugriff verweigert.");
+          window.location.href = "https://google.com";
+          return;
         }
         sessionStorage.setItem("dashboardLoggedIn", "user");
-    }
-});
+      }
+    });
 
-// Adminbereich öffnen
-function openAdmin() {
-    var adminPass = prompt("🔒 Admin-Passwort erforderlich:");
-    if (adminPass === "Admin8112") {
+    // Adminbereich öffnen
+    function openAdmin() {
+      var adminPass = prompt("🔒 Admin-Passwort erforderlich:");
+      if (adminPass === "Admin8112") {
         document.getElementById("adminLinks").style.display = "grid";
-    } else {
+      } else {
         alert("Falsches Admin-Passwort!");
+      }
     }
-}
-</script>
+  </script>
 </head>
 
 <body>
-<h1>Welcome to Slyrox-Analytics</h1>
+  <h1>Welcome to Slyrox-Analytics</h1>
 
-<!-- Admin-Button -->
-<button class="admin-btn" onclick="openAdmin()">⚙ Admin</button>
+  <!-- Admin-Button -->
+  <button class="admin-btn" onclick="openAdmin()">⚙ Admin</button>
 
-<div class="dashboard">
+  <!-- Dashboard-Links -->
+  <div class="dashboard">
     <a href="weapon.html" class="card">🔫 Weapon Comparison</a>
     <a href="rp.html" class="card">📈 Apex S26 RP-Rechner</a>
     <a href="legend.html" class="card">📊 Legend Meta</a>
@@ -86,13 +128,12 @@ function openAdmin() {
     <a href="rankpercentiles.html" class="card">📊 Rank Percentiles</a>
     <a href="legendinfo.html" class="card">🛡 Legend Info</a>
     <a href="classinfo.html" class="card">🏷 Klassenübersicht</a>
-</div>
+  </div>
 
-<!-- Admin-Bereich -->
-<div id="adminLinks" class="admin-cards">
+  <!-- Admin-Bereich -->
+  <div id="adminLinks" class="admin-cards">
     <a href="logger.html">🔫 Match Logger</a>
     <a href="season_tracker.html">📉 Season Performance Tracker</a>
-</div>
-
+  </div>
 </body>
 </html>
