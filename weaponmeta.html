@@ -40,7 +40,7 @@
 
 <a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
 <h1>🔫 Weapon Meta</h1>
-<p id="lastUpdate"></p>
+<p id="lastUpdate">Letztes Update: –</p>
 
 <table id="metaTable">
   <thead>
@@ -52,7 +52,11 @@
 <script>
 // === Datum zentral festlegen (nur hier ändern) ===
 const lastUpdateDate = "09.08.2025";
-document.getElementById("lastUpdate").innerText = "Letztes Update: " + lastUpdateDate;
+
+document.addEventListener("DOMContentLoaded", () => {
+  const el = document.getElementById("lastUpdate");
+  if (el) el.innerText = "Letztes Update: " + lastUpdateDate;
+});
 
 const metaData = [
   // Ranked – Top 15 (Stand 2025-08-09)
