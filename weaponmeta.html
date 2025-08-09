@@ -6,7 +6,8 @@
 <title>Weapon Meta</title>
 <style>
   body { background:#121212; color:#fff; font-family:Arial, sans-serif; padding:20px; }
-  h1 { text-align:center; margin-bottom:20px; }
+  h1 { text-align:center; margin-bottom:5px; }
+  #lastUpdate { text-align:center; color:#bbb; font-size:0.9em; margin-bottom:15px; }
   table { width:100%; border-collapse:collapse; margin-top:20px; }
   th, td { padding:10px; text-align:left; border-bottom:1px solid #333; }
   th { background:#222; }
@@ -20,7 +21,8 @@
   /* —— Mobile Boost —— */
   @media (max-width: 600px) {
     body { padding:14px; }
-    h1 { font-size:1.6rem; margin-bottom:14px; }
+    h1 { font-size:1.6rem; margin-bottom:6px; }
+    #lastUpdate { font-size:0.95em; margin-bottom:12px; }
     table { font-size:1.05rem; }
     th, td { padding:14px 12px; }
     .weapon-name { font-size:1.2em; }
@@ -38,6 +40,7 @@
 
 <a href="index.html" class="back-btn">⬅ Zurück zum Dashboard</a>
 <h1>🔫 Weapon Meta</h1>
+<p id="lastUpdate"></p>
 
 <table id="metaTable">
   <thead>
@@ -47,6 +50,10 @@
 </table>
 
 <script>
+// === Datum zentral festlegen (nur hier ändern) ===
+const lastUpdateDate = "09.08.2025";
+document.getElementById("lastUpdate").innerText = "Letztes Update: " + lastUpdateDate;
+
 const metaData = [
   // Ranked – Top 15 (Stand 2025-08-09)
   { rank: "ranked", platform: "all", weapon: "Nemesis Burst AR", pick: "S-Tier" },
@@ -67,6 +74,7 @@ const metaData = [
 
   { rank: "ranked", platform: "all", weapon: "Charge Rifle",      pick: "B-Tier" }
 ];
+
 function updateTable() {
   const tbody = document.querySelector("#metaTable tbody");
   tbody.innerHTML = "";
