@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Weapon Meta</title>
 <style>
   body { background:#121212; color:#fff; font-family:Arial, sans-serif; padding:20px; }
@@ -15,6 +16,22 @@
     background:#e53935; color:white; text-decoration:none; border-radius:5px; font-weight:bold;
   }
   .back-btn:hover { background:#d32f2f; }
+
+  /* —— Mobile Boost —— */
+  @media (max-width: 600px) {
+    body { padding:14px; }
+    h1 { font-size:1.6rem; margin-bottom:14px; }
+    table { font-size:1.05rem; }
+    th, td { padding:14px 12px; }
+    .weapon-name { font-size:1.2em; }
+    .back-btn { width:100%; text-align:center; padding:12px 14px; font-size:1rem; }
+  }
+
+  /* Extra klein (z.B. 360–390px) */
+  @media (max-width: 390px) {
+    table { font-size:1.1rem; }
+    .weapon-name { line-height:1.25; word-break:break-word; }
+  }
 </style>
 </head>
 <body>
