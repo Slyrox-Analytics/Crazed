@@ -52,84 +52,118 @@
 </table>
 
 <script>
+// --- Global Ranked (Alle Ränge) — Top 15 ---
 const metaData = [
+  // Alle Ränge — Ranked (Top 15)
+  { rank: "all", platform: "all", legend: "Ash",         pick: "18.6%", win: "–" },
+  { rank: "all", platform: "all", legend: "Bangalore",   pick: "12.9%", win: "–" },
+  { rank: "all", platform: "all", legend: "Lifeline",    pick: "8.2%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Revenant",    pick: "7.3%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Caustic",     pick: "6.6%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Sparrow",     pick: "6.2%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Alter",       pick: "5.6%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Wraith",      pick: "5.1%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Pathfinder",  pick: "4.9%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Octane",      pick: "4.4%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Mirage",      pick: "4.1%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Ballistic",   pick: "3.7%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Vantage",     pick: "3.5%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Bloodhound",  pick: "3.4%",  win: "–" },
+  { rank: "all", platform: "all", legend: "Loba",        pick: "3.1%",  win: "–" },
+
+  // ====== Deine Ranglisten (Top 10 je Rang) bleiben wie gehabt ======
+  // Bronze
   { rank: "Bronze", platform: "all", legend: "Bangalore", pick: "15.1%", win: "–" },
-  { rank: "Bronze", platform: "all", legend: "Ash", pick: "12.9%", win: "–" },
-  { rank: "Bronze", platform: "all", legend: "Lifeline", pick: "8.9%", win: "–" },
-  { rank: "Bronze", platform: "all", legend: "Revenant", pick: "7.5%", win: "–" },
-  { rank: "Bronze", platform: "all", legend: "Caustic", pick: "6.7%", win: "–" },
-  { rank: "Bronze", platform: "all", legend: "Alter", pick: "6.1%", win: "–" },
-  { rank: "Bronze", platform: "all", legend: "Mirage", pick: "5.2%", win: "–" },
-  { rank: "Bronze", platform: "all", legend: "Sparrow", pick: "4.9%", win: "–" },
-  { rank: "Bronze", platform: "all", legend: "Wraith", pick: "4.6%", win: "–" },
-  { rank: "Bronze", platform: "all", legend: "Pathfinder", pick: "4.3%", win: "–" },
-  { rank: "Silver", platform: "all", legend: "Ash", pick: "15.2%", win: "–" },
-  { rank: "Silver", platform: "all", legend: "Bangalore", pick: "13.6%", win: "–" },
-  { rank: "Silver", platform: "all", legend: "Lifeline", pick: "9.3%", win: "–" },
-  { rank: "Silver", platform: "all", legend: "Caustic", pick: "7.9%", win: "–" },
-  { rank: "Silver", platform: "all", legend: "Revenant", pick: "6.8%", win: "–" },
-  { rank: "Silver", platform: "all", legend: "Alter", pick: "6.4%", win: "–" },
-  { rank: "Silver", platform: "all", legend: "Sparrow", pick: "5.8%", win: "–" },
-  { rank: "Silver", platform: "all", legend: "Pathfinder", pick: "5.2%", win: "–" },
-  { rank: "Silver", platform: "all", legend: "Mirage", pick: "5.0%", win: "–" },
-  { rank: "Silver", platform: "all", legend: "Wraith", pick: "4.7%", win: "–" },
-  { rank: "Gold", platform: "all", legend: "Ash", pick: "16.3%", win: "–" },
-  { rank: "Gold", platform: "all", legend: "Bangalore", pick: "13.5%", win: "–" },
-  { rank: "Gold", platform: "all", legend: "Lifeline", pick: "8.6%", win: "–" },
-  { rank: "Gold", platform: "all", legend: "Caustic", pick: "8.2%", win: "–" },
-  { rank: "Gold", platform: "all", legend: "Revenant", pick: "6.9%", win: "–" },
-  { rank: "Gold", platform: "all", legend: "Alter", pick: "5.5%", win: "–" },
-  { rank: "Gold", platform: "all", legend: "Sparrow", pick: "5.3%", win: "–" },
-  { rank: "Gold", platform: "all", legend: "Pathfinder", pick: "4.8%", win: "–" },
-  { rank: "Gold", platform: "all", legend: "Mirage", pick: "4.7%", win: "–" },
-  { rank: "Gold", platform: "all", legend: "Wraith", pick: "4.5%", win: "–" },
-  { rank: "Platinum", platform: "all", legend: "Ash", pick: "17.5%", win: "–" },
-  { rank: "Platinum", platform: "all", legend: "Bangalore", pick: "13.2%", win: "–" },
-  { rank: "Platinum", platform: "all", legend: "Caustic", pick: "8.3%", win: "–" },
-  { rank: "Platinum", platform: "all", legend: "Lifeline", pick: "7.5%", win: "–" },
-  { rank: "Platinum", platform: "all", legend: "Revenant", pick: "6.3%", win: "–" },
-  { rank: "Platinum", platform: "all", legend: "Sparrow", pick: "5.4%", win: "–" },
-  { rank: "Platinum", platform: "all", legend: "Alter", pick: "5.2%", win: "–" },
-  { rank: "Platinum", platform: "all", legend: "Pathfinder", pick: "4.7%", win: "–" },
-  { rank: "Platinum", platform: "all", legend: "Mirage", pick: "4.1%", win: "–" },
-  { rank: "Platinum", platform: "all", legend: "Wraith", pick: "3.9%", win: "–" },
-  { rank: "Diamond", platform: "all", legend: "Ash", pick: "18.4%", win: "–" },
-  { rank: "Diamond", platform: "all", legend: "Bangalore", pick: "13.6%", win: "–" },
-  { rank: "Diamond", platform: "all", legend: "Caustic", pick: "8.5%", win: "–" },
-  { rank: "Diamond", platform: "all", legend: "Revenant", pick: "7.2%", win: "–" },
-  { rank: "Diamond", platform: "all", legend: "Lifeline", pick: "6.6%", win: "–" },
-  { rank: "Diamond", platform: "all", legend: "Sparrow", pick: "5.2%", win: "–" },
-  { rank: "Diamond", platform: "all", legend: "Pathfinder", pick: "5.0%", win: "–" },
-  { rank: "Diamond", platform: "all", legend: "Alter", pick: "4.8%", win: "–" },
-  { rank: "Diamond", platform: "all", legend: "Wraith", pick: "4.2%", win: "–" },
-  { rank: "Diamond", platform: "all", legend: "Mirage", pick: "3.9%", win: "–" },
-  { rank: "Master/Predator", platform: "all", legend: "Ash", pick: "19.7%", win: "–" },
-  { rank: "Master/Predator", platform: "all", legend: "Bangalore", pick: "14.2%", win: "–" },
-  { rank: "Master/Predator", platform: "all", legend: "Caustic", pick: "9.4%", win: "–" },
-  { rank: "Master/Predator", platform: "all", legend: "Sparrow", pick: "6.6%", win: "–" },
-  { rank: "Master/Predator", platform: "all", legend: "Lifeline", pick: "6.1%", win: "–" },
-  { rank: "Master/Predator", platform: "all", legend: "Revenant", pick: "5.9%", win: "–" },
-  { rank: "Master/Predator", platform: "all", legend: "Wraith", pick: "5.2%", win: "–" },
-  { rank: "Master/Predator", platform: "all", legend: "Pathfinder", pick: "4.8%", win: "–" },
-  { rank: "Master/Predator", platform: "all", legend: "Mirage", pick: "4.0%", win: "–" },
-  { rank: "Master/Predator", platform: "all", legend: "Alter", pick: "2.7%", win: "–" }
+  { rank: "Bronze", platform: "all", legend: "Ash",       pick: "12.9%", win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Lifeline",  pick: "8.9%",  win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Revenant",  pick: "7.5%",  win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Caustic",   pick: "6.7%",  win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Alter",     pick: "6.1%",  win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Mirage",    pick: "5.2%",  win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Sparrow",   pick: "4.9%",  win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Wraith",    pick: "4.6%",  win: "–" },
+  { rank: "Bronze", platform: "all", legend: "Pathfinder",pick: "4.3%",  win: "–" },
+
+  // Silver
+  { rank: "Silver", platform: "all", legend: "Ash",        pick: "15.2%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Bangalore",  pick: "13.6%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Lifeline",   pick: "9.3%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Caustic",    pick: "7.9%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Revenant",   pick: "6.8%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Alter",      pick: "6.4%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Sparrow",    pick: "5.8%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Pathfinder", pick: "5.2%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Mirage",     pick: "5.0%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Wraith",     pick: "4.7%",  win: "–" },
+
+  // Gold
+  { rank: "Gold", platform: "all", legend: "Ash",          pick: "16.3%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Bangalore",    pick: "13.5%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Lifeline",     pick: "8.6%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Caustic",      pick: "8.2%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Revenant",     pick: "6.9%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Alter",        pick: "5.5%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Sparrow",      pick: "5.3%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Pathfinder",   pick: "4.8%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Mirage",       pick: "4.7%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Wraith",       pick: "4.5%",  win: "–" },
+
+  // Platinum
+  { rank: "Platinum", platform: "all", legend: "Ash",        pick: "17.5%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Bangalore",  pick: "13.2%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Caustic",    pick: "8.3%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Lifeline",   pick: "7.5%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Revenant",   pick: "6.3%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Sparrow",    pick: "5.4%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Alter",      pick: "5.2%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Pathfinder", pick: "4.7%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Mirage",     pick: "4.1%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Wraith",     pick: "3.9%",  win: "–" },
+
+  // Diamond
+  { rank: "Diamond", platform: "all", legend: "Ash",        pick: "18.4%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Bangalore",  pick: "13.6%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Caustic",    pick: "8.5%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Revenant",   pick: "7.2%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Lifeline",   pick: "6.6%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Sparrow",    pick: "5.2%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Pathfinder", pick: "5.0%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Alter",      pick: "4.8%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Wraith",     pick: "4.2%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Mirage",     pick: "3.9%",  win: "–" },
+
+  // Master / Predator
+  { rank: "Master/Predator", platform: "all", legend: "Ash",        pick: "19.7%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Bangalore",  pick: "14.2%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Caustic",    pick: "9.4%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Sparrow",    pick: "6.6%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Lifeline",   pick: "6.1%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Revenant",   pick: "5.9%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Wraith",     pick: "5.2%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Pathfinder", pick: "4.8%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Mirage",     pick: "4.0%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Alter",      pick: "2.7%",  win: "–" }
 ];
 
+// --- Table render ---
 function updateTable() {
   const tbody = document.querySelector("#metaTable tbody");
   tbody.innerHTML = "";
   const rank = document.getElementById("rank").value;
 
-  const filtered = metaData.filter(m =>
-    rank === "all" || m.rank === rank
-  );
+  // Wichtig: Für "Alle Ränge" NUR die globalen Einträge anzeigen
+  const filtered = metaData.filter(m => (rank === "all" ? m.rank === "all" : m.rank === rank));
 
   filtered.forEach((m, i) => {
+    // Bei "Alle Ränge" KEIN Abdunkeln – es ist ja eine saubere Top 15
+    const rowClass = (rank !== "all" && i >= 10) ? "beyond-top10" : "";
     tbody.innerHTML += `
-      <tr class="${rank === 'all' && i >= 10 ? 'beyond-top10' : ''}">
+      <tr class="${rowClass}">
         <td>${i+1}</td>
-        <td><span class="legend-name">${m.legend}</span><br>
-            <span class="small-data">Pick: ${m.pick} | Win: ${m.win}</span></td>
+        <td>
+          <span class="legend-name">${m.legend}</span><br>
+          <span class="small-data">Pick: ${m.pick} | Win: ${m.win}</span>
+        </td>
         <td>${m.pick}</td>
         <td>${m.win}</td>
       </tr>
