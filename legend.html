@@ -55,11 +55,11 @@
 
 <script>
 // === Datum zentral festlegen ===
-const lastUpdateDate = "09.08.2025"; // <— HIER ändern für beide Metas
+const lastUpdateDate = "09.08.2025";
 document.getElementById("lastUpdate").innerText = "Letztes Update: " + lastUpdateDate;
 
-// --- Global Ranked (Alle Ränge) — Top 15 ---
 const metaData = [
+  // Alle Ränge — Ranked (Top 15)
   { rank: "all", platform: "all", legend: "Ash",         pick: "18.6%", win: "–" },
   { rank: "all", platform: "all", legend: "Bangalore",   pick: "12.9%", win: "–" },
   { rank: "all", platform: "all", legend: "Lifeline",    pick: "8.2%",  win: "–" },
@@ -88,15 +88,74 @@ const metaData = [
   { rank: "Bronze", platform: "all", legend: "Wraith",    pick: "4.6%",  win: "–" },
   { rank: "Bronze", platform: "all", legend: "Pathfinder",pick: "4.3%",  win: "–" },
 
-  // ... Rest deiner Rangdaten unverändert ...
+  // Silver
+  { rank: "Silver", platform: "all", legend: "Ash",        pick: "15.2%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Bangalore",  pick: "13.6%", win: "–" },
+  { rank: "Silver", platform: "all", legend: "Lifeline",   pick: "9.3%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Caustic",    pick: "7.9%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Revenant",   pick: "6.8%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Alter",      pick: "6.4%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Sparrow",    pick: "5.8%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Pathfinder", pick: "5.2%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Mirage",     pick: "5.0%",  win: "–" },
+  { rank: "Silver", platform: "all", legend: "Wraith",     pick: "4.7%",  win: "–" },
+
+  // Gold
+  { rank: "Gold", platform: "all", legend: "Ash",          pick: "16.3%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Bangalore",    pick: "13.5%", win: "–" },
+  { rank: "Gold", platform: "all", legend: "Lifeline",     pick: "8.6%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Caustic",      pick: "8.2%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Revenant",     pick: "6.9%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Alter",        pick: "5.5%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Sparrow",      pick: "5.3%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Pathfinder",   pick: "4.8%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Mirage",       pick: "4.7%",  win: "–" },
+  { rank: "Gold", platform: "all", legend: "Wraith",       pick: "4.5%",  win: "–" },
+
+  // Platinum
+  { rank: "Platinum", platform: "all", legend: "Ash",        pick: "17.5%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Bangalore",  pick: "13.2%", win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Caustic",    pick: "8.3%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Lifeline",   pick: "7.5%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Revenant",   pick: "6.3%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Sparrow",    pick: "5.4%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Alter",      pick: "5.2%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Pathfinder", pick: "4.7%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Mirage",     pick: "4.1%",  win: "–" },
+  { rank: "Platinum", platform: "all", legend: "Wraith",     pick: "3.9%",  win: "–" },
+
+  // Diamond
+  { rank: "Diamond", platform: "all", legend: "Ash",        pick: "18.4%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Bangalore",  pick: "13.6%", win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Caustic",    pick: "8.5%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Revenant",   pick: "7.2%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Lifeline",   pick: "6.6%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Sparrow",    pick: "5.2%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Pathfinder", pick: "5.0%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Alter",      pick: "4.8%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Wraith",     pick: "4.2%",  win: "–" },
+  { rank: "Diamond", platform: "all", legend: "Mirage",     pick: "3.9%",  win: "–" },
+
+  // Master / Predator
+  { rank: "Master/Predator", platform: "all", legend: "Ash",        pick: "19.7%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Bangalore",  pick: "14.2%", win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Caustic",    pick: "9.4%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Sparrow",    pick: "6.6%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Lifeline",   pick: "6.1%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Revenant",   pick: "5.9%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Wraith",     pick: "5.2%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Pathfinder", pick: "4.8%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Mirage",     pick: "4.0%",  win: "–" },
+  { rank: "Master/Predator", platform: "all", legend: "Alter",      pick: "2.7%",  win: "–" }
 ];
 
-// --- Table render ---
+// Rendering
 function updateTable() {
   const tbody = document.querySelector("#metaTable tbody");
   tbody.innerHTML = "";
   const rank = document.getElementById("rank").value;
 
+  // Für „Alle Ränge“ nur die globalen Einträge zeigen
   const filtered = metaData.filter(m => (rank === "all" ? m.rank === "all" : m.rank === rank));
 
   filtered.forEach((m, i) => {
@@ -114,7 +173,6 @@ function updateTable() {
     `;
   });
 }
-
 updateTable();
 </script>
 
