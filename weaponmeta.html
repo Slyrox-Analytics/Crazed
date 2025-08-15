@@ -51,32 +51,53 @@
 
 <script>
 // === Datum zentral festlegen (nur hier ändern) ===
-const lastUpdateDate = "09.08.2025";
+const lastUpdateDate = "15.08.2025";
 
 document.addEventListener("DOMContentLoaded", () => {
   const el = document.getElementById("lastUpdate");
   if (el) el.innerText = "Letztes Update: " + lastUpdateDate;
 });
 
+// Hinweis: Reihenfolge = Anzeige-Reihenfolge in der Tabelle
 const metaData = [
-  // Ranked – Top 15 (Stand 2025-08-09)
-  { rank: "ranked", platform: "all", weapon: "Nemesis Burst AR", pick: "S-Tier" },
-  { rank: "ranked", platform: "all", weapon: "R-301 Carbine",    pick: "S-Tier" },
-  { rank: "ranked", platform: "all", weapon: "Flatline",          pick: "S-Tier" },
-  { rank: "ranked", platform: "all", weapon: "G7 Scout",          pick: "S-Tier" },
-  { rank: "ranked", platform: "all", weapon: "R-99 SMG",          pick: "S-Tier" },
-  { rank: "ranked", platform: "all", weapon: "Volt SMG",          pick: "S-Tier" },
-  { rank: "ranked", platform: "all", weapon: "Peacekeeper",       pick: "S-Tier" },
-  { rank: "ranked", platform: "all", weapon: "RE-45 Auto",        pick: "S-Tier" },
+  // —— S+ (Care Package) ——
+  { rank: "ranked", platform: "all", weapon: "Kraber .50-Cal Sniper", pick: "S+ Tier" },
+  { rank: "ranked", platform: "all", weapon: "Triple Take",           pick: "S+ Tier" },
+  { rank: "ranked", platform: "all", weapon: "P2020 (Akimbo)",         pick: "S+ Tier" },
 
-  { rank: "ranked", platform: "all", weapon: "C.A.R. SMG",        pick: "A-Tier" },
-  { rank: "ranked", platform: "all", weapon: "EVA-08 Shotgun",    pick: "A-Tier" },
-  { rank: "ranked", platform: "all", weapon: "Wingman",           pick: "A-Tier" },
-  { rank: "ranked", platform: "all", weapon: "30-30 Repeater",    pick: "A-Tier" },
-  { rank: "ranked", platform: "all", weapon: "Prowler SMG",       pick: "A-Tier" },
-  { rank: "ranked", platform: "all", weapon: "Hemlok",            pick: "A-Tier" },
+  // —— S Tier ——
+  { rank: "ranked", platform: "all", weapon: "RE-45 Auto",            pick: "S-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Peacekeeper",           pick: "S-Tier" },
+  { rank: "ranked", platform: "all", weapon: "R-99 SMG",              pick: "S-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Devotion LMG",          pick: "S-Tier" },
+  { rank: "ranked", platform: "all", weapon: "30-30 Repeater",        pick: "S-Tier" },
+  { rank: "ranked", platform: "all", weapon: "G7 Scout",              pick: "S-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Bocek Compound Bow",    pick: "S-Tier" },
 
-  { rank: "ranked", platform: "all", weapon: "Charge Rifle",      pick: "B-Tier" }
+  // —— A+ Tier ——
+  { rank: "ranked", platform: "all", weapon: "Nemesis Burst AR",      pick: "A+ Tier" },
+  { rank: "ranked", platform: "all", weapon: "Mozambique Shotgun",    pick: "A+ Tier" },
+  { rank: "ranked", platform: "all", weapon: "Hemlok Burst AR",       pick: "A+ Tier" },
+  { rank: "ranked", platform: "all", weapon: "Volt SMG",              pick: "A+ Tier" },
+  { rank: "ranked", platform: "all", weapon: "C.A.R. SMG",            pick: "A+ Tier" },
+  { rank: "ranked", platform: "all", weapon: "M600 Spitfire",         pick: "A+ Tier" },
+
+  // —— A Tier ——
+  { rank: "ranked", platform: "all", weapon: "Havoc Rifle",           pick: "A-Tier" },
+  { rank: "ranked", platform: "all", weapon: "VK-47 Flatline",        pick: "A-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Charge Rifle",          pick: "A-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Sentinel",              pick: "A-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Longbow DMR",           pick: "A-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Wingman",               pick: "A-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Prowler Burst PDW",     pick: "A-Tier" },
+
+  // —— B Tier ——
+  { rank: "ranked", platform: "all", weapon: "EVA-8 Auto",            pick: "B-Tier" },
+  { rank: "ranked", platform: "all", weapon: "R-301 Carbine",         pick: "B-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Rampage LMG",           pick: "B-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Mastiff Shotgun",       pick: "B-Tier" },
+  { rank: "ranked", platform: "all", weapon: "L-STAR EMG",            pick: "B-Tier" },
+  { rank: "ranked", platform: "all", weapon: "Alternator SMG",        pick: "B-Tier" }
 ];
 
 function updateTable() {
